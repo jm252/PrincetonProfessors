@@ -4,7 +4,7 @@
 #-----------------------------------------------------------------------
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Float
+from sqlalchemy import Column, String, Float, Integer
 
 Base = declarative_base()
 
@@ -18,7 +18,8 @@ class Professor (Base):
 class Review (Base):
     __tablename__ = 'reviews'
 
-    name = Column(String, primary_key=True)
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
     content = Column(Float)
     delivery = Column(Float)
     availability = Column(Float)
