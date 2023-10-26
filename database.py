@@ -25,7 +25,7 @@ class Review (Base):
     availability = Column(Float)
     organization = Column(Float)
     comment = Column(String)
-    course = Column(String)
+    courses = Column(String)
 
 
     
