@@ -51,8 +51,8 @@ def get_reviews(name: str):
 
         with sqlalchemy.orm.Session(engine) as session:
 
-            review1 = database.Review(name="Prof", content=3.3, course="COS434")
-            review2 = database.Review(name="Prof", content=3.3, course="COS434")
+            review1 = database.Review(name="Prof", content=3.3, courses="COS434")
+            review2 = database.Review(name="Prof", content=3.3, courses="COS434")
             
             session.add(review1)
             session.add(review2)
@@ -61,7 +61,7 @@ def get_reviews(name: str):
             query = session.query(database.Review).filter(name == name)
             table = query.all()
             for row in table:
-                print(row.name, row.availability, row.comment, row.content, row.course)
+                print(row.name, row.availability, row.comment, row.content, row.courses)
 
         engine.dispose()
 
