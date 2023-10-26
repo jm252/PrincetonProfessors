@@ -20,11 +20,11 @@ def main():
         database.Base.metadata.drop_all(engine)
         database.Base.metadata.create_all(engine)
 
-        # test adding 
-        with sqlalchemy.orm.Session(engine) as session:
-            professor = database.Professor(name="Prof", department="HIS", rating=5.0)
-            session.add(professor)
-            session.commit()
+        # # test adding 
+        # with sqlalchemy.orm.Session(engine) as session:
+        #     professor = database.Professor(name="Prof", department="HIS", rating=5.0)
+        #     session.add(professor)
+        #     session.commit()
 
         engine.dispose()
 
