@@ -10,64 +10,32 @@ import database
 
 dotenv.load_dotenv()
 DATABASE_URL = os.environ['DATABASE_URL']
+try:
+    engine = sqlalchemy.create_engine(DATABASE_URL)
+
+    session = sqlalchemy.orm.Session(engine)
+         
+except Exception as ex:
+    print(ex, file=sys.stderr)
+    sys.exit(1)
 
 def get_all_professors():
-    try:
-        engine = sqlalchemy.create_engine(DATABASE_URL)
-
-        with sqlalchemy.orm.Session(engine) as session:
-
-            query = session.query(database.Professor)
-            table = query.all()
-            for row in table:
-                print(row.name, row.department, row.rating)
-
-        engine.dispose()
-
-    except Exception as ex:
-        print(ex, file=sys.stderr)
-        sys.exit(1)
+    query = session.query(database.Professor)
+    table = query.all()
+    for row in table:
+        print(row.name, row.department, row.rating)
 
 def get_professor(name: str):
-    try:
-        engine = sqlalchemy.create_engine(DATABASE_URL)
-
-        with sqlalchemy.orm.Session(engine) as session:
-
-            query = session.query(database.Professor).filter(name == name)
-            table = query.all()
-            for row in table:
-                print(row.name, row.department, row.rating)
-
-        engine.dispose()
-
-    except Exception as ex:
-        print(ex, file=sys.stderr)
-        sys.exit(1)
+    query = session.query(database.Professor).filter(name == name)
+    table = query.all()
+    for row in table:
+        print(row.name, row.department, row.rating)
 
 def get_reviews(name: str):
-    try:
-        engine = sqlalchemy.create_engine(DATABASE_URL)
-
-        with sqlalchemy.orm.Session(engine) as session:
-
-            review1 = database.Review(name="Prof", content=3.3, courses="COS434")
-            review2 = database.Review(name="Prof", content=3.3, courses="COS434")
-            
-            session.add(review1)
-            session.add(review2)
-            session.commit()
-
-            query = session.query(database.Review).filter(name == name)
-            table = query.all()
-            for row in table:
-                print(row.name, row.availability, row.comment, row.content, row.courses)
-
-        engine.dispose()
-
-    except Exception as ex:
-        print(ex, file=sys.stderr)
-        sys.exit(1)
+    query = session.query(database.Review).filter(name == name)
+    table = query.all()
+    for row in table:
+        print(row.name, row.availability, row.comment, row.content, row.courses)
 
 # test functions
 def main(): 
