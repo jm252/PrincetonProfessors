@@ -1,6 +1,8 @@
 Hello and Welcome 
 
-for fun: source ~/.virtualenvs/cos333/bin/activate
+for virtual env: source ~/.virtualenvs/cos333/bin/activate
+
+for CAS (run as terminal command): /Applications/Python\ 3.10/Install\ Certificates.command
     
 
 index.html:
