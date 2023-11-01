@@ -32,15 +32,21 @@ def index():
     response = flask.make_response(html_code)
     return response
 
+@app.route('/review_form', methods=['GET'])
+def review_form():
+    html_code = flask.render_template('review_form.html')
+    response = flask.make_response(html_code)
+    return response
+
 @app.route('/review', methods=['GET'])
 def review():
     name = flask.request.args.get('name')
     department = flask.request.args.get('dept')
 
-    content = flask.request.args.get('content')
-    delivery = flask.request.args.get('delivery')
-    availability = flask.request.args.get('availability')
-    organization =  flask.request.args.get('organization')
+    content = float(flask.request.args.get('content'))
+    delivery = float(flask.request.args.get('delivery'))
+    availability = float(flask.request.args.get('availability'))
+    organization =  float(flask.request.args.get('organization'))
     comment =  flask.request.args.get('comment')
     courses =  flask.request.args.get('courses')
 
