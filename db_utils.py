@@ -36,13 +36,24 @@ def get_reviews(name: str) -> list[Review]:
     table = query.all()
     return table
 
-def add_professor(name, dept, rating):
-    professor = Professor(name=name, department=dept, rating=rating)
+def _add_professor(name, dept, rating = 0, numratings = 0):
+    professor = Professor(name=name, department=dept, rating=rating, numratings=numratings)
     session.add(professor)
     session.commit()
 
-def add_review(name, content, delivery, availability, organization, 
+def prof_exists(name):
+    if len(session.query(Professor).filter(name == name).all()) != 0:
+        return True
+    else:
+        return False
+    
+# right now we require reviews to include dept and rating; this needs
+# to change going forward!!
+def add_review(name, dept, rating, content, delivery, availability, organization,  
                comment, courses):
+    if not prof_exists(name):
+        _add_professor(name, dept, rating)
+    
     review = Review(name=name, 
                             content=content, 
                             delivery=delivery, 
@@ -50,8 +61,22 @@ def add_review(name, content, delivery, availability, organization,
                             organization=organization, 
                             comment=comment, 
                             courses=courses)
+    
     session.add(review)
     session.commit()
+
+    prof = session.query(Professor).filter(name == name).first()
+    # increse number of ratings by 1
+    #print(prof.numratings)
+    prof.numratings = prof.numratings + 1
+    #print(prof.numratings)
+    # update rating, this user's contribution is average of their subscores
+    #print(prof.rating)
+    prof.rating = (prof.rating * (prof.numratings - 1) + (content + delivery + availability + organization)/4)/prof.numratings
+    #print(prof.rating)
+    session.commit()
+
+
 
 # test functions
 def main(): 
@@ -59,6 +84,9 @@ def main():
     # add_review("Robert", 1.3, 1.3, 1.3, 1.3,"Hello", "hello",)
     # print(get_all_professors())
     # print(get_reviews("Robert"))
-    print(get_professor('Bob'))
+    add_review('Bob', 'cos', 0, 5, 5, 5, 5, 'asdfa', 'asdfad')
+    #print('')
+    add_review('Bob', 'cos', 3, 4, 5, 3, 3, 'asdfa', 'asdfad')
+
 if __name__ == '__main__':
     main()
