@@ -14,6 +14,7 @@ class Professor (Base):
     name = Column(String, primary_key=True)
     department = Column(String)
     rating = Column(Float)
+    numratings = Column(Integer)
 
 class Review (Base):
     __tablename__ = 'reviews'

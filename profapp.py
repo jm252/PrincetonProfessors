@@ -54,6 +54,7 @@ def review():
     # need to add to list of ratings and calcualte average
     rating = (content + delivery + availability + organization) / 4 
 
+    # if professor exists, just add review -- need to do this
     db.add_professor(name, department, rating)
     db.add_review(name, content, delivery, availability, organization, comment, courses)
 
