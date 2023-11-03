@@ -3,3 +3,8 @@ psycopg2
 SQLAlchemy 
 python-dotenv 
 gunicorn
+typing
+urllib.request
+urllib.parse
+re
+auth
