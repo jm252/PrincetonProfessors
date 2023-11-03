@@ -78,7 +78,7 @@ def add_review(
     session.add(review)
     session.commit()
 
-    prof = session.query(Professor).filter(prof.name == name).first()
+    prof = session.query(Professor).filter(Professor.name == name).first()
     # increse number of ratings by 1
     # print(prof.numratings)
     prof.numratings = prof.numratings + 1

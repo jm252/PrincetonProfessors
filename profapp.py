@@ -54,9 +54,7 @@ def review():
 
     # rating = db.calc_rating(name)
     # need to add to list of ratings and calcualte average
-    rating = (content + delivery + availability + organization) / 4 
-
-    db.add_review(name, department, rating, content, delivery, availability, organization, comment, courses)
+    db.add_review(name, department, content, delivery, availability, organization, comment, courses)
 
     html_code = flask.render_template('thanks.html')
     response = flask.make_response(html_code)
