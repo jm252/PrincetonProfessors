@@ -1,6 +1,7 @@
 Flask 
 psycopg2 
-SQLAlchemy 
+sqlalchemy
+sqlalchemy.ext.declarative
 python-dotenv 
 gunicorn
 typing
