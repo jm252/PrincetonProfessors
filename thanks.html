@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head> </head>
+  <head>
+    <script>
+      function closeTab() {
+        window.close(); // Close the current tab
+      }
+    </script>
+  </head>
   <body>
     <h1>Thank You for Your Review</h1>
-    <a href="/index">Go back to the homepage</a>
+    <a href="/index" onclick="closeTab()">Close this tab.</a>
   </body>
 </html>

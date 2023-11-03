@@ -14,36 +14,39 @@ dotenv.load_dotenv()
 DATABASE_URL = os.environ['DATABASE_URL']
 try:
     engine = sqlalchemy.create_engine(DATABASE_URL)
-
-    session = sqlalchemy.orm.Session(engine)
          
 except Exception as ex:
     print(ex, file=sys.stderr)
     sys.exit(1)
 
 def get_all_professors() -> list[Professor]:
-    query = session.query(Professor)
-    table = query.all()
-    return table
+    with sqlalchemy.orm.Session(engine) as session:
+        query = session.query(Professor)
+        table = query.all()
+        return table
 
 
 def get_professor(name: str) -> Professor:
-    query = session.query(Professor).filter(name == name)
-    professor = query.all()
-    return professor
+    with sqlalchemy.orm.Session(engine) as session:
+        query = session.query(Professor).filter(name == name)
+        professor = query.all()
+        return professor
                        
 def get_reviews(name: str) -> list[Review]: 
-    query = session.query(Review).filter(name == name)
-    table = query.all()
-    return table
+    with sqlalchemy.orm.Session(engine) as session:
+        query = session.query(Review).filter(name == name)
+        table = query.all()
+        return table
 
 def _add_professor(name, dept, rating = 0, numratings = 0):
-    professor = Professor(name=name, department=dept, rating=rating, numratings=numratings)
-    session.add(professor)
-    session.commit()
+    with sqlalchemy.orm.Session(engine) as session:
+        professor = Professor(name=name, department=dept, rating=rating, numratings=numratings)
+        session.add(professor)
+        session.commit()
 
 def prof_exists(name) -> bool:
-    return bool(session.query(Professor).filter_by(name=name).first())
+    with sqlalchemy.orm.Session(engine) as session:
+        return bool(session.query(Professor).filter_by(name=name).first())
     # if len(session.query(Professor).filter(name == name).all()) != 0:
     #     return True
     # else:
