@@ -76,6 +76,7 @@ def add_review(name, dept, rating, content, delivery, availability, organization
     prof.rating = (prof.rating * (prof.numratings - 1) + (content + delivery + availability + organization)/4)/prof.numratings
     #print(prof.rating)
     session.commit()
+    session.flush()
 
 
 

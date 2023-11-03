@@ -55,6 +55,7 @@ body {
 
 <div class="topnav">
   <a href="#home">Princeton Professors</a>
+  <b class= "hover" href="/review_form">Review a Professor</b>
   <b class="hover">kw2689</b>
 </div>
 
@@ -72,59 +73,16 @@ body {
         </div>
         <div class="w3-container">
           <br>
+          <a href="/review_form">Review a Professor</a>
           <div>
             <input type="text" placeholder="Search..">
           </div>
-          
+          {% for prof in professors: %}
           <div class="w3-container">
-          
-            <h6 class="w3-opacity"><b>Robert Dondero</b></h6>
-            <p>Department: COS</p>
+            <h6 class="w3-opacity"><b>{{prof.name}}</b></h6> <p><b>Dept:</b> {{prof.department}} • <b>Rating: </b> {{prof.rating}}</p>
             <hr>
-          
           </div>
-          <div class="w3-container">
-          
-            <h6 class="w3-opacity"><b>Kevin Wayne</b></h6>
-            <p>Department: COS</p>
-            <hr>
-          
-          </div>
-          <div class="w3-container">
-          
-            <h6 class="w3-opacity"><b>Ruth Fong</b></h6>
-            <p>Department: COS</p>
-            <hr>
-          
-          </div>
-
-          <div class="w3-container">
-          
-            <h6 class="w3-opacity"><b>Christopher Moretti</b></h6>
-            <p>Department: COS</p>
-            <hr>
-          
-          </div>
-          <div class="w3-container">
-          
-            <h6 class="w3-opacity"><b>Vikram Ramaswamy</b></h6>
-            <p>Department: COS</p>
-            <hr>
-          
-          </div>
-          <div class="w3-container">
-          
-            <h6 class="w3-opacity"><b>David Walker</b></h6>
-            <p>Department: COS</p>
-            <hr>
-          
-          </div>
-          <div class="w3-container">
-          
-            <h6 class="w3-opacity"><b>Ran Raz</b></h6>
-            <p>Department: COS</p>
-          
-          </div>
+          {% endfor %}
         </div>
       </div><br>
 
@@ -141,13 +99,6 @@ body {
           <h5 class="w3-opacity"><b>Department: Computer Science</b></h5>
           <h6 class="w3-text-blue"></i>Past Courses: COS333</h6>
           <hr>
-        </div>
-        <div class="w3-container">
-          <h5 class="w3-opacity"><b>Quality: 5/5</b></h5>
-          <hr>
-        </div>
-        <div class="w3-container">
-          <h5 class="w3-opacity"><b>Difficulty: 4/5</b></h5>
         </div>
         <p></p>
       </div>
@@ -194,8 +145,6 @@ body {
 
 <footer class="w3-container w3-blue w3-center w3-margin-top">
   <p>Created by Eden Bendory, Jacob Colchamiro, Jonathan Mindel, Kayla Waitman</p>
-  <a href="/review_form">Review a Professor</a>
-  <a href="/results">View Ratings</a>
 </footer>
 
 </body>
