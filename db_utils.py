@@ -14,18 +14,12 @@ DATABASE_URL = os.environ["DATABASE_URL"]
 try:
     engine = sqlalchemy.create_engine(DATABASE_URL)
 
-    session = sqlalchemy.orm.Session(engine)
-         
 except Exception as ex:
     print(ex, file=sys.stderr)
     sys.exit(1)
 
 
 def get_all_professors():
-    query = session.query(Professor)
-    table = query.all()
-    return table
-def get_all_professors() -> list[Professor]:
     with sqlalchemy.orm.Session(engine) as session:
         query = session.query(Professor)
         table = query.all()
@@ -33,25 +27,33 @@ def get_all_professors() -> list[Professor]:
 
 
 def get_professor(name: str):
-    query = session.query(Professor).filter(name == name)
-    professor = query.all()
-    return professor
+    with sqlalchemy.orm.Session(engine) as session:
+        query = session.query(Professor).filter(name == name)
+        professor = query.all()
+        return professor
 
 
-def get_reviews(name: str) -> list[Review]:
-    query = session.query(Review).filter(name == name)
-    table = query.all()
-    return table
+def get_reviews(name: str):
+    with sqlalchemy.orm.Session(engine) as session:
+        query = session.query(Review).filter(name == name)
+        table = query.all()
+        return table
 
-def _add_professor(name, dept, rating = 0, numratings = 0):
-    professor = Professor(name=name, department=dept, rating=rating, numratings=numratings)
-    session.add(professor)
-    session.commit()
+
+def _add_professor(name, dept, rating=0, numratings=0):
+    with sqlalchemy.orm.Session(engine) as session:
+
+        professor = Professor(
+            name=name, department=dept, rating=rating, numratings=numratings
+        )
+        session.add(professor)
+        session.commit()
 
 
 def prof_exists(name):
-    return bool(session.query(Professor).filter_by(name=name).first())
-    # if len(session.query(Professor).filter(name == name).all()) != 0:
+    with sqlalchemy.orm.Session(engine) as session:
+        return bool(session.query(Professor).filter_by(name=name).first())
+    # if len(session.query(Professor).filter_by(name == name).all()) != 0:
     #     return True
     # else:
     #     return False
@@ -62,39 +64,41 @@ def prof_exists(name):
 def add_review(
     name, dept, content, delivery, availability, organization, comment, courses
 ):
-    if not prof_exists(name):
-        _add_professor(name, dept)
-        print("hi")
+    with sqlalchemy.orm.Session(engine) as session:
 
-    review = Review(
-        name=name,
-        content=content,
-        delivery=delivery,
-        availability=availability,
-        organization=organization,
-        comment=comment,
-        courses=courses,
-    )
+        if not prof_exists(name):
+            _add_professor(name, dept)
+            print("hi")
 
-    session.add(review)
-    session.commit()
+        review = Review(
+            name=name,
+            content=content,
+            delivery=delivery,
+            availability=availability,
+            organization=organization,
+            comment=comment,
+            courses=courses,
+        )
 
-    prof = session.query(Professor).filter(Professor.name == name).first()
-    # increse number of ratings by 1
-    # print(prof.numratings)
-    prof.numratings = prof.numratings + 1
-    # print(prof.numratings)
-    # update rating, this user's contribution is average of their subscores
-    print(prof.name + ": ")
-    print(prof.numratings)
-    print(prof.rating)
-    prof.rating = (
-        prof.rating * (prof.numratings - 1)
-        + (content + delivery + availability + organization) / 4
-    ) / prof.numratings
-    print(prof.rating)
-    session.commit()
-    session.flush()
+        session.add(review)
+        session.commit()
+
+        prof = session.query(Professor).filter(Professor.name == name).first()
+        # increse number of ratings by 1
+        # print(prof.numratings)
+        prof.numratings = prof.numratings + 1
+        # print(prof.numratings)
+        # update rating, this user's contribution is average of their subscores
+        print(prof.name + ": ")
+        print(prof.numratings)
+        print(prof.rating)
+        prof.rating = (
+            prof.rating * (prof.numratings - 1)
+            + (content + delivery + availability + organization) / 4
+        ) / prof.numratings
+        print(prof.rating)
+        session.commit()
+        session.flush()
 
 
 # test functions
