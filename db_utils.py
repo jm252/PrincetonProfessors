@@ -1,6 +1,5 @@
 import os
 import sys
-import typing
 import psycopg2
 import sqlalchemy
 import sqlalchemy.orm
@@ -22,6 +21,10 @@ except Exception as ex:
     sys.exit(1)
 
 
+def get_all_professors():
+    query = session.query(Professor)
+    table = query.all()
+    return table
 def get_all_professors() -> list[Professor]:
     with sqlalchemy.orm.Session(engine) as session:
         query = session.query(Professor)
@@ -29,12 +32,13 @@ def get_all_professors() -> list[Professor]:
         return table
 
 
-def get_professor(name: str) -> Professor:
+def get_professor(name: str):
     query = session.query(Professor).filter(name == name)
     professor = query.all()
     return professor
-                       
-def get_reviews(name: str) -> list[Review]: 
+
+
+def get_reviews(name: str) -> list[Review]:
     query = session.query(Review).filter(name == name)
     table = query.all()
     return table
@@ -45,7 +49,7 @@ def _add_professor(name, dept, rating = 0, numratings = 0):
     session.commit()
 
 
-def prof_exists(name) -> bool:
+def prof_exists(name):
     return bool(session.query(Professor).filter_by(name=name).first())
     # if len(session.query(Professor).filter(name == name).all()) != 0:
     #     return True
@@ -75,7 +79,7 @@ def add_review(
     session.add(review)
     session.commit()
 
-    prof = session.query(Professor).filter(prof.name == name).first()
+    prof = session.query(Professor).filter(Professor.name == name).first()
     # increse number of ratings by 1
     # print(prof.numratings)
     prof.numratings = prof.numratings + 1
