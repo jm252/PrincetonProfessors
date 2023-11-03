@@ -59,7 +59,18 @@ def review():
     html_code = flask.render_template('thanks.html')
     response = flask.make_response(html_code)
     return response
-    
+
+@app.route('/results', methods=['GET'])
+def results():
+
+    professors = db.get_all_professors()
+
+    html_code = flask.render_template('results.html',
+        professors = professors
+    )
+
+    response = flask.make_response(html_code)
+    return response
 
 
 

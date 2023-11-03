@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <h1>Professor's Ratings</h1>
+   
+    <!-- table -->
+    <table border="1">
+      <tr>
+        <td><strong>Professor</strong></td>
+        <td><strong>Department</strong></td>
+        <td><strong>Rating</strong></td>
+      </tr>
+
+      {% for prof in professors: %}
+      <tr>
+        <td> {{prof.name}}</td>
+        <td>{{prof.department}}</td>
+        <td>{{prof.rating}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <br />
+
+    <!-- footer -->
+    <hr />
+    <a href="/index"> Homepage </a>
+    <hr />
+  </body>
+</html>
