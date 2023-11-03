@@ -1,5 +1,7 @@
 Flask 
 psycopg2 
-SQLAlchemy 
+sqlalchemy
 python-dotenv 
 gunicorn
+typing
+auth
