@@ -26,6 +26,7 @@ def get_all_professors() -> list[Professor]:
     table = query.all()
     return table
 
+
 def get_professor(name: str) -> Professor:
     query = session.query(Professor).filter(name == name)
     professor = query.all()
@@ -41,16 +42,16 @@ def _add_professor(name, dept, rating = 0, numratings = 0):
     session.add(professor)
     session.commit()
 
-def prof_exists(name):
-    if len(session.query(Professor).filter(name == name).all()) != 0:
-        return True
-    else:
-        return False
+def prof_exists(name) -> bool:
+    return bool(session.query(Professor).filter_by(name=name).first())
+    # if len(session.query(Professor).filter(name == name).all()) != 0:
+    #     return True
+    # else:
+    #     return False
     
 # right now we require reviews to include dept and rating; this needs
 # to change going forward!!
-def add_review(name, dept, rating, content, delivery, availability, organization,  
-               comment, courses):
+def add_review(name, dept, rating, content, delivery, availability, organization, comment, courses):
     if not prof_exists(name):
         _add_professor(name, dept, rating)
     
