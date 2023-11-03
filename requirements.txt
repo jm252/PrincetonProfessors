@@ -4,5 +4,4 @@ SQLAlchemy
 python-dotenv 
 gunicorn
 typing
-re
 auth
