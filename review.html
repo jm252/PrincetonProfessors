@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Princeton Professors</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #61afe2;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav b {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav b:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+</style>
+</head>
+<body class="w3-light-grey">
+
+<!-- Page Container -->
+
+<div class="topnav">
+  <a href="/index">Go back</a>
+  <b class="hover">kw2689</b>
+</div>
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+  <p></p>
+  
+    <!-- Left Column -->
+    
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-display-container">
+          <div class="w3-display-bottomleft w3-container w3-text-black">
+          </div>
+        </div>
+        <div class="w3-container">
+                <h1>Submit a Review</h1>
+              
+                <!-- Input boxes for searching -->
+                <form action="/review" method="get">
+                    Professor Name:
+                    <input type="text" name="name"/>
+                    <br>
+                    Professor Department: 
+                    <input type="text" name="dept"/>
+                    <br>
+                    Quality of Content
+                    <input type="number" name="content" min="0" max="5" step="0.1"/>
+                    <br>
+                    Quality of Delivery
+                    <input type="number" name="delivery" min="0" max="5" step="0.1"/>
+                    <br>
+                    Level of Availability
+                    <input type="number" name="availability" min="0" max="5" step="0.1"/>
+                    <br>
+                    Level of Organization
+                    <input type="number" name="organization" min="0" max="5" step="0.1"/>
+                    <br>
+                    Any Comments?
+                    <input type="text" name="comment"/>
+                    <br>
+                    Courses taken with this Professor
+                    <input type="text" name="courses"/>
+                    <br>
+                    <input type="submit" value="Submit" id="submitButton" />
+                    <p></p>
+                </form>
+        </div>
+      </div><br>
+    
+  <!-- End Grid -->
+  </div>
+  
+  <!-- End Page Container -->
+</div>
+
+<footer class="w3-container w3-blue w3-center w3-margin-top">
+  <p>Created by Eden Bendory, Jacob Colchamiro, Jonathan Mindel, Kayla Waitman</p>
+</footer>
+
+</body>
+</html>
