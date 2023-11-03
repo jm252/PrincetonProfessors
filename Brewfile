@@ -1,0 +1,5 @@
+tap "heroku/brew"
+tap "homebrew/bundle"
+tap "homebrew/core"
+brew "postgresql@14"
+brew "heroku/brew/heroku"
