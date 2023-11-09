@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script>
+    // Add this JavaScript function to automatically reload the page
+    function reloadPage() {
+      location.reload();
+    }
+  </script>
+</head>
 <title>Princeton Professors</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,7 +62,7 @@ body {
 
 <div class="topnav">
   <a href="#home">Princeton Professors</a>
-  <a class= "hover" target="_blank" href="/review_form">Review a Professor</a>
+  <a class= "hover" href="/review_form">Review a Professor</a>
   <b class="hover">kw2689</b>
 </div>
 
@@ -78,7 +85,7 @@ body {
           </div>
           {% for prof in professors: %}
           <div class="w3-container">
-            <h6 class="w3-opacity"><b>{{prof.name}}</b></h6> <p><b>Dept:</b> {{prof.department}} • <b>Rating: </b> {{prof.rating}}</p>
+            <h6 class="w3-opacity"><b><input id="profName" type="button" value={{prof.name}} /></b></h6> <p><b>Dept:</b> {{prof.department}} • <b>Rating: </b> {{prof.rating}}</p>
             <hr>
           </div>
           {% endfor %}
@@ -94,9 +101,10 @@ body {
 
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-star-o fa-fw w3-margin-right w3-xxlarge w3-text-yellow"></i>Robert Dondero</h2>
-        <div class="w3-container">
+        <div class="w3-container" id="resultsDiv">
           <h5 class="w3-opacity"><b>Department: Computer Science</b></h5>
           <h6 class="w3-text-blue"></i>Past Courses: COS333</h6>
+          {{allprofs}}
           <hr>
         </div>
         <p></p>
@@ -146,5 +154,49 @@ body {
   <p>Created by Eden Bendory, Jacob Colchamiro, Jonathan Mindel, Kayla Waitman</p>
 </footer>
 
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"> </script>
+    
+<script>
+
+  'use strict'; 
+
+  function handleResponse(data) {
+    $('#resultsDiv').html(data);
+  }
+
+  function handleError() {
+    alert('Error: Failed to fetch data from server');
+  }
+
+  let request = null
+
+  function getResults() {
+          let profName = $('#profName').val();
+          let encodedProfName = encodeURIComponent(profName);
+
+          let url = '/prof_details?name=' + encodedProfName;
+
+          if (request !== null)
+            request.abort();
+            
+          let requestData = {
+            type: 'GET',
+            url: url,
+            success: handleResponse,
+            error: handleError
+          };
+          $.ajax(requestData);
+  }
+
+  function setup() {
+          $('#profName').on('click', getResults);
+        }
+
+    $('document').ready(setup);
+</script>
+
 </body>
 </html>
+
+<
