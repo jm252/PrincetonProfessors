@@ -27,6 +27,7 @@ class Review (Base):
     organization = Column(Float)
     comment = Column(String)
     courses = Column(String)
+    # need to get overall rating
 
 
     
