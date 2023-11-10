@@ -30,7 +30,7 @@ def get_professor(name: str):
     with sqlalchemy.orm.Session(engine) as session:
         query = session.query(Professor).filter(name == name)
         professor = query.all()
-        return professor
+        return professor[0]
 
 
 def get_reviews(name: str):
@@ -42,7 +42,6 @@ def get_reviews(name: str):
 
 def _add_professor(name, dept, rating=0, numratings=0):
     with sqlalchemy.orm.Session(engine) as session:
-
         professor = Professor(
             name=name, department=dept, rating=rating, numratings=numratings
         )
@@ -65,7 +64,6 @@ def add_review(
     name, dept, content, delivery, availability, organization, comment, courses
 ):
     with sqlalchemy.orm.Session(engine) as session:
-
         if not prof_exists(name):
             _add_professor(name, dept)
             print("hi")
