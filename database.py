@@ -13,6 +13,10 @@ class Professor (Base):
 
     name = Column(String, primary_key=True)
     department = Column(String)
+    content = Column(Float)
+    delivery = Column(Float)
+    availability = Column(Float)
+    organization = Column(Float)
     rating = Column(Float)
     numratings = Column(Integer)
 
@@ -21,6 +25,7 @@ class Review (Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    rating = Column(Float)
     content = Column(Float)
     delivery = Column(Float)
     availability = Column(Float)
