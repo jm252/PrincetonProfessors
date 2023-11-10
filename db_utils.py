@@ -28,6 +28,15 @@ def get_all_professors():
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving all professors: {ex}", file=sys.stderr)
 
+def get_all_reviews():
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            query = session.query(Review)
+            table = query.all()
+            return table
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(f"Error retrieving all professors: {ex}", file=sys.stderr)
+
 
 # need to make error handling more robust, right now doesn't reach except clause if there's no professor
 def get_professor(name: str):
@@ -35,7 +44,7 @@ def get_professor(name: str):
         with sqlalchemy.orm.Session(engine) as session:
             if not prof_exists(name):
                 raise Exception('no professor found with given name')
-            query = session.query(Professor).filter(Professor.name == sqlalchemy.func.lower(name))
+            query = session.query(Professor).filter(Professor.name == name.lower())
             professor = query.first()
             return professor
     except Exception as ex:
@@ -45,8 +54,7 @@ def get_professor(name: str):
 def get_reviews(name: str):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            lower_name = sqlalchemy.func.lower(name)
-            query = session.query(Review).filter(Review.name == lower_name)
+            query = session.query(Review).filter(Review.name == name.lower())
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
@@ -57,7 +65,7 @@ def get_reviews(name: str):
 def _add_professor(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            lower_name = sqlalchemy.func.lower(name)
+            lower_name = name.lower()
             professor = Professor(
                 name=lower_name, department=dept, rating=0, content=0,
                 delivery=0, availability=0, organization=0, numratings=0
@@ -70,8 +78,7 @@ def _add_professor(name, dept):
 def prof_exists(name):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            lower_name = sqlalchemy.func.lower(name)
-            return bool(session.query(Professor).filter(Professor.name == sqlalchemy.func.lower(name)).first())
+            return bool(session.query(Professor).filter(Professor.name == name.lower()).first())
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error checking if professor {name} exists: {ex}", file=sys.stderr)
     # if len(session.query(Professor).filter_by(name == name).all()) != 0:
@@ -86,12 +93,11 @@ def add_review(
     name, dept, content, delivery, availability, organization, comment, courses
 ):
     with sqlalchemy.orm.Session(engine) as session:
-        lower_name = sqlalchemy.func.lower(Professor.name)
-        if not session.query(Professor).filter(Professor.name == sqlalchemy.func.lower(name)).first():
+        if not session.query(Professor).filter(Professor.name == name.lower()).first():
             _add_professor(name, dept)
 
         review = Review(
-            name=name,
+            name=name.lower(),
             rating = (content + delivery + availability + organization)/4,
             content=content,
             delivery=delivery,
@@ -104,7 +110,7 @@ def add_review(
         session.add(review)
         session.commit()
 
-        prof = session.query(Professor).filter(Professor.name == sqlalchemy.func.lower(name)).first()
+        prof = session.query(Professor).filter(Professor.name == name.lower()).first()
         if prof:
             # increse number of ratings by 1
             prof.numratings += 1
@@ -144,6 +150,15 @@ def main():
         print(get_professor("Kohei").rating)
         print("testing exception if professor doesn't exsit...")
         get_professor("shri")
+
+        print("testing get_reviews...")
+        print("first call: ")
+        print(get_reviews("Kayla"))
+        print("second call: ")
+        print(get_reviews("kayla"))
+        table = get_all_reviews()
+        for row in table:
+            print(row.name)
     except Exception as ex:
         print(f"An error occurred in the main function: {ex}", file=sys.stderr)
 
