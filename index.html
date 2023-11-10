@@ -136,9 +136,8 @@ body {
 
   let request = null
 
-  function getResults() {
-      let profName = $('#profName').val();
-      let encodedProfName = encodeURIComponent(profName);
+  function getResults(name) {
+      let encodedProfName = encodeURIComponent(name);
 
       let url = '/prof_details?name=' + encodedProfName;
 
@@ -155,7 +154,10 @@ body {
   }
 
   function setup() {
-          $('.profName').on('click', getResults);
+          $('.profName').click(function() {
+            var name = $(this).val();
+            getResults(name)
+          });
         }
 
     $('document').ready(setup);
