@@ -22,7 +22,7 @@ except Exception as ex:
 def get_all_professors():
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            query = session.query(Professor).order_by(Professor.rating)
+            query = session.query(Professor).order_by(Professor.rating.desc())
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
