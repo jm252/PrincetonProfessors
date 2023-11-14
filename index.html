@@ -84,6 +84,8 @@ body {
             <input type="text" id="searchInput" placeholder="Search..">
             <hr>
           </div>
+        </div>
+        <div class="w3-container">
           {% for prof in professors: %}
             <div class="profName w3-container" prof-value={{prof.name}}>
               <h3 class="w3-opacity"><b>{{prof.name.capitalize()}}</b></h3>
