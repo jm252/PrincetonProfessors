@@ -82,15 +82,14 @@ body {
           <br>
           <div>
             <input type="text" id="searchInput" placeholder="Search..">
-          </div>
-          {% for prof in professors: %}
-          <div class="w3-container">
-            <div class="profName w3-container" prof-value={{prof.name}}>
-              <h6 class="w3-opacity"><b>{{prof.name}}</b></h6>
-              <p><b>Dept:</b> {{ prof.department }} • <b>Rating: </b> {{ prof.rating }}</p>
-            </div>
             <hr>
           </div>
+          {% for prof in professors: %}
+            <div class="profName w3-container" prof-value={{prof.name}}>
+              <h3 class="w3-opacity"><b>{{prof.name.capitalize()}}</b></h3>
+              <p><b>Dept:</b> {{ prof.department.upper() }} • <b>Rating: </b> {{ prof.rating }}</p>
+              <hr>
+            </div>
           {% endfor %}
         </div>
       </div><br>
