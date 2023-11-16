@@ -1,5 +1,6 @@
 # import html # html_code.escape() is used to thwart XSS attacks
 import flask
+import os
 import auth
 import db_utils as db
 
@@ -7,6 +8,7 @@ import db_utils as db
 
 app = flask.Flask(__name__, template_folder=".")
 
+app.secret_key = 'APP_SECRET_KEY'
 # -----------------------------------------------------------------------
 
 # Routes for authentication.
@@ -28,14 +30,14 @@ def logoutcas():
 @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
-    # username = auth.authenticate()
+    username = auth.authenticate()
 
     professors = db.get_all_professors()
 
     html_code = flask.render_template(
         "index.html",
-        professors=professors
-        # username=username
+        professors=professors,
+        username=username
     )
     response = flask.make_response(html_code)
     return response
