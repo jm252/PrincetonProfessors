@@ -45,7 +45,9 @@ def index():
 
 @app.route("/review_form", methods=["GET"])
 def review_form():
-    html_code = flask.render_template("review.html")
+    profs = db.get_all_professors()
+
+    html_code = flask.render_template("review.html", profs=profs)
     response = flask.make_response(html_code)
     return response
 

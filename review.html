@@ -75,7 +75,11 @@ body {
                 <!-- Input boxes for searching -->
                 <form action="/review" method="get">
                     Professor Name:
-                    <input type="text" name="name"/>
+                    <select name="name">
+                      {% for prof in profs: %}
+                      <option value={{prof.name}}>{{prof.name.capitalize()}}</option>
+                      {% endfor %}
+                    </select>
                     <br>
                     Professor Department: 
                     <input type="text" name="dept"/>
