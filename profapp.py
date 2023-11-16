@@ -8,7 +8,7 @@ import db_utils as db
 
 app = flask.Flask(__name__, template_folder=".")
 
-app.secret_key = 'APP_SECRET_KEY'
+app.secret_key = "APP_SECRET_KEY"
 # -----------------------------------------------------------------------
 
 # Routes for authentication.
@@ -35,10 +35,22 @@ def index():
     professors = db.get_all_professors()
 
     html_code = flask.render_template(
-        "index.html",
-        professors=professors,
-        username=username
+        "index.html", professors=professors, username=username
     )
+    response = flask.make_response(html_code)
+    return response
+
+
+@app.route("/", methods=["GET"])
+@app.route("/search_results", methods=["GET"])
+def search_results():
+    query = flask.request.args.get("search")
+    if query is None:
+        query = ""
+
+    professors = db.query_professor_name(query)
+
+    html_code = flask.render_template("search_results.html", professors=professors)
     response = flask.make_response(html_code)
     return response
 

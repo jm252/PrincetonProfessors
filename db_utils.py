@@ -55,6 +55,8 @@ def get_professor(name: str):
 def query_professor_name(keyword: str):
     try:
         with sqlalchemy.orm.Session(engine) as session:
+            if keyword == "":
+                return get_all_professors()
             query = session.query(Professor).filter(
                 Professor.name.contains(keyword.lower())
             )

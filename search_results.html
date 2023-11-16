@@ -1,0 +1,10 @@
+{% for prof in professors: %}
+<div class="profName w3-container" prof-value="{{prof.name}}">
+  <h3 class="w3-opacity"><b>{{prof.name.capitalize()}}</b></h3>
+  <p>
+    <b>Dept:</b> {{ prof.department.upper() }} • <b>Rating: </b> {{ prof.rating
+    }}
+  </p>
+</div>
+<hr />
+{% endfor %}

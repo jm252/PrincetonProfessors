@@ -95,15 +95,7 @@ body {
             <hr>
           </div>
         </div>
-        <div class="w3-container">
-          {% for prof in professors: %}
-            <div class="profName w3-container" prof-value={{prof.name}}>
-              <h3 class="w3-opacity"><b>{{prof.name.capitalize()}}</b></h3>
-              <p><b>Dept:</b> {{ prof.department.upper() }} • <b>Rating: </b> {{ prof.rating }}</p>
-            </div>
-            <hr>
-          {% endfor %}
-        </div>
+        <div class="w3-container" id="searchResultsDiv"></div>
       </div><br>
 
     <!-- End Left Column -->
@@ -143,6 +135,10 @@ body {
     $('#resultsDiv').html(data);
   }
 
+  function handleSearchResponse(data) {
+    $('#searchResultsDiv').html(data);
+  }
+
   function handleError() {
     alert('Error: Failed to fetch data from server');
   }
@@ -150,31 +146,54 @@ body {
   let request = null
 
   function getResults(name) {
-      let encodedProfName = encodeURIComponent(name);
+    let encodedProfName = encodeURIComponent(name);
 
-      let url = '/prof_details?name=' + encodedProfName;
+    let url = '/prof_details?name=' + encodedProfName;
 
-      if (request !== null)
-        request.abort();
-        
-      let requestData = {
-        type: 'GET',
-        url: url,
-        success: handleResponse,
-        error: handleError
-      };
-      $.ajax(requestData);
+    if (request !== null)
+      request.abort();
+      
+    let requestData = {
+      type: 'GET',
+      url: url,
+      success: handleResponse,
+      error: handleError
+    };
+    $.ajax(requestData);
+  }
+
+  let searchRequest = null
+
+  function getSearchResults() {
+    let search = $("#searchInput").val();
+    let encodedSearch = encodeURIComponent(search);
+
+    let url = "/search_results?search=" + encodedSearch;
+
+    if (searchRequest !== null) searchRequest.abort();
+
+    let searchRequestData = {
+      type: "GET",
+      url: url,
+      success: handleSearchResponse,
+      error: handleError,
+    };
+    $.ajax(searchRequestData);
   }
 
   function setup() {
-          $('.profName').click(function() {
-            var name = $(this).attr('prof-value');
-            console.log(name)
-            getResults(name)
-          });
-        }
+    $("#searchInput").on("input", getSearchResults);
 
-    $('document').ready(setup);
+    getSearchResults();
+    
+    $('.profName').click(function() {
+      var name = $(this).attr('prof-value');
+      console.log(name)
+      getResults(name)
+    });
+  }
+
+  $('document').ready(setup);
 </script>
 
 </body>
