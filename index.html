@@ -64,6 +64,14 @@ body {
   color: black;
 }
 
+.left-column,
+.right-column {
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
 </style>
 </head>
 <body class="w3-light-grey">
@@ -81,7 +89,7 @@ body {
   <p></p>
   
     <!-- Left Column -->
-    <div class="w3-third">
+    <div class="w3-third left-column">
     
       <div class="w3-white w3-text-grey w3-card-4">
         <div class="w3-display-container">
@@ -102,7 +110,7 @@ body {
     </div>
 
     <!-- Right Column -->
-    <div class="w3-twothird" id="resultsDiv">
+    <div class="w3-twothird right-column" id="resultsDiv">
 
       <div display="flex" align-items="center" class="w3-container ">
         <center>
