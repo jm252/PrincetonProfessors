@@ -155,13 +155,13 @@ body {
     $.ajax(searchRequestData);
   }
 
-  function setup() {
+  function searchSetup() {
     $("#searchInput").on("input", getSearchResults);
 
     getSearchResults();
   }
 
-  $('document').ready(setup);
+  $('document').ready(searchSetup);
 </script>
 
 </body>
