@@ -1,6 +1,5 @@
 # import html # html_code.escape() is used to thwart XSS attacks
 import flask
-import os
 import auth
 import db_utils as db
 

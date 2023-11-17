@@ -136,7 +136,7 @@ body {
     alert('Error: Failed to fetch data from server');
   }
 
-  let searchRequest = null
+  let searchRequest = null;
 
   function getSearchResults() {
     let search = $("#searchInput").val();
@@ -155,8 +155,17 @@ body {
     $.ajax(searchRequestData);
   }
 
+  let timer = null;
+
+  function debouncedGetSearchResults() {
+    clearTimeout(timer);
+    timer = setTimeout(getSearchResults, 500);
+  }
+
+
+
   function searchSetup() {
-    $("#searchInput").on("input", getSearchResults);
+    $("#searchInput").on("input", debouncedGetSearchResults);
 
     getSearchResults();
   }
