@@ -29,13 +29,11 @@ def logoutcas():
 @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
-    username = auth.authenticate()
+    # username = auth.authenticate()
 
     professors = db.get_all_professors()
 
-    html_code = flask.render_template(
-        "index.html", professors=professors, username=username
-    )
+    html_code = flask.render_template("index.html", professors=professors)
     response = flask.make_response(html_code)
     return response
 
