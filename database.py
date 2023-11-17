@@ -6,7 +6,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Float, Integer
 
-Base = declarative_base()
+Base = declarative_base()    
 
 class Professor (Base):
     __tablename__ = 'professors'
