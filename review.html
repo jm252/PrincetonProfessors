@@ -75,14 +75,20 @@ body {
                 <!-- Input boxes for searching -->
                 <form action="/review" method="get">
                     Professor Name:
-                    <select name="name">
+                    <select id="professorDropdown" name="name" onchange="getProfDept()">
+                      <option value="" selected>Select...</option>
                       {% for prof in profs: %}
                       <option value={{prof.name}}>{{prof.name.capitalize()}}</option>
                       {% endfor %}
                     </select>
                     <br>
                     Professor Department: 
-                    <input type="text" name="dept" required/>
+                    <select id="departmentDropdown">   
+                      <option value="" selected>Select...</option>
+                      {% for prof in profs: %}
+                      <option value={{prof.department}}>{{prof.department}}</option>
+                      {% endfor %}
+                    </select>
                     <br>
                     Quality of Content
                     <input type="number" name="content" min="0" max="5" step="0.1" required/>
