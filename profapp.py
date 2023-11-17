@@ -41,7 +41,6 @@ def index():
     return response
 
 
-@app.route("/", methods=["GET"])
 @app.route("/search_results", methods=["GET"])
 def search_results():
     query = flask.request.args.get("search")
