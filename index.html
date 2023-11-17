@@ -131,35 +131,12 @@ body {
 
   'use strict'; 
 
-  function handleResponse(data) {
-    $('#resultsDiv').html(data);
-  }
-
   function handleSearchResponse(data) {
     $('#searchResultsDiv').html(data);
   }
 
   function handleError() {
     alert('Error: Failed to fetch data from server');
-  }
-
-  let request = null
-
-  function getResults(name) {
-    let encodedProfName = encodeURIComponent(name);
-
-    let url = '/prof_details?name=' + encodedProfName;
-
-    if (request !== null)
-      request.abort();
-      
-    let requestData = {
-      type: 'GET',
-      url: url,
-      success: handleResponse,
-      error: handleError
-    };
-    $.ajax(requestData);
   }
 
   let searchRequest = null
@@ -185,12 +162,6 @@ body {
     $("#searchInput").on("input", getSearchResults);
 
     getSearchResults();
-    
-    $('.profName').click(function() {
-      var name = $(this).attr('prof-value');
-      console.log(name)
-      getResults(name)
-    });
   }
 
   $('document').ready(setup);
@@ -198,5 +169,3 @@ body {
 
 </body>
 </html>
-
-<
