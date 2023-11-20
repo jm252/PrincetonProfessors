@@ -66,10 +66,25 @@ def query_professor_name(keyword: str):
         print(f"Error retrieving name query {keyword}: {ex}", file=sys.stderr)
 
 
-def get_reviews(name: str):
+def _get_profId(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            query = session.query(Review).filter(Review.name == name.lower())
+            print(name)
+            print(dept)
+            prof = session.query(Professor).filter(Professor.name == name.lower(), 
+                                                     Professor.department == dept.upper()).first()
+            
+            return prof.profId
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(f"Error retrieving reviews for professor {name}: {ex}", file=sys.stderr)
+
+
+
+def get_reviews(name, dept):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            
+            query = session.query(Review).filter(Review.profId == _get_profId(name, dept))
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
@@ -125,12 +140,11 @@ def add_review(
         if not prof_exists(name, dept):
             _add_professor(name, dept)
 
-        profId = session.query(Professor).filter(Professor.name == name.lower(), 
-                                                 Professor.department == dept.upper()).first().profId
+        profId = _get_profId(name, dept)
 
+       
         review = Review(
             profId = profId,
-            name=name.lower(),
             rating=(content + delivery + availability + organization) / 4,
             content=content,
             delivery=delivery,
@@ -143,7 +157,7 @@ def add_review(
         session.add(review)
         session.commit()
 
-        prof = session.query(Professor).filter(Professor.name == name.lower()).first()
+        prof = session.query(Professor).filter(Professor.profId == profId).first()
         if prof:
             # increse number of ratings by 1
             prof.numratings += 1
@@ -220,6 +234,7 @@ def main():
     _add_professor('Jacob Colch', 'gss')
     _add_professor('Yoni Min', 'lAs')
     _add_professor('Kayla Way', 'AaS')
+    _add_professor("YonI mIN", 'COS')
     professors = get_all_professors()
     for prof in professors:
         print(prof.profId, prof.name, prof.department)
@@ -230,9 +245,10 @@ def main():
     add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
     add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
     add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
+    add_review("YonI mIN", 'COS', 5, 5, 3, 1, "Hello" , "hello")
     reviews = get_all_reviews()
     for review in reviews:
-        print(review.profId, review.name, review.rating)
+        print(review.profId, review.rating)
 
 
     

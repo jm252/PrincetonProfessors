@@ -1,5 +1,5 @@
 {% for prof in professors: %}
-<div class="profName w3-container" prof-value="{{prof.name}}">
+<div class="profName w3-container" prof-name={{prof.name}} prof-dept={{prof.department}}>
   <h3 class="w3-opacity"><b>{{prof.name.capitalize()}}</b></h3>
   <p>
     <b>Dept:</b> {{ prof.department.upper() }} • <b>Rating: </b> {{ prof.rating|round(2)
@@ -27,10 +27,11 @@
 
   let request = null
 
-  function getResults(name) {
+  function getResults(name, dept) {
     let encodedProfName = encodeURIComponent(name);
+    let encodedProfDept = encodeURIComponent(dept);
 
-    let url = '/prof_details?name=' + encodedProfName;
+    let url = '/prof_details?name=' + encodedProfName + "&dept=" + encodedProfDept;
 
     if (request !== null)
       request.abort();
@@ -46,9 +47,10 @@
 
   function setup() {
     $('.profName').click(function() {
-      var name = $(this).attr('prof-value');
+      var name = $(this).attr('prof-name');
+      var dept = $(this).attr('prof-dept');
       console.log(name)
-      getResults(name)
+      getResults(name, dept)
     });
   }
 

@@ -26,7 +26,6 @@ class Review (Base):
 
     reviewId = Column(Integer, primary_key=True, autoincrement=True)
     profId = Column(Integer)
-    name = Column(String)
     rating = Column(Float)
     content = Column(Float)
     delivery = Column(Float)

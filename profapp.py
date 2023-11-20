@@ -98,9 +98,13 @@ def review():
 @app.route("/prof_details", methods=["GET"])
 def prof_details():
     name = flask.request.args.get("name")
+    dept = flask.request.args.get("dept")
 
-    reviews = db.get_reviews(name)
-    prof = db.get_professor(name)
+    print(name)
+    print(dept)
+
+    reviews = db.get_reviews(name, dept)
+    prof = db.get_professor(name, dept)
 
     html_code = flask.render_template("detailtable.html", reviews=reviews, prof=prof)
     response = flask.make_response(html_code)
