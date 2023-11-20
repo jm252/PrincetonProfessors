@@ -75,14 +75,17 @@ def get_reviews(name: str):
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving reviews for professor {name}: {ex}", file=sys.stderr)
 
-
 def _add_professor(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
+            if prof_exists(name, dept):
+                raise Exception("professor already exists")
+            
             lower_name = name.lower()
+            upper_dept = dept.upper()
             professor = Professor(
                 name=lower_name,
-                department=dept,
+                department=upper_dept,
                 rating=0,
                 content=0,
                 delivery=0,
@@ -94,13 +97,16 @@ def _add_professor(name, dept):
             session.commit()
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error adding professor {name}: {ex}", file=sys.stderr)
+    except Exception as ex:
+        print(f"Error adding professor {name}: {ex}", file=sys.stderr)
 
 
-def prof_exists(name):
+def prof_exists(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
             return bool(
-                session.query(Professor).filter(Professor.name == name.lower()).first()
+                session.query(Professor).filter(Professor.name == name.lower(), 
+                                                 Professor.department == dept.upper()).first()
             )
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error checking if professor {name} exists: {ex}", file=sys.stderr)
@@ -116,10 +122,14 @@ def add_review(
     name, dept, content, delivery, availability, organization, comment, courses
 ):
     with sqlalchemy.orm.Session(engine) as session:
-        if not session.query(Professor).filter(Professor.name == name.lower()).first():
+        if not prof_exists(name, dept):
             _add_professor(name, dept)
 
+        profId = session.query(Professor).filter(Professor.name == name.lower(), 
+                                                 Professor.department == dept.upper()).first().profId
+
         review = Review(
+            profId = profId,
             name=name.lower(),
             rating=(content + delivery + availability + organization) / 4,
             content=content,
@@ -202,9 +212,30 @@ def main():
     # print('')
     # add_review('Bob', 'cos', 3, 4, 5, 3, 3, 'asdfa', 'asdfad')
 
-    professors = query_professor_name("ed")
-    for professor in professors:
-        print(professor.name)
+    # professors = query_professor_name("ed")
+    # for professor in professors:
+    #     print(professor.name)
+
+    # test add professor
+    _add_professor('Jacob Colch', 'gss')
+    _add_professor('Yoni Min', 'lAs')
+    _add_professor('Kayla Way', 'AaS')
+    professors = get_all_professors()
+    for prof in professors:
+        print(prof.profId, prof.name, prof.department)
+
+    # test add review
+    add_review("JaCoB Colch", "GSS", 5, 5, 5, 5, "Hello", "hello")
+    add_review("YonI MIn", 'las', 5, 5, 5, 5, "Hello", "hello")
+    add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
+    add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
+    add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
+    reviews = get_all_reviews()
+    for review in reviews:
+        print(review.profId, review.name, review.rating)
+
+
+    
 
 
 if __name__ == "__main__":

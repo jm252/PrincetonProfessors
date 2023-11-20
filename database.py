@@ -11,7 +11,8 @@ Base = declarative_base()
 class Professor (Base):
     __tablename__ = 'professors'
 
-    name = Column(String, primary_key=True)
+    profId = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
     department = Column(String)
     content = Column(Float)
     delivery = Column(Float)
@@ -23,7 +24,8 @@ class Professor (Base):
 class Review (Base):
     __tablename__ = 'reviews'
 
-    id = Column(Integer, primary_key=True)
+    reviewId = Column(Integer, primary_key=True, autoincrement=True)
+    profId = Column(Integer)
     name = Column(String)
     rating = Column(Float)
     content = Column(Float)
@@ -32,7 +34,6 @@ class Review (Base):
     organization = Column(Float)
     comment = Column(String)
     courses = Column(String)
-    # need to get overall rating
 
 
     
