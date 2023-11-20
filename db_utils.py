@@ -40,12 +40,13 @@ def get_all_reviews():
 
 
 # need to make error handling more robust, right now doesn't reach except clause if there's no professor
-def get_professor(name: str):
+def get_professor(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            if not prof_exists(name):
+            if not prof_exists(name, dept):
                 raise Exception("no professor found with given name")
-            query = session.query(Professor).filter(Professor.name == name.lower())
+            # faster in this case not to use _get_profId in order to only query once
+            query = session.query(Professor).filter(Professor.name == name.lower(), Professor.department == dept.upper())
             professor = query.first()
             return professor
     except Exception as ex:
@@ -69,10 +70,7 @@ def query_professor_name(keyword: str):
 def _get_profId(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            print(name)
-            print(dept)
-            prof = session.query(Professor).filter(Professor.name == name.lower(), 
-                                                     Professor.department == dept.upper()).first()
+            prof = session.query(Professor).filter(Professor.name == name.lower(), Professor.department == dept.upper()).first()
             
             return prof.profId
     except sqlalchemy.exc.SQLAlchemyError as ex:
@@ -231,24 +229,27 @@ def main():
     #     print(professor.name)
 
     # test add professor
-    _add_professor('Jacob Colch', 'gss')
-    _add_professor('Yoni Min', 'lAs')
-    _add_professor('Kayla Way', 'AaS')
-    _add_professor("YonI mIN", 'COS')
-    professors = get_all_professors()
-    for prof in professors:
-        print(prof.profId, prof.name, prof.department)
+    # _add_professor('Jacob Colch', 'gss')
+    # _add_professor('Yoni Min', 'lAs')
+    # _add_professor('Kayla Way', 'AaS')
+    # _add_professor("YonI mIN", 'COS')
+    # professors = get_all_professors()
+    # for prof in professors:
+    #     print(prof.profId, prof.name, prof.department)
 
     # test add review
-    add_review("JaCoB Colch", "GSS", 5, 5, 5, 5, "Hello", "hello")
-    add_review("YonI MIn", 'las', 5, 5, 5, 5, "Hello", "hello")
-    add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
-    add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
-    add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
-    add_review("YonI mIN", 'COS', 5, 5, 3, 1, "Hello" , "hello")
-    reviews = get_all_reviews()
-    for review in reviews:
-        print(review.profId, review.rating)
+    # add_review("JaCoB Colch", "GSS", 5, 5, 5, 5, "Hello", "hello")
+    # add_review("YonI MIn", 'las', 5, 5, 5, 5, "Hello", "hello")
+    # add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
+    # add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
+    # add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
+    # add_review("YonI mIN", 'COS', 5, 5, 3, 1, "Hello" , "hello")
+    # reviews = get_all_reviews()
+    # for review in reviews:
+    #     print(review.profId, review.rating)
+
+    print("here!")
+    print(_get_profId("jacob colch", "Gss"))
 
 
     
