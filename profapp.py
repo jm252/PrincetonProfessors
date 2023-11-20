@@ -64,8 +64,9 @@ def review_form():
 
 @app.route("/review", methods=["GET"])
 def review():
-    name = flask.request.args.get("name")
-    department = flask.request.args.get("dept")
+    professor = flask.request.args.get("professor")
+    parse = professor.split(', ')
+    name, department = parse[0], parse[1]
 
     content = float(flask.request.args.get("content"))
     delivery = float(flask.request.args.get("delivery"))
