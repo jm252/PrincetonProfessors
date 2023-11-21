@@ -137,3 +137,11 @@ def reg():
     response = flask.make_response(html_code)
 
     return response
+
+@app.route('/delete_review', methods=['DELETE'])
+def delete_review():
+
+    review_id = flask.request.args.get('reviewId')
+    print(review_id)
+    db.delete_review(review_id)
+    return ' '

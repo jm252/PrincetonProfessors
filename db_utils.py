@@ -52,7 +52,6 @@ def get_professor(name, dept):
     except Exception as ex:
         print(f"Error retrieving professor {name}: {ex}", file=sys.stderr)
 
-
 def query_professor_name(keyword: str):
     try:
         with sqlalchemy.orm.Session(engine) as session:
@@ -182,6 +181,16 @@ def add_review(
             session.commit()
             session.flush()
 
+def delete_review(review_id):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            # need to check if review exists first
+            review = session.query(Review).filter(Review.reviewId == review_id).first()
+            session.delete(review)
+            session.commit()
+    except Exception as ex:
+        print(f"Error deleting review {review_id}: {ex}", file=sys.stderr)
+
 
 def print_object_contents(obj):
     for key, value in vars(obj).items():
@@ -248,8 +257,19 @@ def main():
     # for review in reviews:
     #     print(review.profId, review.rating)
 
-    print("here!")
-    print(_get_profId("jacob colch", "Gss"))
+    #test delete review
+    reviews = get_reviews("jacob colch", "gss")
+    for review in reviews:
+        print(review.reviewId)
+
+    delete_review('1')
+    delete_review(6)
+
+    reviews = get_reviews("jacob colch", "gss")
+    for review in reviews:
+        print(review.reviewId)
+
+
 
 
     
