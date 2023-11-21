@@ -133,7 +133,7 @@ def reg():
     #     html_code = flask.render_template('error.html', message=message,
     #                                     error_type=error_type)
     # else:
-    html_code = flask.render_template('admintable.html', reviews=reviews, profname=profname)
+    html_code = flask.render_template('admintable.html', reviews=reviews, profname=profname, profdept=profdept)
     response = flask.make_response(html_code)
 
     return response
@@ -142,6 +142,13 @@ def reg():
 def delete_review():
 
     review_id = flask.request.args.get('reviewId')
-    print(review_id)
     db.delete_review(review_id)
-    return ' '
+
+    prof_name = flask.request.args.get('profName')
+    prof_dept = flask.request.args.get('profDept')
+    reviews = db.get_reviews(prof_name, prof_dept)
+    
+    html_code = flask.render_template('admintable.html', reviews=reviews, profname=prof_name)
+    response = flask.make_response(html_code)
+
+    return response

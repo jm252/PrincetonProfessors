@@ -11,7 +11,7 @@
       <p>Comments: {{review.comment}}</p>
       <p>Courses taken with {{profname}}: {{review.courses}}</p>
       <!-- *** WE NEED TO ADD A FUNCTION IN UTILS TO BE ABLE TO DELETE AN INDIVIDUAL REVIEW! -->
-      <button onclick="deleteReview('{{review.id}}')">Delete</button>
+      <button onclick="deleteReview('{{review.reviewId}}', '{{profname}}', '{{profdept}}')">Delete</button>
       <hr>
     </div>
   {% endfor %}
@@ -30,8 +30,10 @@
     alert('Error: Failed to fetch data from server');
   }
 
-  function deleteReview(reviewId) {
-    let url = "/delete_review?reviewId=" + reviewId;
+  function deleteReview(reviewId, profname, profdept) {
+    console.log("hi");
+    console.log(reviewId);
+    let url = "/delete_review?reviewId=" + reviewId + "&profName=" + profname + "&profDept=" + profdept;
 
     let deleteRequestData = {
       type: "DELETE",

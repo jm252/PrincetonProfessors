@@ -258,16 +258,16 @@ def main():
     #     print(review.profId, review.rating)
 
     #test delete review
-    reviews = get_reviews("jacob colch", "gss")
+    reviews = get_reviews("kayla way", "aas")
     for review in reviews:
         print(review.reviewId)
+        delete_review(review.reviewId)
 
-    delete_review('1')
-    delete_review(6)
 
-    reviews = get_reviews("jacob colch", "gss")
-    for review in reviews:
-        print(review.reviewId)
+
+    #reviews = get_reviews("jacob colch", "gss")
+    #for review in reviews:
+        #print(review.reviewId)
 
 
 

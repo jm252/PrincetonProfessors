@@ -1,5 +1,10 @@
 <!DOCTYPE html>
     <html>
+
+    {% if not reviews %}
+    <h3> No Reviews Added Yet</h3>
+
+    {% else %}
     <div class="container-fluid px-2.5">
         <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-star-o fa-fw w3-margin-right w3-xxlarge w3-text-yellow"></i>{{prof.name}}</h2>
@@ -25,3 +30,4 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %}
