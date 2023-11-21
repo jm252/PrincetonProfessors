@@ -98,21 +98,26 @@ body {
         </div>
         <div class="w3-container">
           <br>
-          <div class="col-sm-3">
+          <div class="search col-sm-3">
             <input type="text" id="searchInput" placeholder="Search..">
           </div>
-          <div class="col-sm-3">
-            <input type="text" id="nameInput" placeholder="Name..">
-          </div>
-          <div class="col-sm-3">
-            <input type="text" id="deptInput" placeholder="Department..">
-          </div>
-          <div class="col-sm-3">
-            <input type="text" id="areaInput" placeholder="Area..">
-          </div>
-          <div class="col-sm-3">
-            <input type="text" id="courseInput" placeholder="Course..">
-            <hr>
+          <button type="button" onclick="showFilters()" id="filters">
+            Filters
+          </button>
+          <div class ="filtersDiv">
+            <div class="name col-sm-3">
+              <input type="text" id="nameInput" placeholder="Name..">
+            </div>
+            <div class="dept col-sm-3">
+              <input type="text" id="deptInput" placeholder="Department..">
+            </div>
+            <div class="area col-sm-3">
+              <input type="text" id="areaInput" placeholder="Area..">
+            </div>
+            <div class="course col-sm-3">
+              <input type="text" id="courseInput" placeholder="Course..">
+              <hr>
+            </div>
           </div>
         </div>
         <div class="w3-container" id="searchResultsDiv"></div>
@@ -150,6 +155,10 @@ body {
 <script>
 
   'use strict'; 
+
+  function showFilters(data) {
+    $('#filtersDiv').html(data);
+  }
 
   function handleSearchResponse(data) {
     $('#searchResultsDiv').html(data);
