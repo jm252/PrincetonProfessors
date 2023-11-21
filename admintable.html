@@ -1,0 +1,18 @@
+<script src="path/to/jquery.min.js"></script> <!-- Include jQuery if not already included -->
+<script src="path/to/db_utils.js"></script>
+<script src="path/to/main.js"></script>
+
+<table class="table table-striped">
+    {% for review in reviews %}
+    <div class="w3-container">
+      <!-- make for loop for all reviews  -->
+      <p>Overall Rating: {{review.rating}} </p> <!-- gonna have to add this  -->
+      <p>Content: {{review.content}} / 5.0 | Delivery {{review.delivery}} / 5.0 | Availability {{review.availability}} / 5.0 | Organization {{review.organization}} / 5.0</p>
+      <p>Comments: {{review.comment}}</p>
+      <p>Courses taken with {{profname}}: {{review.courses}}</p>
+      <!-- *** WE NEED TO ADD A FUNCTION IN UTILS TO BE ABLE TO DELETE AN INDIVIDUAL REVIEW! -->
+      <button onclick="deleteReview('{{review.id}}')">Delete</button>
+      <hr>
+    </div>
+  {% endfor %}
+</table>

@@ -110,3 +110,30 @@ def prof_details():
     html_code = flask.render_template("detailtable.html", reviews=reviews, prof=prof)
     response = flask.make_response(html_code)
     return response
+
+@app.route("/adminpage", methods=["GET"])
+def admin_page():
+    profs = db.get_all_professors()
+    html_code = flask.render_template("adminpage.html", profs=profs)
+    response = flask.make_response(html_code)
+    return response
+
+@app.route('/adminpagetable', methods=['GET'])
+def reg():
+
+    profname = flask.request.args.get('profname')
+    profdept = flask.request.args.get('profdept')
+    print(profname)
+    print(profdept)
+    reviews = db.get_reviews(profname, profdept)
+
+    # if success is False:
+    #     message = table.get('error_msg')
+    #     error_type = table.get('error_type')
+    #     html_code = flask.render_template('error.html', message=message,
+    #                                     error_type=error_type)
+    # else:
+    html_code = flask.render_template('admintable.html', reviews=reviews, profname=profname)
+    response = flask.make_response(html_code)
+
+    return response
