@@ -45,8 +45,14 @@ def search_results():
     query = flask.request.args.get("search")
     if query is None:
         query = ""
+    name = flask.request.args.get("name")
+    if name is None:
+        name = ""
+    dept = flask.request.args.get("dept")
+    if dept is None:
+        dept = ""
 
-    professors = db.query_professor_name(query)
+    professors = db.query_professor_keyword(name, dept)
 
     html_code = flask.render_template("search_results.html", professors=professors)
     response = flask.make_response(html_code)
@@ -65,7 +71,7 @@ def review_form():
 @app.route("/review", methods=["GET"])
 def review():
     professor = flask.request.args.get("professor")
-    parse = professor.split(', ')
+    parse = professor.split(", ")
     name, department = parse[0], parse[1]
 
     content = float(flask.request.args.get("content"))
@@ -111,6 +117,7 @@ def prof_details():
     response = flask.make_response(html_code)
     return response
 
+
 @app.route("/adminpage", methods=["GET"])
 def admin_page():
     profs = db.get_all_professors()
@@ -118,11 +125,11 @@ def admin_page():
     response = flask.make_response(html_code)
     return response
 
-@app.route('/adminpagetable', methods=['GET'])
-def reg():
 
-    profname = flask.request.args.get('profname')
-    profdept = flask.request.args.get('profdept')
+@app.route("/adminpagetable", methods=["GET"])
+def reg():
+    profname = flask.request.args.get("profname")
+    profdept = flask.request.args.get("profdept")
     print(profname)
     print(profdept)
     reviews = db.get_reviews(profname, profdept)
@@ -133,22 +140,26 @@ def reg():
     #     html_code = flask.render_template('error.html', message=message,
     #                                     error_type=error_type)
     # else:
-    html_code = flask.render_template('admintable.html', reviews=reviews, profname=profname, profdept=profdept)
+    html_code = flask.render_template(
+        "admintable.html", reviews=reviews, profname=profname, profdept=profdept
+    )
     response = flask.make_response(html_code)
 
     return response
 
-@app.route('/delete_review', methods=['DELETE'])
-def delete_review():
 
-    review_id = flask.request.args.get('reviewId')
+@app.route("/delete_review", methods=["DELETE"])
+def delete_review():
+    review_id = flask.request.args.get("reviewId")
     db.delete_review(review_id)
 
-    prof_name = flask.request.args.get('profName')
-    prof_dept = flask.request.args.get('profDept')
+    prof_name = flask.request.args.get("profName")
+    prof_dept = flask.request.args.get("profDept")
     reviews = db.get_reviews(prof_name, prof_dept)
-    
-    html_code = flask.render_template('admintable.html', reviews=reviews, profname=prof_name)
+
+    html_code = flask.render_template(
+        "admintable.html", reviews=reviews, profname=prof_name
+    )
     response = flask.make_response(html_code)
 
     return response

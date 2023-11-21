@@ -98,8 +98,20 @@ body {
         </div>
         <div class="w3-container">
           <br>
-          <div>
+          <div class="col-sm-3">
             <input type="text" id="searchInput" placeholder="Search..">
+          </div>
+          <div class="col-sm-3">
+            <input type="text" id="nameInput" placeholder="Name..">
+          </div>
+          <div class="col-sm-3">
+            <input type="text" id="deptInput" placeholder="Department..">
+          </div>
+          <div class="col-sm-3">
+            <input type="text" id="areaInput" placeholder="Area..">
+          </div>
+          <div class="col-sm-3">
+            <input type="text" id="courseInput" placeholder="Course..">
             <hr>
           </div>
         </div>
@@ -152,8 +164,16 @@ body {
   function getSearchResults() {
     let search = $("#searchInput").val();
     let encodedSearch = encodeURIComponent(search);
+    let name = $("#nameInput").val();
+    let encodedName = encodeURIComponent(name);
+    let dept = $("#deptInput").val();
+    let encodedDept = encodeURIComponent(dept);
 
-    let url = "/search_results?search=" + encodedSearch;
+    let url = "/search_results?search=" + encodedSearch +
+          "&name=" +
+          encodedName +
+          "&dept=" +
+          encodedDept;
 
     if (searchRequest !== null) searchRequest.abort();
 
@@ -177,6 +197,8 @@ body {
 
   function searchSetup() {
     $("#searchInput").on("input", debouncedGetSearchResults);
+    $("#nameInput").on("input", debouncedGetSearchResults);
+    $("#deptInput").on("input", debouncedGetSearchResults);
 
     getSearchResults();
   }
