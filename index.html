@@ -92,35 +92,31 @@ body {
     <div class="w3-third left-column">
     
       <div class="w3-white w3-text-grey w3-card-4">
-        <div class="w3-display-container">
-          <div class="w3-display-bottomleft w3-container w3-text-black">
-          </div>
-        </div>
         <div class="w3-container">
           <br>
           <div class="search col-sm-3">
-            <input type="text" id="searchInput" placeholder="Search..">
+            <input type="text" id="searchInput" placeholder="Search.." style="max-width: 100%;">
           </div>
           <button type="button" onclick="showFilters()" id="filters">
             Filters
           </button>
           <div class ="filtersDiv">
             <div class="name col-sm-3">
-              <input type="text" id="nameInput" placeholder="Name..">
+              <input type="text" id="nameInput" placeholder="Name.." style="max-width: 100%;">
             </div>
             <div class="dept col-sm-3">
-              <input type="text" id="deptInput" placeholder="Department..">
+              <input type="text" id="deptInput" placeholder="Department.." style="max-width: 100%;">
             </div>
             <div class="area col-sm-3">
-              <input type="text" id="areaInput" placeholder="Area..">
+              <input type="text" id="areaInput" placeholder="Area.." style="max-width: 100%;">
             </div>
             <div class="course col-sm-3">
-              <input type="text" id="courseInput" placeholder="Course..">
+              <input type="text" id="courseInput" placeholder="Course.." style="max-width: 100%;">
               <hr>
             </div>
           </div>
         </div>
-        <div class="w3-container" id="searchResultsDiv"></div>
+        <div class="container-fluid" id="searchResultsDiv"></div>
       </div><br>
 
     <!-- End Left Column -->
@@ -129,7 +125,7 @@ body {
     <!-- Right Column -->
     <div class="w3-twothird right-column" id="resultsDiv">
 
-      <div display="flex" align-items="center" class="w3-container ">
+      <div display="flex" align-items="center" class="w3-container" style="height: 100vh;">
         <center>
           <h2 class="w3-text-grey w3-padding-16">Search to begin...</h2>
         </center>
