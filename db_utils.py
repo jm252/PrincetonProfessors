@@ -46,53 +46,62 @@ def get_professor(name, dept):
             if not prof_exists(name, dept):
                 raise Exception("no professor found with given name")
             # faster in this case not to use _get_profId in order to only query once
-            query = session.query(Professor).filter(Professor.name == name.lower(), Professor.department == dept.upper())
+            query = session.query(Professor).filter(
+                Professor.name == name.lower(), Professor.department == dept.upper()
+            )
             professor = query.first()
             return professor
     except Exception as ex:
         print(f"Error retrieving professor {name}: {ex}", file=sys.stderr)
 
-def query_professor_name(keyword: str):
+
+def query_professor_keyword(name: str, dept: str):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            if keyword == "":
-                return get_all_professors()
             query = session.query(Professor).filter(
-                Professor.name.contains(keyword.lower())
+                Professor.name.contains(name.lower())
+                & Professor.department.contains(dept.upper())
             )
             professors = query.all()
             return professors
     except Exception as ex:
-        print(f"Error retrieving name query {keyword}: {ex}", file=sys.stderr)
+        print(f"Error retrieving query {name}, {dept}: {ex}", file=sys.stderr)
 
 
 def _get_profId(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            prof = session.query(Professor).filter(Professor.name == name.lower(), Professor.department == dept.upper()).first()
-            
+            prof = (
+                session.query(Professor)
+                .filter(
+                    Professor.name == name.lower(), Professor.department == dept.upper()
+                )
+                .first()
+            )
+
             return prof.profId
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving reviews for professor {name}: {ex}", file=sys.stderr)
 
 
-
 def get_reviews(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            
-            query = session.query(Review).filter(Review.profId == _get_profId(name, dept))
+            query = session.query(Review).filter(
+                Review.profId == _get_profId(name, dept)
+            )
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving reviews for professor {name}: {ex}", file=sys.stderr)
+
 
 def _add_professor(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
             if prof_exists(name, dept):
                 raise Exception("professor already exists")
-            
+
             lower_name = name.lower()
             upper_dept = dept.upper()
             professor = Professor(
@@ -117,8 +126,11 @@ def prof_exists(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
             return bool(
-                session.query(Professor).filter(Professor.name == name.lower(), 
-                                                 Professor.department == dept.upper()).first()
+                session.query(Professor)
+                .filter(
+                    Professor.name == name.lower(), Professor.department == dept.upper()
+                )
+                .first()
             )
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error checking if professor {name} exists: {ex}", file=sys.stderr)
@@ -139,9 +151,8 @@ def add_review(
 
         profId = _get_profId(name, dept)
 
-       
         review = Review(
-            profId = profId,
+            profId=profId,
             rating=(content + delivery + availability + organization) / 4,
             content=content,
             delivery=delivery,
@@ -180,6 +191,7 @@ def add_review(
 
             session.commit()
             session.flush()
+
 
 def delete_review(review_id):
     try:
@@ -278,9 +290,10 @@ def main():
     # print('')
     # add_review('Bob', 'cos', 3, 4, 5, 3, 3, 'asdfa', 'asdfad')
 
-    # professors = query_professor_name("ed")
-    # for professor in professors:
-    #     print(professor.name)
+    professors = query_professor_keyword("k", "a")
+    for professor in professors:
+        print(professor.name)
+        print(professor.department)
 
     # test add professor
     # _add_professor('Jacob Colch', 'gss')
@@ -308,6 +321,11 @@ def main():
         print(review.reviewId)
     #    delete_review(review.reviewId)
     delete_review(1)
+    # test delete review
+    # reviews = get_reviews("kayla way", "aas")
+    # for review in reviews:
+    #     print(review.reviewId)
+    #     delete_review(review.reviewId)
 
 
 
@@ -318,7 +336,9 @@ def main():
 
 
 
-    
+    # reviews = get_reviews("jacob colch", "gss")
+    # for review in reviews:
+    # print(review.reviewId)
 
 if __name__ == "__main__":
     main()
