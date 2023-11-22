@@ -166,3 +166,21 @@ def delete_review():
     response = flask.make_response(html_code)
 
     return response
+
+# @app.route("/adminsearch_results", methods=["GET"])
+# def search_results():
+#     query = flask.request.args.get("search")
+#     if query is None:
+#         query = ""
+#     name = flask.request.args.get("name")
+#     if name is None:
+#         name = ""
+#     dept = flask.request.args.get("dept")
+#     if dept is None:
+#         dept = ""
+
+#     professors = db.query_professor_keyword(name, dept)
+
+#     html_code = flask.render_template("search_results.html", professors=professors)
+#     response = flask.make_response(html_code)
+#     return response

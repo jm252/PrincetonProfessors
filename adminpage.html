@@ -21,9 +21,9 @@
                 <h1>Admin Control Panel</h1>
             </center>
                     <div class="row">
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" id="profNameInput" placeholder="Professor Name..." autoFocus>
-                            </div>
+                        <div class="search col-sm-3">
+                            <input type="text" id="adminsearchInput" placeholder="Search for a professor..." autofocus>
+                        </div>
                     </div>
             <br>
         </div>
@@ -44,6 +44,49 @@
         <script src=
 "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
         </script>
+
+        <!-- <script>
+            'use strict'
+                    function handleSearchResponse(data) {
+            $('#searchResultsDiv').html(data);
+        }
+
+        function handleError() {
+            alert('Error: Failed to fetch data from server');
+        }
+
+        let searchRequest = null;
+
+        function getSearchResults() {
+            let adminsearch = $("#adminsearchInput").val();
+            let encodedSearch = encodeURIComponent(adminsearch);
+
+            let url = "/search_results?search=" + encodedSearch;
+
+            if (searchRequest !== null) searchRequest.abort();
+
+            let searchRequestData = {
+            type: "GET",
+            url: url,
+            success: handleSearchResponse,
+            error: handleError,
+            };
+            $.ajax(searchRequestData);
+        }
+
+        let timer = null;
+
+        function debouncedGetSearchResults() {
+            clearTimeout(timer);
+            timer = setTimeout(getSearchResults, 500);
+        }
+            function searchSetup() {
+                $("#adminsearchInput").on("input", debouncedGetSearchResults);
+
+                getSearchResults();
+            }
+            $('document').ready(searchSetup);
+        </script> -->
 
         <!-- <script>
 

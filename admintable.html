@@ -24,7 +24,9 @@
 <!-- <script src="path/to/jquery.min.js"></script> Include jQuery if not already included -->
 <!-- <script src="path/to/db_utils.js"></script>
 <script src="path/to/main.js"></script> -->
+<div class="container-fluid">
 <h3>Displaying all reviews for {{profname}}:</h3>
+
 <table class="table table-striped">
 
     {% if not reviews %}
@@ -48,6 +50,7 @@
     {% endif %}
     <a href="/adminpage">Go back to all professors</a>
 </table>
+</div>
 
 <div class="container-fluid footer">
     <center>
@@ -69,7 +72,9 @@
   }
 
   function deleteReview(reviewId, profname, profdept) {
-    console.log("hi");
+    var result = confirm("Are you sure you want to delete this review?");
+    if (result) {
+        console.log("hi");
     console.log(reviewId);
     let url = "/delete_review?reviewId=" + reviewId + "&profName=" + profname + "&profDept=" + profdept;
 
@@ -80,5 +85,7 @@
       error: handleError,
     };
     $.ajax(deleteRequestData);
+    }
+    
   }
 </script>
