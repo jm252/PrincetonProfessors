@@ -186,8 +186,53 @@ def delete_review(review_id):
         with sqlalchemy.orm.Session(engine) as session:
             # need to check if review exists first
             review = session.query(Review).filter(Review.reviewId == review_id).first()
+            profId = review.profId
+            rating = review.rating
+            content = review.content
+            delivery = review.delivery
+            availability = review.availability
+            organization = review.organization
             session.delete(review)
             session.commit()
+
+            prof = session.query(Professor).filter(Professor.profId == profId).first()
+            prof.numratings -= 1
+            if prof.numratings != 0:
+                prof.rating = (
+                    prof.rating * (prof.numratings + 1)
+                    - (content + delivery + availability + organization) / 4
+                ) / prof.numratings
+
+            
+                prof.content = (
+                    (prof.content * (prof.numratings + 1)) - content
+                ) / prof.numratings
+
+                prof.delivery = (
+                    (prof.delivery * (prof.numratings + 1)) - delivery
+                ) / prof.numratings
+
+                prof.availability = (
+                    (prof.availability * (prof.numratings + 1)) - availability
+                ) / prof.numratings
+
+                prof.organization = (
+                    (prof.organization * (prof.numratings + 1)) - organization
+                ) / prof.numratings
+            
+            else: 
+                prof.rating = 0
+                prof.content = 0
+                prof.delivery = 0
+                prof.availability = 0
+                prof.organization = 0
+
+            session.commit()
+            session.flush()
+
+
+
+
     except Exception as ex:
         print(f"Error deleting review {review_id}: {ex}", file=sys.stderr)
 
@@ -200,7 +245,7 @@ def print_object_contents(obj):
 
 # test functions
 def main():
-    # try:
+    #try:
     #     add_review("Kayla", "cos", 2, 2, 2, 2, "asdfa", "asdfad")
     #     print("testing case sensitivity...")
     #     print("first call: ")
@@ -249,9 +294,9 @@ def main():
     # test add review
     # add_review("JaCoB Colch", "GSS", 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI MIn", 'las', 5, 5, 5, 5, "Hello", "hello")
-    # add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
-    # add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
-    # add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
+    #add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
+    #add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
+    #add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI mIN", 'COS', 5, 5, 3, 1, "Hello" , "hello")
     # reviews = get_all_reviews()
     # for review in reviews:
@@ -261,7 +306,8 @@ def main():
     reviews = get_reviews("kayla way", "aas")
     for review in reviews:
         print(review.reviewId)
-        delete_review(review.reviewId)
+    #    delete_review(review.reviewId)
+    delete_review(1)
 
 
 
@@ -273,7 +319,6 @@ def main():
 
 
     
-
 
 if __name__ == "__main__":
     main()
