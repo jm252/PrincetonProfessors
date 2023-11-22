@@ -157,6 +157,9 @@ def delete_review():
     prof_dept = flask.request.args.get("profDept")
     reviews = db.get_reviews(prof_name, prof_dept)
 
+    if not reviews:
+        print("hi")
+
     html_code = flask.render_template(
         "admintable.html", reviews=reviews, profname=prof_name
     )
