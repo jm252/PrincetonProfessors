@@ -167,6 +167,7 @@ def delete_review():
 
     return response
 
+
 # @app.route("/adminsearch_results", methods=["GET"])
 # def search_results():
 #     query = flask.request.args.get("search")

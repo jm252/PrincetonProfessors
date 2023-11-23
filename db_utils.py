@@ -61,6 +61,7 @@ def query_professor_keyword(name: str, dept: str):
             query = session.query(Professor).filter(
                 Professor.name.contains(name.lower())
                 & Professor.department.contains(dept.upper())
+                # & Professor.rating.startswith(rating)
             )
             professors = query.all()
             return professors
@@ -215,7 +216,6 @@ def delete_review(review_id):
                     - (content + delivery + availability + organization) / 4
                 ) / prof.numratings
 
-            
                 prof.content = (
                     (prof.content * (prof.numratings + 1)) - content
                 ) / prof.numratings
@@ -231,8 +231,8 @@ def delete_review(review_id):
                 prof.organization = (
                     (prof.organization * (prof.numratings + 1)) - organization
                 ) / prof.numratings
-            
-            else: 
+
+            else:
                 prof.rating = 0
                 prof.content = 0
                 prof.delivery = 0
@@ -241,9 +241,6 @@ def delete_review(review_id):
 
             session.commit()
             session.flush()
-
-
-
 
     except Exception as ex:
         print(f"Error deleting review {review_id}: {ex}", file=sys.stderr)
@@ -257,7 +254,7 @@ def print_object_contents(obj):
 
 # test functions
 def main():
-    #try:
+    # try:
     #     add_review("Kayla", "cos", 2, 2, 2, 2, "asdfa", "asdfad")
     #     print("testing case sensitivity...")
     #     print("first call: ")
@@ -290,7 +287,7 @@ def main():
     # print('')
     # add_review('Bob', 'cos', 3, 4, 5, 3, 3, 'asdfa', 'asdfad')
 
-    professors = query_professor_keyword("k", "a")
+    professors = query_professor_keyword("k", "a", 3)
     for professor in professors:
         print(professor.name)
         print(professor.department)
@@ -307,38 +304,34 @@ def main():
     # test add review
     # add_review("JaCoB Colch", "GSS", 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI MIn", 'las', 5, 5, 5, 5, "Hello", "hello")
-    #add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
-    #add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
-    #add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
+    # add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
+    # add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
+    # add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI mIN", 'COS', 5, 5, 3, 1, "Hello" , "hello")
     # reviews = get_all_reviews()
     # for review in reviews:
     #     print(review.profId, review.rating)
 
-    #test delete review
-    reviews = get_reviews("kayla way", "aas")
-    for review in reviews:
-        print(review.reviewId)
-    #    delete_review(review.reviewId)
-    delete_review(1)
+    # test delete review
+    # reviews = get_reviews("kayla way", "aas")
+    # for review in reviews:
+    #     print(review.reviewId)
+    # #    delete_review(review.reviewId)
+    # delete_review(1)
     # test delete review
     # reviews = get_reviews("kayla way", "aas")
     # for review in reviews:
     #     print(review.reviewId)
     #     delete_review(review.reviewId)
 
-
-
-    #reviews = get_reviews("jacob colch", "gss")
-    #for review in reviews:
-        #print(review.reviewId)
-
-
-
+    # reviews = get_reviews("jacob colch", "gss")
+    # for review in reviews:
+    # print(review.reviewId)
 
     # reviews = get_reviews("jacob colch", "gss")
     # for review in reviews:
     # print(review.reviewId)
+
 
 if __name__ == "__main__":
     main()

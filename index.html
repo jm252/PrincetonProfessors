@@ -96,22 +96,19 @@ body {
           <br>
           <div class="search col-sm-3">
             <input type="text" id="searchInput" placeholder="Search.." style="max-width: 100%;">
+            <button type="button" onclick="showFilters()" id="filters">
+              Filters
+            </button>
           </div>
-          <button type="button" onclick="showFilters()" id="filters">
-            Filters
-          </button>
-          <div class ="filtersDiv">
+          <div id ="filtersDiv">
             <div class="name col-sm-3">
               <input type="text" id="nameInput" placeholder="Name.." style="max-width: 100%;">
             </div>
             <div class="dept col-sm-3">
               <input type="text" id="deptInput" placeholder="Department.." style="max-width: 100%;">
             </div>
-            <div class="area col-sm-3">
-              <input type="text" id="areaInput" placeholder="Area.." style="max-width: 100%;">
-            </div>
-            <div class="course col-sm-3">
-              <input type="text" id="courseInput" placeholder="Course.." style="max-width: 100%;">
+            <div class="rating col-sm-3">
+              <input type="text" id="ratingInput" placeholder="Rating.." style="max-width: 100%;">
               <hr>
             </div>
           </div>
@@ -151,9 +148,15 @@ body {
 <script>
 
   'use strict'; 
+  document.getElementById("filtersDiv").style.display = "none";
 
   function showFilters(data) {
-    $('#filtersDiv').html(data);
+    var x = document.getElementById("filtersDiv");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
   }
 
   function handleSearchResponse(data) {
@@ -173,12 +176,14 @@ body {
     let encodedName = encodeURIComponent(name);
     let dept = $("#deptInput").val();
     let encodedDept = encodeURIComponent(dept);
+    let rating = $("#ratingInput").val();
+    let encodedRating = encodeURIComponent(rating);
 
     let url = "/search_results?search=" + encodedSearch +
           "&name=" +
           encodedName +
           "&dept=" +
-          encodedDept;
+          encodedDept
 
     if (searchRequest !== null) searchRequest.abort();
 
@@ -204,6 +209,7 @@ body {
     $("#searchInput").on("input", debouncedGetSearchResults);
     $("#nameInput").on("input", debouncedGetSearchResults);
     $("#deptInput").on("input", debouncedGetSearchResults);
+    $("#ratingInput").on("input", debouncedGetSearchResults);
 
     getSearchResults();
   }
