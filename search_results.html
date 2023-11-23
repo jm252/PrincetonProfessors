@@ -1,5 +1,5 @@
 {% for prof in professors: %}
-<div class="profName w3-container" prof-name="{{prof.name}}" prof-dept={{prof.department}}>
+<div class="profName w3-container" prof-name="{{prof.name}}" prof-dept={{prof.department}} onclick="getResults('{{prof.name}}', '{{prof.department}}')">
   <h3 class="w3-opacity"><b>{{prof.name.capitalize()}}</b></h3>
   <p>
     <b>Dept:</b> {{ prof.department.upper() }} • <b>Rating: </b> {{ prof.rating|round(2)
@@ -45,16 +45,6 @@
     $.ajax(requestData);
   }
 
-  function setup() {
-    $('.profName').click(function() {
-      var name = $(this).attr('prof-name');
-      var dept = $(this).attr('prof-dept');
-      console.log(name)
-      getResults(name, dept)
-    });
-  }
-
-  $('document').ready(setup);
 </script>
 
 </body>
