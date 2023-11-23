@@ -2,17 +2,20 @@
 import flask
 import auth
 import db_utils as db
+import os
+import dotenv
 
 # -----------------------------------------------------------------------
 
 app = flask.Flask(__name__, template_folder=".")
 
 app.secret_key = "APP_SECRET_KEY"
+
+dotenv.load_dotenv()
+ADMIN_USERS = os.environ["ADMIN_USERS"]
 # -----------------------------------------------------------------------
 
 # Routes for authentication.
-
-
 @app.route("/logoutapp", methods=["GET"])
 def logoutapp():
     return auth.logoutapp()
@@ -22,19 +25,19 @@ def logoutapp():
 def logoutcas():
     return auth.logoutcas()
 
-
 # -----------------------------------------------------------------------
 
 
 @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
-    username = auth.authenticate()
+    global USERNAME
+    USERNAME = auth.authenticate()
 
     professors = db.get_all_professors()
 
     html_code = flask.render_template(
-        "index.html", professors=professors, username=username
+        "index.html", professors=professors, username=USERNAME
     )
     response = flask.make_response(html_code)
     return response
@@ -120,8 +123,10 @@ def prof_details():
 
 @app.route("/adminpage", methods=["GET"])
 def admin_page():
+    is_admin = (USERNAME in ADMIN_USERS)
+    
     profs = db.get_all_professors()
-    html_code = flask.render_template("adminpage.html", profs=profs)
+    html_code = flask.render_template("adminpage.html", profs=profs, is_admin=is_admin)
     response = flask.make_response(html_code)
     return response
 
