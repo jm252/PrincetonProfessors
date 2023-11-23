@@ -81,7 +81,9 @@ body {
 <div class="topnav">
   <a href="#home">Princeton Professors</a>
   <a class= "hover" href="/review_form">Review a Professor</a>
-  <b class="hover">{{username}}</b>
+  <b onclick="logoutDisplay()" class="hover">{{username}}</b> 
+  <a href="/logoutcas" onclick="logout()" id = "logoutB">Logout</a>
+
 </div>
 
   <!-- The Grid -->
@@ -149,6 +151,16 @@ body {
 
   'use strict'; 
   document.getElementById("filtersDiv").style.display = "none";
+  document.getElementById("logoutB").style.display = "none";
+
+  function logoutDisplay() {
+    var x = document.getElementById("logoutB");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
 
   function showFilters(data) {
     var x = document.getElementById("filtersDiv");
