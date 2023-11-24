@@ -1,17 +1,19 @@
 <!DOCTYPE html>
     <html>
 
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    
     {% if not reviews %}
     <div class="container-fluid px-2.5" style="height: 100vh; display: flex; justify-content: center; align-items: center; background-color: white;">
       <div>
-        <h3>No reviews added yet!</h3>
+        <h3>No reviews have been added for {{prof.name}} yet!</h3>
       </div>
     </div>
 
     {% else %}
     <div class="container-fluid px-2.5">
         <div class="w3-container w3-white w3-margin-bottom">
-            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-star-o fa-fw w3-margin-right w3-xxlarge w3-text-yellow"></i>{{prof.name}}</h2>
+            <h2 class="w3-text-grey w3-padding-16"><i class='fa fa-user w3-margin-right w3-text-blue' style='font-size:36px'></i>{{prof.name}}</h2>
               <div class="w3-container">
                 <h5 class="w3-opacity"><b>Department: {{prof.department}}</b></h5>
                 <h6 class="w3-text-blue"></i>Past Courses: {{reviews[0].courses}}</h6> <!-- leaving this for now but gonna need all the courses they've taught from the registrar-->
