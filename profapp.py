@@ -15,6 +15,7 @@ dotenv.load_dotenv()
 ADMIN_USERS = os.environ["ADMIN_USERS"]
 # -----------------------------------------------------------------------
 
+
 # Routes for authentication.
 @app.route("/logoutapp", methods=["GET"])
 def logoutapp():
@@ -24,6 +25,7 @@ def logoutapp():
 @app.route("/logoutcas", methods=["GET"])
 def logoutcas():
     return auth.logoutcas()
+
 
 # -----------------------------------------------------------------------
 
@@ -55,7 +57,7 @@ def search_results():
     if dept is None:
         dept = ""
 
-    professors = db.query_professor_keyword(name, dept)
+    professors = db.query_professor_keyword(query or name, dept)
 
     html_code = flask.render_template("search_results.html", professors=professors)
     response = flask.make_response(html_code)
@@ -65,7 +67,7 @@ def search_results():
 @app.route("/review_form", methods=["GET"])
 def review_form():
     profs = db.get_all_professors()
-    
+
     html_code = flask.render_template("review.html", profs=profs, username=USERNAME)
     response = flask.make_response(html_code)
     return response
@@ -123,8 +125,8 @@ def prof_details():
 
 @app.route("/adminpage", methods=["GET"])
 def admin_page():
-    is_admin = (USERNAME in ADMIN_USERS)
-    
+    is_admin = USERNAME in ADMIN_USERS
+
     profs = db.get_all_professors()
     html_code = flask.render_template("adminpage.html", profs=profs, is_admin=is_admin)
     response = flask.make_response(html_code)

@@ -146,7 +146,7 @@ body {
       <div class="w3-white w3-text-grey w3-card-4">
         <div class="w3-container">
           <br>
-          <div class="search col-sm-3">
+          <div id = "searchDiv" class="search col-sm-3">
             <input type="text" id="searchInput" placeholder="Search.." style="max-width: 100%;">
             <button type="button" onclick="showFilters()" id="filters">
               Filters
@@ -155,6 +155,9 @@ body {
           <div id ="filtersDiv">
             <div class="name col-sm-3">
               <input type="text" id="nameInput" placeholder="Name.." style="max-width: 100%;">
+              <button type="button" onclick="showFilters()" id="filters">
+                Filters
+              </button>
             </div>
             <div class="dept col-sm-3">
               <input type="text" id="deptInput" placeholder="Department.." style="max-width: 100%;">
@@ -214,10 +217,14 @@ body {
 
   function showFilters(data) {
     var x = document.getElementById("filtersDiv");
+    var y = document.getElementById("searchDiv");
+
     if (x.style.display === "none") {
       x.style.display = "block";
+      y.style.display = "none";
     } else {
       x.style.display = "none";
+      y.style.display = "block";
     }
   }
 
