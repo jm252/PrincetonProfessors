@@ -7,19 +7,11 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <style>
-
-<style>
-
-#review-form {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 label {
     display: block;
     margin-bottom: 8px;
@@ -92,7 +84,14 @@ body {
   color: white;
 }
 
+/* Style for the Select2 dropdown
+.select2-container--default .select2-selection--single {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+} */
+
 </style>
+
 </head>
 <body class="w3-light-grey">
 
@@ -120,13 +119,12 @@ body {
                 <!-- Input boxes for searching -->
                 <form action="/review" method="get">
 
-                    Professor: 
-                    <input list="professorList" id="professorChoice" name="professor"/>
-                    <datalist id="professorList">
+                    Professor:
+                    <select id="professor-select" name="professor" style="width: 100%;" required>
                       {% for prof in profs: %}
-                      <option value="{{prof.name}}, {{prof.department}}">{{prof.name.capitalize()}} {{prof.department}}</option>
-                      {% endfor %}
-                    </datalist>
+                        <option value="{{prof.name}}, {{prof.department}}">{{prof.name.capitalize()}} ({{prof.department}})</option>
+                        {% endfor %}
+                    </select>
                     <br>
                     <br>
                     Quality of Content
@@ -163,6 +161,13 @@ body {
 <footer class="w3-container w3-blue w3-center w3-margin-top">
   <p>Created by Eden Bendory, Jacob Colchamiro, Jonathan Mindel, Kayla Waitman</p>
 </footer>
+
+<script>
+  // Activate Select2 on the professor's name select element
+  $(document).ready(function() {
+      $('#professor-select').select2();
+  });
+</script>
 
 </body>
 </html>
