@@ -72,6 +72,48 @@ body {
     padding: 20px;
 }
 
+.dropdown {
+  float: right;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  /* padding: 14px 16px; */
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  /* padding: 12px 16px; */
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 </style>
 </head>
 <body class="w3-light-grey">
@@ -81,8 +123,16 @@ body {
 <div class="topnav">
   <a href="#home">Princeton Professors</a>
   <a class= "hover" href="/review_form">Review a Professor</a>
-  <b onclick="logoutDisplay()" class="hover">{{username}}</b> 
-  <a href="/logoutcas" onclick="logout()" id = "logoutB">Logout</a>
+  <div class="dropdown">
+    <b class="dropbtn">{{username}}
+      <!-- <i class="fa fa-caret-down"></i> -->
+    </b>
+    <div class="dropdown-content">
+      <a href="/logoutcas" onclick="logout()" id = "logoutB">Logout</a>
+    </div>
+  </div>
+  <!-- <b onclick="logoutDisplay()" class="hover">{{username}}</b> 
+  <a href="/logoutcas" onclick="logout()" id = "logoutB">Logout</a> -->
 
 </div>
 
@@ -151,7 +201,7 @@ body {
 
   'use strict'; 
   document.getElementById("filtersDiv").style.display = "none";
-  document.getElementById("logoutB").style.display = "none";
+  // document.getElementById("logoutB").style.display = "none";
 
   function logoutDisplay() {
     var x = document.getElementById("logoutB");
