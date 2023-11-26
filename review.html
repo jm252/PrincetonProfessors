@@ -9,6 +9,51 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 
+<style>
+
+#review-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    resize: vertical; /* Allow vertical resizing */
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -55,7 +100,7 @@ body {
 
 <div class="topnav">
   <a href="/index">Go back</a>
-  <b class="hover">kw2689</b>
+  <b class="hover">{{username}}</b>
 </div>
 
   <!-- The Grid -->
@@ -69,8 +114,8 @@ body {
           <div class="w3-display-bottomleft w3-container w3-text-black">
           </div>
         </div>
-        <div class="w3-container">
-                <h1>Submit a Review</h1>
+        <div id="review-form" class="w3-container">
+                <h2>Submit a Review</h2>
               
                 <!-- Input boxes for searching -->
                 <form action="/review" method="get">
@@ -82,8 +127,7 @@ body {
                       <option value="{{prof.name}}, {{prof.department}}">{{prof.name.capitalize()}} {{prof.department}}</option>
                       {% endfor %}
                     </datalist>
-                    
-
+                    <br>
                     <br>
                     Quality of Content
                     <input type="number" name="content" min="0" max="5" step="0.1" required/>
@@ -98,12 +142,13 @@ body {
                     <input type="number" name="organization" min="0" max="5" step="0.1" required/>
                     <br>
                     Any Comments?
-                    <input type="text" name="comment" value=""/>
+                    <textarea name="comment"> </textarea>
                     <br>
                     Courses taken with this Professor
                     <input type="text" name="courses" required/>
                     <br>
-                    <input type="submit" value="Submit" id="submitButton"/>
+                    <br>
+                    <button type="submit">Submit Review</button>
                     <p></p>
                 </form>
         </div>
