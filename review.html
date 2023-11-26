@@ -122,7 +122,7 @@ body {
                     Professor:
                     <select id="professor-select" name="professor" style="width: 100%;" required>
                       {% for prof in profs: %}
-                        <option value="{{prof.name}}, {{prof.department}}">{{prof.name.capitalize()}} ({{prof.department}})</option>
+                        <option value="{{prof.name}}, {{prof.department}}">{{prof.name.title()}} ({{prof.department}})</option>
                         {% endfor %}
                     </select>
                     <br>

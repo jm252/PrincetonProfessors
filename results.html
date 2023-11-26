@@ -14,7 +14,7 @@
 
       {% for prof in professors: %}
       <tr>
-        <td>{{prof.name}}</td>
+        <td>{{prof.name.title()}}</td>
         <td>{{prof.department}}</td>
         <td>{{prof.rating}}</td>
       </tr>
