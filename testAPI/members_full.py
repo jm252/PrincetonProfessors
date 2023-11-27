@@ -8,6 +8,6 @@ if __name__ == "__main__":
 
     req = req_lib.getJSON(
         req_lib.configs.MEMBERS_FULL,
-        group="Faculty",
+        group="Department 25500 Faculty",
     )
     print(req)

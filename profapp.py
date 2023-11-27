@@ -47,9 +47,6 @@ def index():
 
 @app.route("/search_results", methods=["GET"])
 def search_results():
-    query = flask.request.args.get("search")
-    if query is None:
-        query = ""
     name = flask.request.args.get("name")
     if name is None:
         name = ""
@@ -57,7 +54,7 @@ def search_results():
     if dept is None:
         dept = ""
 
-    professors = db.query_professor_keyword(query or name, dept)
+    professors = db.query_professor_keyword(name, dept)
 
     html_code = flask.render_template("search_results.html", professors=professors)
     response = flask.make_response(html_code)

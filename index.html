@@ -7,6 +7,7 @@
       location.reload();
     }
   </script>
+  <link rel="icon" href="https://www.cs.princeton.edu/favicon">
 </head>
 <title>Princeton Professors</title>
 <meta charset="UTF-8">
@@ -147,24 +148,21 @@ body {
         <div class="w3-container">
           <br>
           <div id = "searchDiv" class="search col-sm-3">
-            <input type="text" id="searchInput" placeholder="Search.." style="max-width: 100%;">
-            <button type="button" onclick="showFilters()" id="filters">
-              Filters
-            </button>
+            <div class="name col-sm-3">
+              <input type="text" id="nameInput" placeholder="Search by Name" style="max-width: 100%;">
+              <input type="text" id="deptInput" placeholder="Search by Department" style="max-width: 100%;">
+              <!-- <button type="button" onclick="showFilters()" id="filters">
+                Filters
+              </button> -->
+            </div>
+            <hr>
           </div>
           <div id ="filtersDiv">
             <div class="name col-sm-3">
-              <input type="text" id="nameInput" placeholder="Name.." style="max-width: 100%;">
+              <!-- <input type="text" id="sortInput" placeholder="SortBy.." style="max-width: 100%;">
               <button type="button" onclick="showFilters()" id="filters">
                 Filters
-              </button>
-            </div>
-            <div class="dept col-sm-3">
-              <input type="text" id="deptInput" placeholder="Department.." style="max-width: 100%;">
-            </div>
-            <div class="rating col-sm-3">
-              <input type="text" id="ratingInput" placeholder="Rating.." style="max-width: 100%;">
-              <hr>
+              </button> -->
             </div>
           </div>
         </div>
@@ -239,17 +237,12 @@ body {
   let searchRequest = null;
 
   function getSearchResults() {
-    let search = $("#searchInput").val();
-    let encodedSearch = encodeURIComponent(search);
     let name = $("#nameInput").val();
     let encodedName = encodeURIComponent(name);
     let dept = $("#deptInput").val();
     let encodedDept = encodeURIComponent(dept);
-    let rating = $("#ratingInput").val();
-    let encodedRating = encodeURIComponent(rating);
 
-    let url = "/search_results?search=" + encodedSearch +
-          "&name=" +
+    let url = "/search_results?name=" +
           encodedName +
           "&dept=" +
           encodedDept
@@ -272,13 +265,9 @@ body {
     timer = setTimeout(getSearchResults, 500);
   }
 
-
-
   function searchSetup() {
-    $("#searchInput").on("input", debouncedGetSearchResults);
     $("#nameInput").on("input", debouncedGetSearchResults);
     $("#deptInput").on("input", debouncedGetSearchResults);
-    $("#ratingInput").on("input", debouncedGetSearchResults);
 
     getSearchResults();
   }
