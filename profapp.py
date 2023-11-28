@@ -34,12 +34,12 @@ def logoutcas():
 @app.route("/index", methods=["GET"])
 def index():
     global USERNAME
-    USERNAME = auth.authenticate()
+    # USERNAME = auth.authenticate()
 
     professors = db.get_all_professors()
 
     html_code = flask.render_template(
-        "index.html", professors=professors, username=USERNAME
+        "index.html", professors=professors
     )
     response = flask.make_response(html_code)
     return response

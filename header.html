@@ -1,3 +1,37 @@
-<hr />
-Hello {{username}}, and welcome to <strong>PrincetonProfessors.com</strong>
-<hr />
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    // Add this JavaScript function to automatically reload the page
+    function reloadPage() {
+      location.reload();
+    }
+  </script>
+  <link rel="icon" href="https://www.cs.princeton.edu/favicon">
+  <title>Princeton Professors</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+</head>
+
+<body class="w3-light-grey">
+
+<!-- Page Container -->
+
+<div class="topnav">
+  <a href="#home">Princeton Professors</a>
+  <a class= "hover" href="/review_form">Review a Professor</a>
+  <div class="dropdown">
+    <b class="dropbtn">{{username}}
+      <!-- <i class="fa fa-caret-down"></i> -->
+    </b>
+    <div class="dropdown-content">
+      <a href="/logoutcas" onclick="logout()" id = "logoutB">Logout</a>
+    </div>
+  </div>
+</div>
+
