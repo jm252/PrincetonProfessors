@@ -9,7 +9,7 @@ import dotenv
 
 app = flask.Flask(__name__, template_folder=".")
 
-app.secret_key = "APP_SECRET_KEY"
+app.secret_key = os.environ["SECRET_KEY"]
 
 dotenv.load_dotenv()
 ADMIN_USERS = os.environ["ADMIN_USERS"]
@@ -173,6 +173,18 @@ def delete_review():
     )
     response = flask.make_response(html_code)
 
+    return response
+
+@app.route("/adminSearchResults", methods=["GET"])
+def adminSearchResults():
+    prof = flask.request.args.get("prof")
+    if prof is None:
+        prof = ""
+
+    professors = db.query_professor_keyword(prof)
+
+    html_code = flask.render_template("adminSearchResults.html", professors=professors)
+    response = flask.make_response(html_code)
     return response
 
 

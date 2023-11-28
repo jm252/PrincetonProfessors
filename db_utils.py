@@ -55,7 +55,7 @@ def get_professor(name, dept):
         print(f"Error retrieving professor {name}: {ex}", file=sys.stderr)
 
 
-def query_professor_keyword(name: str, dept: str):
+def query_professor_keyword(name="", dept=""):
     try:
         with sqlalchemy.orm.Session(engine) as session:
             query = session.query(Professor).filter(

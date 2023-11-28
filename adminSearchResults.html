@@ -1,0 +1,12 @@
+<table class="table table-striped">
+        {% for prof in professors %}
+        <tr>
+            <td>
+            <a
+                target="childWindow"
+                href="/adminpagetable?profname={{prof.name}}&profdept={{prof.department}}"
+                >{{prof.name}} ({{prof.department}})</a>
+            </td>
+        </tr>
+        {% endfor %}
+</table>
