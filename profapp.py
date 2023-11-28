@@ -29,19 +29,17 @@ def logoutcas():
 
 # -----------------------------------------------------------------------
 
-
 @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
-    global USERNAME
-    # USERNAME = auth.authenticate()
-    USERNAME = "eb1889"
+
+    flask.session['username'] = auth.authenticate()
 
     professors = db.get_all_professors()
 
     html_code = flask.render_template(
         "index.html", professors=professors, 
-        username=USERNAME
+        username=flask.session.get('username')
     )
     response = flask.make_response(html_code)
     return response
@@ -67,8 +65,12 @@ def search_results():
 def review_form():
     profs = db.get_all_professors()
 
+    username = flask.session.get('username')
+    if username is None: 
+        flask.session['username'] = auth.authenticate()
+
     html_code = flask.render_template("review.html", profs=profs, 
-                                      username=USERNAME
+                                      username=flask.session.get('username')
                                     )
     response = flask.make_response(html_code)
     return response
@@ -101,7 +103,6 @@ def review():
     )
 
     allprofs = db.get_all_professors()
-    print(allprofs)
 
     html_code = flask.render_template("thanks.html")
     response = flask.make_response(html_code)
@@ -113,9 +114,6 @@ def prof_details():
     name = flask.request.args.get("name")
     dept = flask.request.args.get("dept")
 
-    print(name)
-    print(dept)
-
     reviews = db.get_reviews(name, dept)
     prof = db.get_professor(name, dept)
 
@@ -126,7 +124,11 @@ def prof_details():
 
 @app.route("/adminpage", methods=["GET"])
 def admin_page():
-    is_admin = USERNAME in ADMIN_USERS
+    username = flask.session.get('username')
+    if username is None: 
+        flask.session['username'] = auth.authenticate()
+
+    is_admin = flask.session.get('username') in ADMIN_USERS
 
     profs = db.get_all_professors()
     html_code = flask.render_template("adminpage.html", profs=profs, is_admin=is_admin)
@@ -138,8 +140,6 @@ def admin_page():
 def reg():
     profname = flask.request.args.get("profname")
     profdept = flask.request.args.get("profdept")
-    print(profname)
-    print(profdept)
     reviews = db.get_reviews(profname, profdept)
 
     # if success is False:
@@ -164,9 +164,6 @@ def delete_review():
     prof_name = flask.request.args.get("profName")
     prof_dept = flask.request.args.get("profDept")
     reviews = db.get_reviews(prof_name, prof_dept)
-
-    if not reviews:
-        print("hi")
 
     html_code = flask.render_template(
         "admintable.html", reviews=reviews, profname=prof_name
