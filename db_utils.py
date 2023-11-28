@@ -287,10 +287,10 @@ def main():
     # print('')
     # add_review('Bob', 'cos', 3, 4, 5, 3, 3, 'asdfa', 'asdfad')
 
-    professors = query_professor_keyword("k", "a", 3)
-    for professor in professors:
-        print(professor.name)
-        print(professor.department)
+    # professors = query_professor_keyword("k", "a", 3)
+    # for professor in professors:
+    #     print(professor.name)
+    #     print(professor.department)
 
     # test add professor
     # _add_professor('Jacob Colch', 'gss')
@@ -331,6 +331,11 @@ def main():
     # reviews = get_reviews("jacob colch", "gss")
     # for review in reviews:
     # print(review.reviewId)
+
+    _add_professor('Robert Dondero', "COS")
+    _add_professor('Kevin Wayne', "COS")
+    _add_professor('David Walker', "COS")
+    _add_professor('Elad Hazan', "COS")
 
 
 if __name__ == "__main__":

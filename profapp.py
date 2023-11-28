@@ -35,11 +35,13 @@ def logoutcas():
 def index():
     global USERNAME
     # USERNAME = auth.authenticate()
+    USERNAME = "eb1889"
 
     professors = db.get_all_professors()
 
     html_code = flask.render_template(
-        "index.html", professors=professors
+        "index.html", professors=professors, 
+        username=USERNAME
     )
     response = flask.make_response(html_code)
     return response
@@ -65,7 +67,9 @@ def search_results():
 def review_form():
     profs = db.get_all_professors()
 
-    html_code = flask.render_template("review.html", profs=profs, username=USERNAME)
+    html_code = flask.render_template("review.html", profs=profs, 
+                                      username=USERNAME
+                                    )
     response = flask.make_response(html_code)
     return response
 
