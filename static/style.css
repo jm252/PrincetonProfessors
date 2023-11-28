@@ -30,6 +30,10 @@ footer a {
   font-size: 17px;
 }
 
+.topnav img {
+  float: left;
+}
+
 .topnav a.hover {
   float: right;
   text-align: center;
