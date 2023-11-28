@@ -42,7 +42,7 @@ if __name__ == "__main__":
         req_lib.configs.USERS_FULL,
         uid="rdondero",
     )
-    with open("file", "w") as text_file:
-        text_file.write(json.dumps(req))
+    # with open("file", "w") as text_file:
+    #     text_file.write(json.dumps(req))
 
     print(req)
