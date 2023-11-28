@@ -332,10 +332,8 @@ def main():
     # for review in reviews:
     # print(review.reviewId)
 
-    _add_professor('Robert Dondero', "COS")
-    _add_professor('Kevin Wayne', "COS")
-    _add_professor('David Walker', "COS")
-    _add_professor('Elad Hazan', "COS")
+    _add_professor('Eden Bendory', "ECO")
+    _add_professor('Yoni Mindel', "COS")
 
 
 if __name__ == "__main__":
