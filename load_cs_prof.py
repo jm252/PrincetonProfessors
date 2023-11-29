@@ -6,7 +6,7 @@ import json
 import base64
 import requests
 import dotenv
-from db_utils import _add_professor
+from db_utils import add_professor
 
 ACCESS_TOKEN_URL = "https://api.princeton.edu:443/token"
 BASE_URL = "https://api.princeton.edu:443/active-directory/1.0.5"
@@ -56,7 +56,7 @@ def get_cs_professors():
 
 
 if __name__ == "__main__":
-    jsonProfessors = get_cs_professors()
-    for prof in jsonProfessors:
-        print(prof['full_name'])
+    cs_professors = get_cs_professors()
+    for prof in cs_professors:
+        add_professor(prof['full_name'], 'COS')
 

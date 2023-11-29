@@ -5,7 +5,7 @@
             <a
                 target="childWindow"
                 href="/adminpagetable?profname={{prof.name}}&profdept={{prof.department}}"
-                >{{prof.name}} ({{prof.department}})</a>
+                >{{prof.name.title()}} ({{prof.department}})</a>
             </td>
         </tr>
         {% endfor %}

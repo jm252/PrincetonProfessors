@@ -32,6 +32,9 @@ footer a {
 
 .topnav img {
   float: left;
+  height: 45px;
+  padding-left: 10px;
+  padding-top: 8px;
 }
 
 .topnav a.hover {

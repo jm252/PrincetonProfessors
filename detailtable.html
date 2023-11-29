@@ -6,7 +6,7 @@
     {% if not reviews %}
     <div class="container-fluid px-2.5" style="height: 100vh; display: flex; justify-content: center; align-items: center; background-color: white;">
       <div>
-        <h3>No reviews have been added for {{prof.name}} yet!</h3>
+        <h3>No reviews have been added for {{prof.name.title()}} yet!</h3>
       </div>
     </div>
 
@@ -27,7 +27,7 @@
                 <p>Overall Rating: {{review.rating}} </p> <!-- gonna have to add this  -->
                 <p>Content: {{review.content}} / 5.0 | Delivery {{review.delivery}} / 5.0 | Availability {{review.availability}} / 5.0 | Organization {{review.organization}} / 5.0</p>
                 <p>Comments: {{review.comment}}</p>
-                <p>Courses taken with {{prof.name}}: {{review.courses}}</p>
+                <p>Courses taken with {{prof.name.title()}}: {{review.courses}}</p>
                 <hr>
               </div>
             {% endfor %}

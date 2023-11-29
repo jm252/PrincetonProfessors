@@ -85,7 +85,7 @@ body {
           </div>
           {% for prof in professors: %}
           <div class="w3-container">
-            <h6 class="w3-opacity"><b>{{prof.name}}</b></h6> <p><b>Dept:</b> {{prof.department}} • <b>Rating: </b> {{prof.rating}}</p>
+            <h6 class="w3-opacity"><b>{{prof.name.title()}}</b></h6> <p><b>Dept:</b> {{prof.department}} • <b>Rating: </b> {{prof.rating}}</p>
             <hr>
           </div>
           {% endfor %}
