@@ -27,12 +27,12 @@
 
 <div class="topnav">
   <img src="https://www.cs.princeton.edu/favicon"></img>
-  <a href="/">Princeton Professors</a>
+  <a href="/index">Princeton Professors</a>
   <div class="dropdown">
-    <b class="dropbtn">{{username}}
+    <button class="dropbtn">{{username}}</button>
       <!-- <i class="fa fa-caret-down"></i> -->
-    </b>
     <div class="dropdown-content">
+      <a target="childWindow" href="/adminpage">Admin Controls</a>
       <a href="/logoutcas" onclick="logout()" id = "logoutB">Logout</a>
     </div>
   </div>

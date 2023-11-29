@@ -29,9 +29,13 @@ def logoutcas():
 
 
 # -----------------------------------------------------------------------
-
-
 @app.route("/", methods=["GET"])
+def landing():
+    html_code = flask.render_template("landing.html")
+    response = flask.make_response(html_code)
+    return response
+
+# @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
     flask.session["username"] = auth.authenticate()

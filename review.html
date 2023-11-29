@@ -23,7 +23,7 @@
                 <!-- Input boxes for searching -->
                 <form action="/review" method="get">
 
-                    Professor:
+                    <b>Professor:</b>
                     <select id="professor-select" name="professor" style="width: 100%;" required>
                       {% for prof in profs: %}
                         <option value="{{prof.name}}, {{prof.department}}">{{prof.name.title()}} ({{prof.department}})</option>
@@ -31,23 +31,25 @@
                     </select>
                     <br>
                     <br>
-                    Quality of Content
+                    <label for="content">Quality of Content <span style="color: red;">*</span></label>
                     <input type="number" name="content" min="0" max="5" step="0.1" required/>
                     <br>
-                    Quality of Delivery
-                    <input type="number" name="delivery" min="0" max="5" step="0.1" required/>
+                    <label for="content">Quality of Delivery <span style="color: red;">*</span></label>                    <input type="number" name="delivery" min="0" max="5" step="0.1" required/>
                     <br>
-                    Level of Availability
+                    <label for="content">Level of Availability <span style="color: red;">*</span></label>
                     <input type="number" name="availability" min="0" max="5" step="0.1" required/>
                     <br>
-                    Level of Organization
+                    <label for="content">Level of Organization <span style="color: red;">*</span></label>
                     <input type="number" name="organization" min="0" max="5" step="0.1" required/>
                     <br>
-                    Any Comments?
+                    <b>Any Comments?</b>
                     <textarea name="comment"> </textarea>
                     <br>
-                    Courses taken with this Professor
+                    <label for="content">Courses taken with this Professor <span style="color: red;">*</span></label>
                     <input type="text" name="courses" required/>
+                    <br>
+                    <br>
+                    <span style="color: red;">*</span> = required
                     <br>
                     <br>
                     <button type="submit">Submit Review</button>
