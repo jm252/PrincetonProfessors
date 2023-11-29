@@ -42,9 +42,10 @@ def index():
     # flask.session['username'] = "eb1889"
 
     professors = db.get_all_professors()
+    is_admin = flask.session.get("username") in ADMIN_USERS
 
     html_code = flask.render_template(
-        "index.html", professors=professors, username=flask.session.get("username")
+        "index.html", professors=professors, is_admin=is_admin, username=flask.session.get("username")
     )
     response = flask.make_response(html_code)
     return response
@@ -74,9 +75,10 @@ def review_form():
     if username is None:
         flask.session["username"] = auth.authenticate()
         # flask.session['username'] = "eb1889"
+    is_admin = flask.session.get("username") in ADMIN_USERS
 
     html_code = flask.render_template(
-        "review.html", profs=profs, username=flask.session.get("username")
+        "review.html", profs=profs, is_admin=is_admin, username=flask.session.get("username")
     )
     response = flask.make_response(html_code)
     return response
@@ -107,8 +109,8 @@ def review():
         comment,
         courses,
     )
-
-    html_code = flask.render_template("thanks.html")
+    is_admin = flask.session.get("username") in ADMIN_USERS
+    html_code = flask.render_template("thanks.html", is_admin=is_admin)
     response = flask.make_response(html_code)
     return response
 

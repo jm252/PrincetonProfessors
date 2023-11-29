@@ -32,7 +32,9 @@
     <button class="dropbtn">{{username}}</button>
       <!-- <i class="fa fa-caret-down"></i> -->
     <div class="dropdown-content">
-      <a target="childWindow" href="/adminpage">Admin Controls</a>
+      {% if is_admin: %} 
+      <a target="childWindow" href="/adminpage">Admin Controls</a> 
+      {% endif %}
       <a href="/logoutcas" onclick="logout()" id = "logoutB">Logout</a>
     </div>
   </div>
