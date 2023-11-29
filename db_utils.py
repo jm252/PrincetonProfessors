@@ -97,7 +97,7 @@ def get_reviews(name, dept):
         print(f"Error retrieving reviews for professor {name}: {ex}", file=sys.stderr)
 
 
-def _add_professor(name, dept):
+def add_professor(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
             if prof_exists(name, dept):
@@ -332,8 +332,8 @@ def main():
     # for review in reviews:
     # print(review.reviewId)
 
-    _add_professor('Eden Bendory', "ECO")
-    _add_professor('Yoni Mindel', "COS")
+    _add_professor("Eden Bendory", "ECO")
+    _add_professor("Yoni Mindel", "COS")
 
 
 if __name__ == "__main__":
