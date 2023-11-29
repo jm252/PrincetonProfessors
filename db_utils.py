@@ -61,8 +61,7 @@ def query_professor_keyword(name="", dept=""):
             query = session.query(Professor).filter(
                 Professor.name.contains(name.lower())
                 & Professor.department.contains(dept.upper())
-                # & Professor.rating.startswith(rating)
-            )
+            ).order_by(Professor.rating.desc())
             professors = query.all()
             return professors
     except Exception as ex:
@@ -90,12 +89,20 @@ def get_reviews(name, dept):
         with sqlalchemy.orm.Session(engine) as session:
             query = session.query(Review).filter(
                 Review.profId == _get_profId(name, dept)
-            )
+            ).order_by(Review.datetime.desc())
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving reviews for professor {name}: {ex}", file=sys.stderr)
 
+def get_user_reviews(username):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            query = session.query(Review).filter(Review.username == username).order_by(Review.datetime.desc())
+            table = query.all()
+            return table
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(f"Error retrieving reviews for professor {username}: {ex}", file=sys.stderr)
 
 def add_professor(name, dept):
     try:
@@ -144,23 +151,24 @@ def prof_exists(name, dept):
 # right now we require reviews to include dept and rating; this needs
 # to change going forward!!
 def add_review(
-    name, dept, content, delivery, availability, organization, comment, courses
+    name, dept, username, content, delivery, availability, organization, comment, courses
 ):
     with sqlalchemy.orm.Session(engine) as session:
         if not prof_exists(name, dept):
-            _add_professor(name, dept)
+            add_professor(name, dept)
 
         profId = _get_profId(name, dept)
 
         review = Review(
             profId=profId,
-            rating=(content + delivery + availability + organization) / 4,
+            username = username,
+            rating=(content + delivery + availability + organization)/4,
             content=content,
             delivery=delivery,
             availability=availability,
             organization=organization,
             comment=comment,
-            courses=courses,
+            courses=courses
         )
 
         session.add(review)
@@ -293,24 +301,25 @@ def main():
     #     print(professor.department)
 
     # test add professor
-    # _add_professor('Jacob Colch', 'gss')
-    # _add_professor('Yoni Min', 'lAs')
-    # _add_professor('Kayla Way', 'AaS')
-    # _add_professor("YonI mIN", 'COS')
+    # add_professor('Jacob Colch', 'gss')
+    # add_professor('Yoni Min', 'lAs')
+    # add_professor('Kayla Way', 'AaS')
+    # add_professor("YonI mIN", 'COS')
     # professors = get_all_professors()
     # for prof in professors:
     #     print(prof.profId, prof.name, prof.department)
 
     # test add review
-    # add_review("JaCoB Colch", "GSS", 5, 5, 5, 5, "Hello", "hello")
-    # add_review("YonI MIn", 'las', 5, 5, 5, 5, "Hello", "hello")
-    # add_review("YonI mIN", 'LAs', 5, 5, 5, 5, "Hello", "hello")
-    # add_review("Kayla WaY", 'aAS', 5, 5, 5, 5, "Hello", "hello")
-    # add_review("KAYla WAY", 'aaS', 5, 5, 5, 5, "Hello", "hello")
-    # add_review("YonI mIN", 'COS', 5, 5, 3, 1, "Hello" , "hello")
-    # reviews = get_all_reviews()
-    # for review in reviews:
-    #     print(review.profId, review.rating)
+    add_review("JaCoB Colch", "GSS", "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    add_review("YonI MIn", 'las', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    add_review("YonI mIN", 'LAs', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
+    add_review("YonI mIN", 'COS', "eb1889", 5, 5, 3, 1, "Hello" , "hello")
+    reviews = get_all_reviews()
+    for review in reviews:
+        print(review.profId, review.rating, review.username, review.datetime)
 
     # test delete review
     # reviews = get_reviews("kayla way", "aas")
@@ -331,9 +340,6 @@ def main():
     # reviews = get_reviews("jacob colch", "gss")
     # for review in reviews:
     # print(review.reviewId)
-
-    _add_professor("Eden Bendory", "ECO")
-    _add_professor("Yoni Mindel", "COS")
 
 
 if __name__ == "__main__":

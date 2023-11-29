@@ -4,6 +4,7 @@ import auth
 import db_utils as db
 import os
 import dotenv
+import datetime
 
 # -----------------------------------------------------------------------
 
@@ -33,7 +34,8 @@ def logoutcas():
 @app.route("/index", methods=["GET"])
 def index():
 
-    flask.session['username'] = auth.authenticate()
+    # flask.session['username'] = auth.authenticate()
+    flask.session['username'] = "eb1889"
 
     professors = db.get_all_professors()
 
@@ -67,7 +69,8 @@ def review_form():
 
     username = flask.session.get('username')
     if username is None: 
-        flask.session['username'] = auth.authenticate()
+        # flask.session['username'] = auth.authenticate()
+        flask.session['username'] = "eb1889"
 
     html_code = flask.render_template("review.html", profs=profs, 
                                       username=flask.session.get('username')
@@ -88,12 +91,13 @@ def review():
     organization = float(flask.request.args.get("organization"))
     comment = flask.request.args.get("comment")
     courses = flask.request.args.get("courses")
+    username = flask.session.get('username')
 
-    # rating = db.calc_rating(name)
-    # need to add to list of ratings and calcualte average
+
     db.add_review(
         name,
         department,
+        username,
         content,
         delivery,
         availability,
@@ -101,9 +105,7 @@ def review():
         comment,
         courses,
     )
-
-    allprofs = db.get_all_professors()
-
+    
     html_code = flask.render_template("thanks.html")
     response = flask.make_response(html_code)
     return response
@@ -126,7 +128,8 @@ def prof_details():
 def admin_page():
     username = flask.session.get('username')
     if username is None: 
-        flask.session['username'] = auth.authenticate()
+        # flask.session['username'] = auth.authenticate()
+        flask.session['username'] = "eb1889"
 
     is_admin = flask.session.get('username') in ADMIN_USERS
 

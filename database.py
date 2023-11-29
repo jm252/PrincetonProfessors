@@ -2,9 +2,9 @@
 # database.py
 # defines database schema
 #-----------------------------------------------------------------------
-
+from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Float, Integer
+from sqlalchemy import Column, String, Float, Integer, DateTime
 
 Base = declarative_base()    
 
@@ -26,6 +26,8 @@ class Review (Base):
 
     reviewId = Column(Integer, primary_key=True, autoincrement=True)
     profId = Column(Integer)
+    username = Column(String)
+    datetime = Column(DateTime, default=datetime.now)
     rating = Column(Float)
     content = Column(Float)
     delivery = Column(Float)
