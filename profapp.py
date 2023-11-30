@@ -130,7 +130,6 @@ def prof_details():
     response = flask.make_response(html_code)
     return response
 
-
 @app.route("/adminpage", methods=["GET"])
 def admin_page():
     username = flask.session.get("username")
@@ -140,8 +139,26 @@ def admin_page():
 
     is_admin = flask.session.get("username") in ADMIN_USERS
 
+    html_code = flask.render_template("adminlanding.html", is_admin=is_admin)
+    response = flask.make_response(html_code)
+    return response
+
+
+@app.route("/adminlandingpage", methods=["GET"])
+def admin_landing_page():
+    is_admin = flask.session.get("username") in ADMIN_USERS
     profs = db.get_all_professors()
     html_code = flask.render_template("adminpage.html", profs=profs, is_admin=is_admin)
+    response = flask.make_response(html_code)
+    return response
+
+@app.route("/adminusertrack", methods=["GET"])
+def admin_user_track_page():
+    
+    is_admin = flask.session.get("username") in ADMIN_USERS
+
+    usernames = db.get_all_users()
+    html_code = flask.render_template("adminusertrack.html", usernames=usernames, is_admin=is_admin)
     response = flask.make_response(html_code)
     return response
 

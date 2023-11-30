@@ -28,6 +28,15 @@ def get_all_professors():
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving all professors: {ex}", file=sys.stderr)
 
+def get_all_users():
+    try: 
+        with sqlalchemy.orm.Session(engine) as session:
+            query = session.query(Review.username).distinct()
+            usernames = [result[0] for result in query.all()]
+            return usernames
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(f"Error retrieving all users: {ex}", file = sys.stderr)
+
 
 def get_all_reviews():
     try:
@@ -102,7 +111,7 @@ def get_user_reviews(username):
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(f"Error retrieving reviews for professor {username}: {ex}", file=sys.stderr)
+        print(f"Error retrieving reviews for username {username}: {ex}", file=sys.stderr)
 
 def add_professor(name, dept):
     try:
@@ -310,14 +319,15 @@ def main():
     #     print(prof.profId, prof.name, prof.department)
 
     # test add review
-    add_review("JaCoB Colch", "GSS", "jm2889", 5, 5, 5, 5, "Hello", "hello")
-    add_review("YonI MIn", 'las', "jm2889", 5, 5, 5, 5, "Hello", "hello")
-    add_review("YonI mIN", 'LAs', "jm2889", 5, 5, 5, 5, "Hello", "hello")
-    add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
-    add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
-    add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
-    add_review("YonI mIN", 'COS', "eb1889", 5, 5, 3, 1, "Hello" , "hello")
-    reviews = get_all_reviews()
+    # add_review("JaCoB Colch", "GSS", "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    # add_review("YonI MIn", 'las', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    # add_review("YonI mIN", 'LAs', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    # add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+    # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
+    add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "Hello" , "hello")
+    users = get_all_users()
+    reviews = get_user_reviews(users[0])
     for review in reviews:
         print(review.profId, review.rating, review.username, review.datetime)
 
