@@ -14,6 +14,7 @@ app.secret_key = os.environ["SECRET_KEY"]
 
 dotenv.load_dotenv()
 ADMIN_USERS = os.environ["ADMIN_USERS"]
+BANNED_USERS = os.environ["BANNED_USERS"]
 # -----------------------------------------------------------------------
 
 
@@ -75,10 +76,12 @@ def review_form():
     if username is None:
         flask.session["username"] = auth.authenticate()
         # flask.session['username'] = "eb1889"
+
     is_admin = flask.session.get("username") in ADMIN_USERS
+    is_banned = flask.session.get("username") in BANNED_USERS
 
     html_code = flask.render_template(
-        "review.html", profs=profs, is_admin=is_admin, username=flask.session.get("username")
+        "review.html", profs=profs, is_admin=is_admin, is_banned=is_banned, username=flask.session.get("username")
     )
     response = flask.make_response(html_code)
     return response

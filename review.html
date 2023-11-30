@@ -11,14 +11,16 @@
   <p></p>
   
     <!-- Left Column -->
-    
+    {% if is_banned: %} 
+            You have been banned from submitting reviews. If you belive this to be a mistake, please contact a Princeton Professors system administrator.  
+        {% else %}
       <div class="w3-white w3-text-grey w3-card-4">
         <div class="w3-display-container">
           <div class="w3-display-bottomleft w3-container w3-text-black">
           </div>
         </div>
         <div id="review-form" class="w3-container">
-                <h2>Submit a Review</h2>
+          <h2>Submit a Review</h2>
               
                 <!-- Input boxes for searching -->
                 <form action="/review" method="get">
@@ -45,8 +47,8 @@
                     <b>Any Comments?</b>
                     <textarea name="comment"> </textarea>
                     <br>
-                    <label for="content">Courses taken with this Professor <span style="color: red;">*</span></label>
-                    <input type="text" name="courses" required/>
+                    <label>If this review applies to a specific course(s), please list them below:</label>
+                    <input type="text" name="courses"/>
                     <br>
                     <br>
                     <span style="color: red;">*</span> = required
@@ -54,13 +56,19 @@
                     <br>
                     <a href="/index"><button style="background-color: red; color: white;">Discard</button></a>
                     <button type="submit">Submit Review</button>
-                    <p></p>
+                    <br>
+                    <br>
+                    <p class="footnote"> Please Note: </p>
+                    <p class="footnote"> * &nbsp <b>Once a review is submitted, it cannot be edited or deleted.</b></p>
+                    <p class="footnote"> ** <b>If untruthful or innapropriate material is submitted, a user may be barred.</b></p>
+                    <br>
                 </form>
         </div>
       </div><br>
     
   <!-- End Grid -->
   </div>
+  {% endif %} 
   
   <!-- End Page Container -->
 </div>

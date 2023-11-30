@@ -128,6 +128,12 @@ label {
 }
 
 input[type="number"] {
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+input[type="text"] {
   width: 100%;
   padding: 8px;
   margin-bottom: 16px;
@@ -153,6 +159,13 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+.footnote {
+  font-size: 10px;
+  color: black; 
+  padding: 0; 
+  margin: 0;
 }
 
 /* Style for the Select2 dropdown
