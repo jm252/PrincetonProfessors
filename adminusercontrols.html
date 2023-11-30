@@ -27,12 +27,6 @@
       </center>
       <div class="row">
         <div class="search col-sm-3">
-          <input
-            type="text"
-            id="adminProfSearchInput"
-            placeholder="Search by professor name..."
-            autofocus
-          />
           <hr>
           <input
             type="text"
@@ -46,7 +40,7 @@
     {% if not is_admin: %} 
         You cannot access this page. 
     {% else %}
-      <div id="searchResults"></div>
+      <div id="usersearchResults"></div>
     {% endif %}
 
     <div class="container-fluid footer">
