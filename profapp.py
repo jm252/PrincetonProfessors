@@ -220,6 +220,13 @@ def delete_review():
 
     return response
 
+@app.route("/delete_all_reviews", methods=["DELETE"])
+def delete_all_reviews():
+    username = flask.request.args.get("username")
+    db.delete_all_reviews(username)
+
+    return "All reviews deleted successfully"
+
 
 @app.route("/adminSearchResults", methods=["GET"])
 def adminSearchResults():

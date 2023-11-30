@@ -272,6 +272,18 @@ def delete_review(review_id):
     except Exception as ex:
         print(f"Error deleting review {review_id}: {ex}", file=sys.stderr)
 
+# Add this function to your db_utils.py file
+def delete_all_reviews(username):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            reviews = session.query(Review).filter(Review.username == username).all()
+
+            for review in reviews:
+                reviewId = review.reviewId
+                delete_review(reviewId)
+
+    except Exception as ex:
+        print(f"Error deleting all reviews for {username}: {ex}", file=sys.stderr)
 
 def print_object_contents(obj):
     for key, value in vars(obj).items():

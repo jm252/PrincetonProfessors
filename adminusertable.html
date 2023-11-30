@@ -37,6 +37,8 @@
 
     {% else %}
 
+    <button onclick="deleteAllUserReviews('{{ username }}')">Delete All Reviews</button>
+
     {% for review in reviews %}
     <div class="w3-container">
       <!-- make for loop for all reviews  -->
@@ -92,4 +94,26 @@
     }
     
   }
+
+  function handleDeleteAllResponse(data) {
+        location.reload();
+  }
+
+  function deleteAllUserReviews(username) {
+        var result = confirm("Are you sure you want to delete all reviews for " + username + "?");
+        if (result) {
+            console.log("Deleting all reviews for " + username);
+            let url = "/delete_all_reviews?username=" + username;
+
+            let deleteAllRequestData = {
+                type: "DELETE",
+                url: url,
+                success: handleDeleteAllResponse,
+                error: handleError,
+            };
+
+            $.ajax(deleteAllRequestData);
+        }
+  }
+
 </script>
