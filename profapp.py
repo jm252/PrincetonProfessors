@@ -159,6 +159,26 @@ def admin_user_track_page():
     response = flask.make_response(html_code)
     return response
 
+@app.route("/adminusertable", methods=["GET"])
+def admin_user_table():
+    
+    username = flask.request.args.get("username")
+    reviews = db.get_user_reviews(username)
+    print("hello")
+
+    # if success is False:
+    #     message = table.get('error_msg')
+    #     error_type = table.get('error_type')
+    #     html_code = flask.render_template('error.html', message=message,
+    #                                     error_type=error_type)
+    # else:
+    html_code = flask.render_template(
+        "adminusertable.html", reviews=reviews, username=username
+    )
+    response = flask.make_response(html_code)
+
+    return response
+
 
 @app.route("/adminpagetable", methods=["GET"])
 def reg():
