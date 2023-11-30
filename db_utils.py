@@ -113,6 +113,16 @@ def get_user_reviews(username):
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving reviews for username {username}: {ex}", file=sys.stderr)
 
+def get_prof_from_review(review):
+    try: 
+        with sqlalchemy.orm.Session(engine) as session:
+            profId = review.profId
+            prof = session.query(Professor).filter(Professor.profId == profId).first()
+            return prof
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(f"Error identifying professor for review")
+
+
 def add_professor(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:

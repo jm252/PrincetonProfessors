@@ -25,7 +25,9 @@
 <!-- <script src="path/to/db_utils.js"></script>
 <script src="path/to/main.js"></script> -->
 <div class="container-fluid">
+<a href="/adminuserpage">Go back</a>
 <h3>Displaying all reviews for {{username}}:</h3>
+<hr>
 
 <table class="table table-striped">
 
@@ -38,9 +40,12 @@
     {% for review in reviews %}
     <div class="w3-container">
       <!-- make for loop for all reviews  -->
+      {% set professor = get_professor(review) %}
+      <h2>{{professor.name}}</h2>
       <p>Overall Rating: {{review.rating}} </p> <!-- gonna have to add this  -->
       <p>Content: {{review.content}} / 5.0 | Delivery {{review.delivery}} / 5.0 | Availability {{review.availability}} / 5.0 | Organization {{review.organization}} / 5.0</p>
       <p>Comments: {{review.comment}}</p>
+      <p>Courses taken with {{professor.name}}: {{review.courses}}</p>
       <!-- *** WE NEED TO ADD A FUNCTION IN UTILS TO BE ABLE TO DELETE AN INDIVIDUAL REVIEW! -->
       <!-- <button onclick="deleteReview('{{review.reviewId}}', '{{profname}}', '{{profdept}}')">Delete</button> -->
       <hr>

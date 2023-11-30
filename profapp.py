@@ -168,7 +168,7 @@ def admin_user_table():
     
     username = flask.request.args.get("username")
     reviews = db.get_user_reviews(username)
-    print("hello")
+    prof = db.get_prof_from_review
 
     # if success is False:
     #     message = table.get('error_msg')
@@ -177,7 +177,7 @@ def admin_user_table():
     #                                     error_type=error_type)
     # else:
     html_code = flask.render_template(
-        "adminusertable.html", reviews=reviews, username=username
+        "adminusertable.html", reviews=reviews, username=username,  get_professor=db.get_prof_from_review
     )
     response = flask.make_response(html_code)
 
