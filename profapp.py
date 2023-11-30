@@ -14,7 +14,7 @@ app.secret_key = os.environ["SECRET_KEY"]
 
 dotenv.load_dotenv()
 ADMIN_USERS = os.environ["ADMIN_USERS"]
-BANNED_USERS = os.environ["BANNED_USERS"]
+# BANNED_USERS = os.environ["BANNED_USERS"]
 # -----------------------------------------------------------------------
 
 
@@ -78,10 +78,11 @@ def review_form():
         # flask.session['username'] = "eb1889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
-    is_banned = flask.session.get("username") in BANNED_USERS
+    # is_banned = flask.session.get("username") in BANNED_USERS
 
     html_code = flask.render_template(
-        "review.html", profs=profs, is_admin=is_admin, is_banned=is_banned, username=flask.session.get("username")
+        # "review.html", profs=profs, is_admin=is_admin, is_banned=is_banned, username=flask.session.get("username")
+        "review.html", profs=profs, is_admin=is_admin, username=flask.session.get("username")
     )
     response = flask.make_response(html_code)
     return response
@@ -130,7 +131,7 @@ def prof_details():
     response = flask.make_response(html_code)
     return response
 
-@app.route("/adminpage", methods=["GET"])
+@app.route("/adminlandingpage", methods=["GET"])
 def admin_page():
     username = flask.session.get("username")
     if username is None:
@@ -144,7 +145,7 @@ def admin_page():
     return response
 
 
-@app.route("/adminlandingpage", methods=["GET"])
+@app.route("/adminpage", methods=["GET"])
 def admin_landing_page():
     is_admin = flask.session.get("username") in ADMIN_USERS
     profs = db.get_all_professors()
