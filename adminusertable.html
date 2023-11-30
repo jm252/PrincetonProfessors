@@ -47,7 +47,7 @@
       <p>Comments: {{review.comment}}</p>
       <p>Courses taken with {{professor.name}}: {{review.courses}}</p>
       <!-- *** WE NEED TO ADD A FUNCTION IN UTILS TO BE ABLE TO DELETE AN INDIVIDUAL REVIEW! -->
-      <!-- <button onclick="deleteReview('{{review.reviewId}}', '{{profname}}', '{{profdept}}')">Delete</button> -->
+      <button onclick="deleteReview('{{review.reviewId}}', '{{professor.name}}', '{{professor.department}}')">Delete</button>
       <hr>
     </div>
     {% endfor %}
