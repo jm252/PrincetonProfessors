@@ -145,21 +145,21 @@ def admin_page():
     return response
 
 
-@app.route("/adminpage", methods=["GET"])
+@app.route("/adminprofpage", methods=["GET"])
 def admin_landing_page():
     is_admin = flask.session.get("username") in ADMIN_USERS
     profs = db.get_all_professors()
-    html_code = flask.render_template("adminpage.html", profs=profs, is_admin=is_admin)
+    html_code = flask.render_template("adminprofpage.html", profs=profs, is_admin=is_admin)
     response = flask.make_response(html_code)
     return response
 
-@app.route("/adminusertrack", methods=["GET"])
+@app.route("/adminuserpage", methods=["GET"])
 def admin_user_track_page():
     
     is_admin = flask.session.get("username") in ADMIN_USERS
 
     usernames = db.get_all_users()
-    html_code = flask.render_template("adminusertrack.html", usernames=usernames, is_admin=is_admin)
+    html_code = flask.render_template("adminuserpage.html", usernames=usernames, is_admin=is_admin)
     response = flask.make_response(html_code)
     return response
 
@@ -184,7 +184,7 @@ def admin_user_table():
     return response
 
 
-@app.route("/adminpagetable", methods=["GET"])
+@app.route("/adminproftable", methods=["GET"])
 def reg():
     profname = flask.request.args.get("profname")
     profdept = flask.request.args.get("profdept")
@@ -197,7 +197,7 @@ def reg():
     #                                     error_type=error_type)
     # else:
     html_code = flask.render_template(
-        "admintable.html", reviews=reviews, profname=profname, profdept=profdept
+        "adminproftable.html", reviews=reviews, profname=profname, profdept=profdept
     )
     response = flask.make_response(html_code)
 
@@ -214,7 +214,7 @@ def delete_review():
     reviews = db.get_reviews(prof_name, prof_dept)
 
     html_code = flask.render_template(
-        "admintable.html", reviews=reviews, profname=prof_name
+        "adminproftable.html", reviews=reviews, profname=prof_name
     )
     response = flask.make_response(html_code)
 
