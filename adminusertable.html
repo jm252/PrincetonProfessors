@@ -37,7 +37,7 @@
 
     {% else %}
 
-    <button onclick="deleteAllUserReviews('{{ username }}')">Delete All Reviews</button>
+    <button onclick="blockUserAndDeleteAllUserReviews('{{ username }}')">Delete All Reviews and Block this user</button>
 
     {% for review in reviews %}
     <div class="w3-container">
@@ -99,8 +99,8 @@
         location.reload();
   }
 
-  function deleteAllUserReviews(username) {
-        var result = confirm("Are you sure you want to delete all reviews for " + username + "?");
+  function blockUserAndDeleteAllUserReviews(username) {
+        var result = confirm("Are you sure you want to block " + username + " and delete all of their reviews?");
         if (result) {
             console.log("Deleting all reviews for " + username);
             let url = "/delete_all_reviews?username=" + username;
