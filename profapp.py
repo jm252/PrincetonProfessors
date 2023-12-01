@@ -38,17 +38,21 @@ def landing():
     response = flask.make_response(html_code)
     return response
 
+
 # @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
-    flask.session["username"] = auth.authenticate()
-    # flask.session['username'] = "eb1889"
+    # flask.session["username"] = auth.authenticate()
+    flask.session["username"] = "jm2889"
 
     professors = db.get_all_professors()
     is_admin = flask.session.get("username") in ADMIN_USERS
 
     html_code = flask.render_template(
-        "index.html", professors=professors, is_admin=is_admin, username=flask.session.get("username")
+        "index.html",
+        professors=professors,
+        is_admin=is_admin,
+        username=flask.session.get("username"),
     )
     response = flask.make_response(html_code)
     return response
@@ -76,14 +80,18 @@ def review_form():
 
     username = flask.session.get("username")
     if username is None:
-        flask.session["username"] = auth.authenticate()
-        # flask.session['username'] = "eb1889"
+        # flask.session["username"] = auth.authenticate()
+        flask.session["username"] = "jm2889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
     is_banned = flask.session.get("username") in BANNED_USERS
 
     html_code = flask.render_template(
-        "review.html", profs=profs, is_admin=is_admin, is_banned=is_banned, username=flask.session.get("username")
+        "review.html",
+        profs=profs,
+        is_admin=is_admin,
+        is_banned=is_banned,
+        username=flask.session.get("username"),
     )
     response = flask.make_response(html_code)
     return response
@@ -132,16 +140,19 @@ def prof_details():
     response = flask.make_response(html_code)
     return response
 
+
 @app.route("/adminlandingpage", methods=["GET"])
 def admin_page():
     username = flask.session.get("username")
     if username is None:
-        flask.session["username"] = auth.authenticate()
-        # flask.session['username'] = "eb1889"
+        # flask.session["username"] = auth.authenticate()
+        flask.session["username"] = "jm2889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
 
-    html_code = flask.render_template("adminlanding.html", is_admin=is_admin, username=username)
+    html_code = flask.render_template(
+        "adminlanding.html", is_admin=is_admin, username=username
+    )
     response = flask.make_response(html_code)
     return response
 
@@ -150,23 +161,27 @@ def admin_page():
 def admin_landing_page():
     is_admin = flask.session.get("username") in ADMIN_USERS
     profs = db.get_all_professors()
-    html_code = flask.render_template("adminprofpage.html", profs=profs, is_admin=is_admin)
+    html_code = flask.render_template(
+        "adminprofpage.html", profs=profs, is_admin=is_admin
+    )
     response = flask.make_response(html_code)
     return response
+
 
 @app.route("/adminuserpage", methods=["GET"])
 def admin_user_track_page():
-    
     is_admin = flask.session.get("username") in ADMIN_USERS
 
     usernames = db.get_all_users()
-    html_code = flask.render_template("adminuserpage.html", usernames=usernames, is_admin=is_admin)
+    html_code = flask.render_template(
+        "adminuserpage.html", usernames=usernames, is_admin=is_admin
+    )
     response = flask.make_response(html_code)
     return response
 
+
 @app.route("/adminusertable", methods=["GET"])
 def admin_user_table():
-    
     username = flask.request.args.get("username")
     reviews = db.get_user_reviews(username)
     prof = db.get_prof_from_review
@@ -178,7 +193,10 @@ def admin_user_table():
     #                                     error_type=error_type)
     # else:
     html_code = flask.render_template(
-        "adminusertable.html", reviews=reviews, username=username,  get_professor=db.get_prof_from_review
+        "adminusertable.html",
+        reviews=reviews,
+        username=username,
+        get_professor=db.get_prof_from_review,
     )
     response = flask.make_response(html_code)
 
@@ -221,6 +239,7 @@ def delete_review():
 
     return response
 
+
 @app.route("/delete_all_reviews", methods=["DELETE"])
 def delete_all_reviews():
     username = flask.request.args.get("username")
@@ -233,15 +252,28 @@ def delete_all_reviews():
     return "All reviews deleted successfully"
 
 
-@app.route("/adminSearchResults", methods=["GET"])
-def adminSearchResults():
+@app.route("/adminProfResults", methods=["GET"])
+def adminProfResults():
     prof = flask.request.args.get("prof")
     if prof is None:
         prof = ""
 
     professors = db.query_professor_keyword(prof)
 
-    html_code = flask.render_template("adminSearchResults.html", professors=professors)
+    html_code = flask.render_template("adminProfResults.html", professors=professors)
+    response = flask.make_response(html_code)
+    return response
+
+
+@app.route("/adminUserResults", methods=["GET"])
+def adminUserResults():
+    user = flask.request.args.get("user")
+    if user is None:
+        user = ""
+
+    usernames = db.query_username_keyword(user)
+
+    html_code = flask.render_template("adminUserResults.html", usernames=usernames)
     response = flask.make_response(html_code)
     return response
 

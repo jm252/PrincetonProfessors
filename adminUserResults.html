@@ -1,0 +1,12 @@
+<table class="table table-striped" id="adminusertable">
+    {% for username in usernames %}
+    <tr>
+        <td>
+        <a
+            target="childWindow"
+            href="/adminusertable?username={{username}}"
+            >{{username}}</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

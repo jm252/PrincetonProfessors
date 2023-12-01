@@ -28,7 +28,7 @@
         <div class="search col-sm-3">
           <input
             type="text"
-            id="adminProfSearchInput"
+            id="adminUserSearchInput"
             placeholder="Search by username..."
             autofocus
           />
@@ -39,18 +39,7 @@
     {% if not is_admin: %} 
         You cannot access this page. 
     {% else %}
-    <table class="table table-striped" id="adminusertable">
-        {% for username in usernames %}
-        <tr>
-            <td>
-            <a
-                target="childWindow"
-                href="/adminusertable?username={{username}}"
-                >{{username}}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+      <div id="searchResults"></div>
     {% endif %}
 
     <div class="container-fluid footer">
@@ -59,3 +48,57 @@
           Waitman
       </center>
     </div>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+      "use strict";
+
+      function handleResponse(data) {
+        $("#searchResults").html(data);
+      }
+
+      function handleError() {
+        alert("Error: Failed to fetch data from server");
+      }
+
+      let request = null;
+
+      function getResults() {
+        let adminSearch = $("#adminUserSearchInput").val();
+        let encodedAdminSearch = encodeURIComponent(adminSearch);
+
+        let url =
+          "/adminUserResults?user=" +
+          encodedAdminSearch;
+
+        if (request !== null) request.abort();
+
+        let requestData = {
+          type: "GET",
+          url: url,
+          success: handleResponse,
+          error: handleError,
+        };
+        $.ajax(requestData);
+      }
+
+      let timer = null;
+
+      function debouncedGetResults() {
+        clearTimeout(timer);
+        timer = setTimeout(getResults, 500);
+      }
+
+      function setup() {
+        $("#adminUserSearchInput").on("input", debouncedGetResults);
+
+        getResults();
+      }
+
+      $("document").ready(setup);
+    </script>
+
+</body>
+</html>

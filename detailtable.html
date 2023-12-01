@@ -1,65 +1,94 @@
 <!DOCTYPE html>
-    <html>
+<html>
+  <script
+    src="https://kit.fontawesome.com/a076d05399.js"
+    crossorigin="anonymous"
+  ></script>
 
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    
-    {% if not reviews %}
-    <div class="container-fluid px-2.5" style="height: 100vh; display: flex; justify-content: center; align-items: center; background-color: white;">
-      <div>
-        <h3>No reviews have been added for {{prof.name.title()}} yet!</h3>
+  {% if not reviews %}
+  <div
+    class="container-fluid px-2.5"
+    style="
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+    "
+  >
+    <div>
+      <h3>No reviews have been added for {{prof.name.title()}} yet!</h3>
+    </div>
+  </div>
+
+  {% else %}
+  <div class="container-fluid px-2.5">
+    <div class="w3-container w3-white w3-margin-bottom">
+      <h2 class="w3-text-grey w3-padding-16">
+        <i
+          class="fa fa-user w3-margin-right w3-text-blue"
+          style="font-size: 36px"
+        ></i
+        >{{prof.name.title()}}
+      </h2>
+      <h5 class="w3-opacity"><b>Department: {{prof.department}}</b></h5>
+      <h5 class="w3-opacity"><b>{{prof.numratings}} Reviews</b></h5>
+      <br />
+    </div>
+    <div class="w3-container w3-white w3-margin-bottom">
+      <h2 class="w3-text-grey w3-padding-16">
+        <i
+          class="fa fa-comments fa-fw w3-margin-right w3-xxlarge w3-text-blue"
+        ></i
+        >Student Feedback:
+      </h2>
+
+      <style>
+        .review-box {
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 15px;
+          margin-bottom: 20px;
+        }
+
+        .review-box p {
+          margin: 0;
+          padding: 5px 0;
+        }
+
+        .even-box {
+          background-color: #f5f8fa; /* Light blue for even boxes */
+        }
+
+        .odd-box {
+          background-color: #f0f0f0; /* Light gray for odd boxes */
+        }
+      </style>
+      <div class="w3-container w3-white w3-margin-bottom">
+        <!-- <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-comments fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>Student Feedback:</h2> -->
+
+        {% for review in reviews %}
+        <div
+          class="w3-container review-box {% if loop.index is even %}even-box{% else %}odd-box{% endif %}"
+        >
+          <!-- make for loop for all reviews  -->
+          <p><strong>Overall Rating:</strong> {{ review.rating }}</p>
+          <p>
+            <strong>Content:</strong> {{ review.content }} / 5.0 |
+            <strong>Delivery:</strong> {{ review.delivery }} / 5.0 |
+            <strong>Availability:</strong> {{ review.availability }} / 5.0 |
+            <strong>Organization:</strong> {{ review.organization }} / 5.0
+          </p>
+          <p><strong>Comments:</strong> {{ review.comment }}</p>
+          <p>
+            <strong>Courses taken with {{ prof.name.title() }}:</strong> {{
+            review.courses }}
+          </p>
+          <p><strong>Year:</strong> {{ review.datetime.strftime('%Y') }}</p>
+        </div>
+        {% endfor %}
       </div>
     </div>
-
-    {% else %}
-    <div class="container-fluid px-2.5">
-        <div class="w3-container w3-white w3-margin-bottom">
-            <h2 class="w3-text-grey w3-padding-16"><i class='fa fa-user w3-margin-right w3-text-blue' style='font-size:36px'></i>{{prof.name.title()}}</h2>
-            <h5 class="w3-opacity"><b>Department: {{prof.department}}</b></h5>
-            <h5 class="w3-opacity"><b>{{prof.numratings}} Reviews</b></h5>
-            <br>
-          </div>
-          <div class="w3-container w3-white w3-margin-bottom">
-            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-comments fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>Student Feedback:</h2>
-
-            <style>
-              .review-box {
-                  border: 1px solid #ddd;
-                  border-radius: 8px;
-                  padding: 15px;
-                  margin-bottom: 20px;
-              }
-          
-              .review-box p {
-                  margin: 0;
-                  padding: 5px 0;
-              }
-          
-              .even-box {
-        background-color: #f5f8fa; /* Light blue for even boxes */
-    }
-
-    .odd-box {
-        background-color: #f0f0f0; /* Light gray for odd boxes */
-    }
-          </style>
-          <div class="w3-container w3-white w3-margin-bottom">
-            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-comments fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>Student Feedback:</h2>
-        
-            {% for review in reviews %}
-                <div class="w3-container review-box {% if loop.index is even %}even-box{% else %}odd-box{% endif %}">
-                    <!-- make for loop for all reviews  -->
-                    <p><strong>Overall Rating:</strong> {{ review.rating }}</p>
-                    <p>
-                        <strong>Content:</strong> {{ review.content }} / 5.0 |
-                        <strong>Delivery:</strong> {{ review.delivery }} / 5.0 |
-                        <strong>Availability:</strong> {{ review.availability }} / 5.0 |
-                        <strong>Organization:</strong> {{ review.organization }} / 5.0
-                    </p>
-                    <p><strong>Comments:</strong> {{ review.comment }}</p>
-                    <p><strong>Courses taken with {{ prof.name.title() }}:</strong> {{ review.courses }}</p>
-                    <p><strong>Year:</strong> {{ review.datetime.strftime('%Y') }}</p>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
     {% endif %}
+  </div>
+</html>
