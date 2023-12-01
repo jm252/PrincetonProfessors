@@ -21,8 +21,7 @@
         </div>
         <div id="review-form" class="w3-container">
           <h2>Submit a Review</h2>
-              
-                <!-- Input boxes for searching -->
+                          <!-- Input boxes for searching -->
                 <form action="/review" method="get">
 
                     <b>Professor:</b>
@@ -32,6 +31,13 @@
                         {% endfor %}
                     </select>
                     <br>
+                    <br>
+                    <div style="background-color: #f2f2f2; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                      <p style="font-size: 16px; color: #333;">
+                        Please rate each category on a scale from 0 to 5, with 5 being the best.
+                        You can list ratings up to one decimal place (e.g., 4.5) to indicate greater precision.
+                      </p>
+                    </div>
                     <br>
                     <label for="content">Quality of Content <span style="color: red;">*</span></label>
                     <input type="number" name="content" min="0" max="5" step="0.1" required/>
@@ -60,7 +66,7 @@
                     <br>
                     <p class="footnote"> Please Note: </p>
                     <p class="footnote"> * &nbsp <b>Once a review is submitted, it cannot be edited or deleted.</b></p>
-                    <p class="footnote"> ** <b>If untruthful or innapropriate material is submitted, a user may be barred.</b></p>
+                    <p class="footnote"> ** <b>If untruthful or innapropriate material is submitted, we reserve the right to bar a user and/or delete all of the user's existent reviews.</b></p>
                     <br>
                 </form>
         </div>
