@@ -1,3 +1,22 @@
+<style>
+  .card-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      margin: -10px; 
+  }
+
+  .card {
+      flex: 1 1 calc(33.33% - 20px); /* Adjust the width of each card as needed */
+      margin: 10px; /* Adjust the margin to add space between cards */
+      padding: 20px;
+      border: 1px solid #ddd; /* Add a border for separation */
+      border-radius: 5px; /* Optional: Add rounded corners */
+      background-color: #cdeccd; /* Set the background color */
+  }
+</style>
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,9 +57,10 @@
     {% else %}
 
     <button onclick="blockUserAndDeleteAllUserReviews('{{ username }}')">Delete All Reviews and Block this user</button>
+    <div class="card-wrapper"></div>
 
     {% for review in reviews %}
-    <div class="w3-container">
+    <div class="card">
       <!-- make for loop for all reviews  -->
       {% set professor = get_professor(review) %}
       <h2>{{professor.name}}</h2>
@@ -53,6 +73,7 @@
       <hr>
     </div>
     {% endfor %}
+  </div>
     {% endif %}
     <a href="/adminuserpage">Go back to all users</a>
 </table>
