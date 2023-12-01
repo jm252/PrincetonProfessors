@@ -4,6 +4,7 @@ import auth
 import db_utils as db
 import os
 import dotenv
+import ast
 import datetime
 
 # -----------------------------------------------------------------------
@@ -14,7 +15,8 @@ app.secret_key = os.environ["SECRET_KEY"]
 
 dotenv.load_dotenv()
 ADMIN_USERS = os.environ["ADMIN_USERS"]
-# BANNED_USERS = os.environ["BANNED_USERS"]
+banned_users_str = os.environ.get("BANNED_USERS", "[]")
+BANNED_USERS = ast.literal_eval(banned_users_str)
 # -----------------------------------------------------------------------
 
 
@@ -78,11 +80,10 @@ def review_form():
         # flask.session['username'] = "eb1889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
-    # is_banned = flask.session.get("username") in BANNED_USERS
+    is_banned = flask.session.get("username") in BANNED_USERS
 
     html_code = flask.render_template(
-        # "review.html", profs=profs, is_admin=is_admin, is_banned=is_banned, username=flask.session.get("username")
-        "review.html", profs=profs, is_admin=is_admin, username=flask.session.get("username")
+        "review.html", profs=profs, is_admin=is_admin, is_banned=is_banned, username=flask.session.get("username")
     )
     response = flask.make_response(html_code)
     return response
@@ -223,6 +224,10 @@ def delete_review():
 @app.route("/delete_all_reviews", methods=["DELETE"])
 def delete_all_reviews():
     username = flask.request.args.get("username")
+
+    BANNED_USERS.append(username)
+    os.environ["BANNED_USERS"] = str(BANNED_USERS)
+
     db.delete_all_reviews(username)
 
     return "All reviews deleted successfully"
