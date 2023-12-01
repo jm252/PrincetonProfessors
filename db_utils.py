@@ -2,6 +2,7 @@ import os
 import sys
 import psycopg2
 import sqlalchemy
+from sqlalchemy import distinct
 import sqlalchemy.orm
 import sqlalchemy.exc
 import dotenv
@@ -75,6 +76,20 @@ def query_professor_keyword(name="", dept=""):
             return professors
     except Exception as ex:
         print(f"Error retrieving query {name}, {dept}: {ex}", file=sys.stderr)
+
+def query_username_keyword(username=""):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            query = (
+                session.query(distinct(Review.username))
+                .filter(Review.username.ilike(f"%{username}%"))
+            )
+            usernames = [result[0] for result in query.all()]
+
+            return usernames
+    except Exception as e:
+        print(f"Error querying distinct usernames with keyword: {e}")
+
 
 
 def _get_profId(name, dept):
@@ -347,11 +362,13 @@ def main():
     # add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
-    add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "Hello" , "hello")
+    #add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "Hello" , "hello")
     users = get_all_users()
-    reviews = get_user_reviews(users[0])
-    for review in reviews:
-        print(review.profId, review.rating, review.username, review.datetime)
+    print(users)
+    print(query_username_keyword('f'))
+    #reviews = get_user_reviews(users[0])
+    #for review in reviews:
+    #    print(review.profId, review.rating, review.username, review.datetime)
 
     # test delete review
     # reviews = get_reviews("kayla way", "aas")
