@@ -5,7 +5,7 @@ body {
 
 footer {
   overflow: hidden;
-  background-color: #151A7B;
+  background-color: rgb(71, 135, 232);
 }
 
 footer p {
@@ -16,9 +16,25 @@ footer a {
   color: #f2f2f2;
 }
 
+.adminbody {
+  background-color: rgb(71, 135, 232);
+  color: white
+}
+
+.adminheader,
+.adminfooter {
+  background-color: white;
+  color: rgb(71, 135, 232);
+}
+
+.header {
+  background-color: white;
+  color: rgb(71, 135, 232);
+}
+
 .topnav {
   overflow: hidden;
-  background-color: #151A7B;
+  background-color: rgb(71, 135, 232);
 }
 
 .topnav a {

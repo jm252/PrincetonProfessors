@@ -17,24 +17,36 @@
         background-color: #06839a;
         color: white;
       }
+
+      .search-container {
+      max-width: 400px;
+      margin: 20 auto;
+    }
+
+    .adminbody {
+      background-color: rgb(71, 135, 232);
+      color: white;
+    }
     </style>
   </head>
 
   <body>
+    <div class="adminbody
     <div class="container-fluid header">
       <center>
         <h1>Admin Control Panel</h1>
-      </center>
-      <div class="row">
-        <div class="search col-sm-3">
-          <hr>
-          <input
-            type="text"
-            id="adminUserSearchInput"
-            placeholder="Search by username..."
-          />
+        <div class="row">
+          <div class="search-container">
+            <hr>
+            <input
+              type="text"
+              id="adminUserSearchInput"
+              placeholder="Search by username..."
+            />
+          </div>
         </div>
-      </div>
+      </center>
+      
       <br/>
     </div>
     {% if not is_admin: %} 
@@ -101,5 +113,6 @@
       $("document").ready(setup);
     </script>
 
+  </div>
   </body>
 </html>

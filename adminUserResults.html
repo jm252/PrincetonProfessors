@@ -1,5 +1,28 @@
-<table class="table table-striped" id="adminusertable">
-    {% for username in usernames %}
+<style>
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      width: 100%;
+      padding: 30px;
+    }
+    
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    
+    
+    .container {
+      padding: 2px 8px;
+    }
+
+    .card-link {
+      text-decoration: none; /* Remove underline */
+      color: #333; /* Set the color to a desired value */
+    }
+    </style>
+
+{% for username in usernames %}
+<table class="card" id="adminusertable">
     <tr>
         <td>
         <a
@@ -8,5 +31,6 @@
             >{{username}}</a>
         </td>
     </tr>
-    {% endfor %}
+    
 </table>
+{% endfor %}

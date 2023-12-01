@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="style.css" />
 
 <html>
   <head>
@@ -12,43 +13,51 @@
     />
 
     <style>
-      .header,
-      .footer {
-        background-color: #06839a;
-        color: white;
+      .adminheader,
+      .adminfooter {
+        background-color: white;
+        color: rgb(71, 135, 232);
       }
+
+      .adminbody {
+        background-color: rgb(71, 135, 232);
+        color: white
+      }
+
+      .search-container {
+      max-width: 400px;
+      margin: 20 auto;
+    }
     </style>
   </head>
 
   <body>
-    <div class="container-fluid header">
+  <div class="adminbody">
+    <div class="adminheader container-fluid ">
       <center>
         <h1>Admin Control Panel</h1>
-      </center>
-      <div class="row">
-        <div class="search col-sm-3">
-          <input
-            type="text"
-            id="adminProfSearchInput"
-            placeholder="Search by professor name..."
-            autofocus
-          />
+        <div class="search-container">
+          <div class="row">
+        
+            <input
+              type="text"
+              id="adminProfSearchInput"
+              placeholder="Search by professor name..."
+              autofocus
+            />
         </div>
-      </div>
-      <br/>
+        </div>
+        <br>
+        <a href="/adminlandingpage">Go Back</a>
+        <br>    
+        <br>  
+    </center>
     </div>
     {% if not is_admin: %} 
         You cannot access this page. 
     {% else %}
       <div id="searchResults"></div>
     {% endif %}
-
-    <div class="container-fluid footer">
-      <center>
-          Created by Eden Bendory, Jacob Colchamiro, Jonathan Mindel, Kayla
-          Waitman
-      </center>
-    </div>
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -101,5 +110,6 @@
       $("document").ready(setup);
     </script>
 
-  </body>
+  </div>
+</body>
 </html>

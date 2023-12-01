@@ -1,12 +1,37 @@
-<table class="table table-striped">
-        {% for prof in professors %}
+<style>
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      width: 100%;
+      padding: 30px;
+    }
+    
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    
+    
+    .container {
+      padding: 2px 8px;
+    }
+
+    .card-link {
+      text-decoration: none; /* Remove underline */
+      color: #333; /* Set the color to a desired value */
+    }
+    </style>
+
+<div class="container">
+{% for prof in professors %}
+<br>
+<a class = "card-link" target="childWindow" href="/adminproftable?profname={{prof.name}}&profdept={{prof.department}}" >
+<div class="card">
         <tr>
             <td>
-            <a
-                target="childWindow"
-                href="/adminproftable?profname={{prof.name}}&profdept={{prof.department}}"
-                >{{prof.name.title()}} ({{prof.department}})</a>
+            <h5>{{prof.name.title()}} ({{prof.department}})</h5>
             </td>
         </tr>
-        {% endfor %}
-</table>
+    </div>
+</a>
+{% endfor %}
+</div>
