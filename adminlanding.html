@@ -10,8 +10,13 @@
     <style>
       .header,
       .footer {
-        background-color: #06839a;
-        color: rgb(255, 255, 255);
+        background-color: white;
+        color: rgb(71, 135, 232);
+      }
+
+      body {
+        background-color: rgb(71, 135, 232);
+        color: white;
       }
     </style>
   </head>
@@ -32,14 +37,14 @@
           text-align: center;
           cursor: pointer;
           outline: none;
-          color: #fff;
-          background-color: rgb(4, 65, 170);
+          color:rgb(71, 135, 232);
+          background-color: white;
           border: none;
           border-radius: 15px;
           box-shadow: 0 9px #999;
         }
         
-        .button:hover {background-color: rgb(105, 62, 142)}
+        .button:hover {background-color: navy}
         
         .button:active {
           background-color: rgb(105, 62, 142);
@@ -51,7 +56,8 @@
 <body>
 
 <center>
-<h1>Welcome {{username}}!</h1>
+<br>
+<h1>Welcome admin {{username}}!</h1>
 <h1>How do you want to search reviews?</h1>
 <br>
 <a href="/adminprofpage"><button class="button"><span>By Professor </span></button></a>

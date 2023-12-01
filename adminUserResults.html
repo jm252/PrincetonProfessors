@@ -19,18 +19,23 @@
       text-decoration: none; /* Remove underline */
       color: #333; /* Set the color to a desired value */
     }
-    </style>
 
+    body {
+        background-color: rgb(71, 135, 232);
+        color: white;
+    }
+    </style>
+<div class="container">
 {% for username in usernames %}
-<table class="card" id="adminusertable">
+<br>
+<a class= "card-link" target="childWindow" href="/adminusertable?username={{username}}">
+<div class="card" id="adminusertable">
     <tr>
         <td>
-        <a
-            target="childWindow"
-            href="/adminusertable?username={{username}}"
-            >{{username}}</a>
+            <h5>{{username}}</h5>
         </td>
     </tr>
-    
-</table>
+</div>
+</a>
 {% endfor %}
+</div>

@@ -34,18 +34,22 @@
     <div class="container-fluid adminheader">
       <center>
         <h1>Admin Control Panel</h1>
-      </center>
-      <div class="row">
-        <div class="search col-sm-3">
-          <input
-            type="text"
-            id="adminUserSearchInput"
-            placeholder="Search by username..."
-            autofocus
-          />
+        <div class="search-container">
+            <div class="row">
+                  <input
+                    type="text"
+                    id="adminUserSearchInput"
+                    placeholder="Search by username..."
+                    autofocus/>
+              </div>
         </div>
-      </div>
-      <br/>
+
+        <a href="/adminlandingpage">Go Back</a>
+        <br>
+        <br>
+
+      </center>
+      
     </div>
     
     <div class="adminbody"></div>
@@ -54,13 +58,6 @@
     {% else %}
       <div id="searchResults"></div>
     {% endif %}
-
-    <div class="container-fluid adminfooter">
-      <center>
-          Created by Eden Bendory, Jacob Colchamiro, Jonathan Mindel, Kayla
-          Waitman
-      </center>
-    </div>
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
