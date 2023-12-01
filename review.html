@@ -60,8 +60,16 @@
                     <span style="color: red;">*</span> = required
                     <br>
                     <br>
-                    <a href="/index"><button style="background-color: red; color: white;">Discard</button></a>
+                    <button type="reset" onclick="discardForm()" style="background-color: red; color: white;">Discard</button>
                     <button type="submit">Submit Review</button>
+
+                    <script>
+                      function discardForm() {
+                        // Redirect to the index page
+                        window.location.href = '/index';
+                      }
+                      </script>
+                      
                     <br>
                     <br>
                     <p class="footnote"> Please Note: </p>
