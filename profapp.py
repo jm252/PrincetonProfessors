@@ -140,7 +140,7 @@ def admin_page():
 
     is_admin = flask.session.get("username") in ADMIN_USERS
 
-    html_code = flask.render_template("adminlanding.html", is_admin=is_admin)
+    html_code = flask.render_template("adminlanding.html", is_admin=is_admin, username=username)
     response = flask.make_response(html_code)
     return response
 

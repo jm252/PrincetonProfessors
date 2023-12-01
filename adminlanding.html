@@ -11,7 +11,7 @@
       .header,
       .footer {
         background-color: #06839a;
-        color: white;
+        color: rgb(255, 255, 255);
       }
     </style>
   </head>
@@ -22,6 +22,42 @@
         <h1>Admin Control Panel</h1>
       </center>
     </div>
-<a href="/adminprofpage"><button>Search Reviews by Professor Name</button></a>
-<a href="/adminuserpage"><button>Search Reviews by Username</button></a>
+
+    <!DOCTYPE html>
+
+    <style>
+        .button {
+          padding: 15px 25px;
+          font-size: 24px;
+          text-align: center;
+          cursor: pointer;
+          outline: none;
+          color: #fff;
+          background-color: rgb(4, 65, 170);
+          border: none;
+          border-radius: 15px;
+          box-shadow: 0 9px #999;
+        }
+        
+        .button:hover {background-color: rgb(105, 62, 142)}
+        
+        .button:active {
+          background-color: rgb(105, 62, 142);
+          box-shadow: 0 5px #666;
+          transform: translateY(4px);
+        }
+        </style>
+</head>
+<body>
+
+<center>
+<h1>Welcome {{username}}!</h1>
+<h1>How do you want to search reviews?</h1>
+<br>
+<a href="/adminprofpage"><button class="button"><span>By Professor </span></button></a>
+<a href="/adminuserpage"><button class="button"><span>By reviewer </span></button></a>
+</center>
+
+</body>
+</html>
 
