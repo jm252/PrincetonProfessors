@@ -39,8 +39,8 @@ def landing():
 # @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
-    # flask.session["username"] = auth.authenticate()
-    flask.session["username"] = "eb1889"
+    flask.session["username"] = auth.authenticate()
+    # flask.session["username"] = "eb1889"
 
     professors = db.get_all_professors()
     is_admin = flask.session.get("username") in ADMIN_USERS
@@ -77,8 +77,8 @@ def review_form():
 
     username = flask.session.get("username")
     if username is None:
-        # flask.session["username"] = auth.authenticate()
-        flask.session["username"] = "eb1889"
+        flask.session["username"] = auth.authenticate()
+        # flask.session["username"] = "eb1889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
     is_banned = db.is_banned(username)
@@ -120,7 +120,7 @@ def review():
         courses,
     )
     is_admin = flask.session.get("username") in ADMIN_USERS
-    html_code = flask.render_template("thanks.html", is_admin=is_admin)
+    html_code = flask.render_template("thanks.html", is_admin=is_admin, username=username)
     response = flask.make_response(html_code)
     return response
 
@@ -142,8 +142,8 @@ def prof_details():
 def admin_page():
     username = flask.session.get("username")
     if username is None:
-        # flask.session["username"] = auth.authenticate()
-        flask.session["username"] = "eb1889"
+        flask.session["username"] = auth.authenticate()
+        # flask.session["username"] = "eb1889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
 
