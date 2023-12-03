@@ -38,6 +38,14 @@ def get_all_users():
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving all users: {ex}", file = sys.stderr)
 
+def get_all_banned_users():
+    try: 
+        with sqlalchemy.orm.Session(engine) as session:
+            query = session.query(User).filter(User.isBanned == True)
+            usernames = [result.username for result in query.all()]
+            return usernames
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(f"Error retrieving banned users: {ex}", file = sys.stderr)
 
 def get_all_reviews():
     try:

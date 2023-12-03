@@ -4,7 +4,6 @@ import auth
 import db_utils as db
 import os
 import dotenv
-import ast
 import datetime
 
 # -----------------------------------------------------------------------
@@ -274,6 +273,23 @@ def adminUserResults():
     response = flask.make_response(html_code)
     return response
 
+@app.route("/bannedusers", methods=["GET"])
+def banned_users():
+    usernames = db.get_all_banned_users()
+
+    html_code = flask.render_template("bannedusers.html", usernames=usernames)
+    response = flask.make_response(html_code)
+    return response
+
+@app.route("/unban", methods=["GET"])
+def unban():
+    username = flask.request.args.get("username")
+    db.unban_user(username)
+
+    usernames = db.get_all_banned_users()
+    html_code = flask.render_template("bannedusers.html", usernames=usernames)
+    response = flask.make_response(html_code)
+    return response
 
 # @app.route("/adminsearch_results", methods=["GET"])
 # def search_results():
