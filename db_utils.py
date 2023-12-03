@@ -6,7 +6,7 @@ from sqlalchemy import distinct
 import sqlalchemy.orm
 import sqlalchemy.exc
 import dotenv
-from database import Professor, Review
+from database import Professor, Review, User 
 
 # -----------------------------------------------------------------------
 
@@ -182,6 +182,33 @@ def prof_exists(name, dept):
     #     return False
 
 
+def user_exists(username):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            return bool(
+                session.query(User)
+                .filter(User.username == username).first()
+            )
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(f"Error checking if professor {username} exists: {ex}", file=sys.stderr)
+
+
+def add_user(username):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            if user_exists(username):
+                raise Exception("user already exists")
+
+            username = User(username=username)
+            session.add(username)
+            session.commit()
+            
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(f"Error adding user {username}: {ex}", file=sys.stderr)
+    except Exception as ex:
+        print(f"Error adding user {username}: {ex}", file=sys.stderr)
+
+
 # right now we require reviews to include dept and rating; this needs
 # to change going forward!!
 def add_review(
@@ -235,6 +262,9 @@ def add_review(
             session.commit()
             session.flush()
 
+        # user table checks / inserts
+        if not user_exists(username):
+            add_user(username)
 
 def delete_review(review_id):
     try:
@@ -300,6 +330,38 @@ def delete_all_reviews(username):
     except Exception as ex:
         print(f"Error deleting all reviews for {username}: {ex}", file=sys.stderr)
 
+def ban_user(username):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            user = session.query(User).filter(User.username == username).first()
+            user.isBanned = True
+            session.commit()
+            session.flush()
+            
+    except Exception as ex:
+        print(f"Error blocking user {username}: {ex}", file=sys.stderr)
+
+def unban_user(username):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            user = session.query(User).filter(User.username == username).first()
+            user.isBanned = False
+            session.commit()
+            session.flush()
+            
+    except Exception as ex:
+        print(f"Error blocking user {username}: {ex}", file=sys.stderr)
+
+
+def is_banned(username):
+    try:
+        with sqlalchemy.orm.Session(engine) as session:
+            user = session.query(User).filter(User.username == username).first()
+            return user.isBanned
+            
+    except Exception as ex:
+        print(f"Error blocking user {username}: {ex}", file=sys.stderr)
+
 def print_object_contents(obj):
     for key, value in vars(obj).items():
         if not key.startswith("_"):
@@ -363,9 +425,9 @@ def main():
     # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
     #add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "Hello" , "hello")
-    users = get_all_users()
-    print(users)
-    print(query_username_keyword('f'))
+    # users = get_all_users()
+    # print(users)
+    # print(query_username_keyword('f'))
     #reviews = get_user_reviews(users[0])
     #for review in reviews:
     #    print(review.profId, review.rating, review.username, review.datetime)
@@ -389,7 +451,7 @@ def main():
     # reviews = get_reviews("jacob colch", "gss")
     # for review in reviews:
     # print(review.reviewId)
-
+    print("hi")
 
 if __name__ == "__main__":
     main()

@@ -4,7 +4,7 @@
 #-----------------------------------------------------------------------
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Float, Integer, DateTime
+from sqlalchemy import Column, String, Float, Integer, DateTime, Boolean
 
 Base = declarative_base()    
 
@@ -36,5 +36,12 @@ class Review (Base):
     comment = Column(String)
     courses = Column(String)
 
+class User (Base):
+    __tablename__ = 'users'
+
+    username = Column(String, primary_key=True)
+    isBanned = Column(Boolean, default=False)
+    isAdmin = Column(Boolean, default=False)
+    # add review ids later?
 
     
