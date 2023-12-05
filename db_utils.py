@@ -6,7 +6,7 @@ from sqlalchemy import distinct
 import sqlalchemy.orm
 import sqlalchemy.exc
 import dotenv
-from database import Professor, Review, User 
+from database import Professor, Review, User
 
 # -----------------------------------------------------------------------
 
@@ -29,23 +29,26 @@ def get_all_professors():
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error retrieving all professors: {ex}", file=sys.stderr)
 
+
 def get_all_users():
-    try: 
+    try:
         with sqlalchemy.orm.Session(engine) as session:
             query = session.query(Review.username).distinct()
             usernames = [result[0] for result in query.all()]
             return usernames
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(f"Error retrieving all users: {ex}", file = sys.stderr)
+        print(f"Error retrieving all users: {ex}", file=sys.stderr)
+
 
 def get_all_banned_users():
-    try: 
+    try:
         with sqlalchemy.orm.Session(engine) as session:
             query = session.query(User).filter(User.isBanned == True)
             usernames = [result.username for result in query.all()]
             return usernames
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(f"Error retrieving banned users: {ex}", file = sys.stderr)
+        print(f"Error retrieving banned users: {ex}", file=sys.stderr)
+
 
 def get_all_reviews():
     try:
@@ -76,28 +79,31 @@ def get_professor(name, dept):
 def query_professor_keyword(name="", dept=""):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            query = session.query(Professor).filter(
-                Professor.name.contains(name.lower())
-                & Professor.department.contains(dept.upper())
-            ).order_by(Professor.rating.desc())
+            query = (
+                session.query(Professor)
+                .filter(
+                    Professor.name.contains(name.lower())
+                    & Professor.department.contains(dept.upper())
+                )
+                .order_by(Professor.rating.desc())
+            )
             professors = query.all()
             return professors
     except Exception as ex:
         print(f"Error retrieving query {name}, {dept}: {ex}", file=sys.stderr)
 
+
 def query_username_keyword(username=""):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            query = (
-                session.query(distinct(Review.username))
-                .filter(Review.username.ilike(f"%{username}%"))
+            query = session.query(distinct(Review.username)).filter(
+                Review.username.ilike(f"%{username}%")
             )
             usernames = [result[0] for result in query.all()]
 
             return usernames
     except Exception as e:
         print(f"Error querying distinct usernames with keyword: {e}")
-
 
 
 def _get_profId(name, dept):
@@ -117,27 +123,39 @@ def _get_profId(name, dept):
 
 
 def get_reviews(name, dept):
-    try:
+    try:            
         with sqlalchemy.orm.Session(engine) as session:
-            query = session.query(Review).filter(
-                Review.profId == _get_profId(name, dept)
-            ).order_by(Review.datetime.desc())
+            query = (
+                session.query(Review)
+                .filter(Review.profId == _get_profId(name, dept))
+                .order_by(Review.datetime.desc())
+            )
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(f"Error retrieving reviews for professor {name}: {ex}", file=sys.stderr)
+        err = "Error retrieving reviews for professor %s: %s" % (name, ex)
+        print(err, file=sys.stderr)
+        return err
+
 
 def get_user_reviews(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            query = session.query(Review).filter(Review.username == username).order_by(Review.datetime.desc())
+            query = (
+                session.query(Review)
+                .filter(Review.username == username)
+                .order_by(Review.datetime.desc())
+            )
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(f"Error retrieving reviews for username {username}: {ex}", file=sys.stderr)
+        print(
+            f"Error retrieving reviews for username {username}: {ex}", file=sys.stderr
+        )
+
 
 def get_prof_from_review(review):
-    try: 
+    try:
         with sqlalchemy.orm.Session(engine) as session:
             profId = review.profId
             prof = session.query(Professor).filter(Professor.profId == profId).first()
@@ -193,10 +211,7 @@ def prof_exists(name, dept):
 def user_exists(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            return bool(
-                session.query(User)
-                .filter(User.username == username).first()
-            )
+            return bool(session.query(User).filter(User.username == username).first())
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error checking if professor {username} exists: {ex}", file=sys.stderr)
 
@@ -210,7 +225,7 @@ def add_user(username):
             username = User(username=username)
             session.add(username)
             session.commit()
-            
+
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error adding user {username}: {ex}", file=sys.stderr)
     except Exception as ex:
@@ -220,7 +235,15 @@ def add_user(username):
 # right now we require reviews to include dept and rating; this needs
 # to change going forward!!
 def add_review(
-    name, dept, username, content, delivery, availability, organization, comment, courses
+    name,
+    dept,
+    username,
+    content,
+    delivery,
+    availability,
+    organization,
+    comment,
+    courses,
 ):
     with sqlalchemy.orm.Session(engine) as session:
         if not prof_exists(name, dept):
@@ -230,14 +253,14 @@ def add_review(
 
         review = Review(
             profId=profId,
-            username = username,
-            rating=(content + delivery + availability + organization)/4,
+            username=username,
+            rating=(content + delivery + availability + organization) / 4,
             content=content,
             delivery=delivery,
             availability=availability,
             organization=organization,
             comment=comment,
-            courses=courses
+            courses=courses,
         )
 
         session.add(review)
@@ -273,6 +296,7 @@ def add_review(
         # user table checks / inserts
         if not user_exists(username):
             add_user(username)
+
 
 def delete_review(review_id):
     try:
@@ -325,6 +349,7 @@ def delete_review(review_id):
     except Exception as ex:
         print(f"Error deleting review {review_id}: {ex}", file=sys.stderr)
 
+
 # Add this function to your db_utils.py file
 def delete_all_reviews(username):
     try:
@@ -338,6 +363,7 @@ def delete_all_reviews(username):
     except Exception as ex:
         print(f"Error deleting all reviews for {username}: {ex}", file=sys.stderr)
 
+
 def ban_user(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
@@ -345,9 +371,10 @@ def ban_user(username):
             user.isBanned = True
             session.commit()
             session.flush()
-            
+
     except Exception as ex:
         print(f"Error blocking user {username}: {ex}", file=sys.stderr)
+
 
 def unban_user(username):
     try:
@@ -356,7 +383,7 @@ def unban_user(username):
             user.isBanned = False
             session.commit()
             session.flush()
-            
+
     except Exception as ex:
         print(f"Error blocking user {username}: {ex}", file=sys.stderr)
 
@@ -366,9 +393,10 @@ def is_banned(username):
         with sqlalchemy.orm.Session(engine) as session:
             user = session.query(User).filter(User.username == username).first()
             return user.isBanned
-            
+
     except Exception as ex:
         print(f"Error blocking user {username}: {ex}", file=sys.stderr)
+
 
 def print_object_contents(obj):
     for key, value in vars(obj).items():
@@ -432,12 +460,12 @@ def main():
     # add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
-    #add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "Hello" , "hello")
+    # add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "Hello" , "hello")
     # users = get_all_users()
     # print(users)
     # print(query_username_keyword('f'))
-    #reviews = get_user_reviews(users[0])
-    #for review in reviews:
+    # reviews = get_user_reviews(users[0])
+    # for review in reviews:
     #    print(review.profId, review.rating, review.username, review.datetime)
 
     # test delete review
@@ -460,6 +488,7 @@ def main():
     # for review in reviews:
     # print(review.reviewId)
     print("hi")
+
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,37 @@
+<style>
+  .profname {
+    font-size: 16pt;
+    color: rgb(51, 51, 51);
+  }
+  .deptrating{
+    font-size: 12pt;
+    color: rgb(51, 51, 51);
+  }
+
+  .deptB{
+    display: inline-block;
+    font-size: 12pt;
+    color: rgb(51, 51, 51);
+    border-radius: 8px;
+    padding: 3px;
+    background-color: lightcoral;
+  }
+  .ratingB{
+    display: inline-block;
+    font-size: 12pt;
+    color: rgb(51, 51, 51);
+    border-radius: 8px;
+    padding: 3px;
+    background-color: lightblue;
+  }
+</style>
+
 {% for prof in professors: %}
 <div class="profName w3-container" prof-name="{{prof.name}}" prof-dept={{prof.department}} onclick="getResults('{{prof.name}}', '{{prof.department}}')">
-  <h3 class="w3-opacity"><b>{{prof.name.title()}}</b></h3>
-  <p>
-    <b>Dept:</b> {{ prof.department.upper() }} • <b>Rating: </b> {{ prof.rating|round(2)
-    }}
-  </p>
+  <h4 class="w3-opacity"><b><div class="profname"> {{prof.name.title()}}</div></b>
+    <div class="deptB"> {{ prof.department.upper() }}</div> 
+    <div class="ratingB">{{ '%.2f'|format(prof.rating) }} </div>
+  </h4>
 </div>
 <hr style="margin: 0;">
 {% endfor %}

@@ -33,7 +33,7 @@ i {
 
 .header {
   background-color: white;
-  color: rgb(71, 135, 232);
+  color: r#9a9fe6;
 }
 
 .topnav {
@@ -73,12 +73,12 @@ i {
 }
 
 .topnav b:hover {
-  background-color: rgb(71, 135, 232);
+  background-color: #9a9fe6;
   color: black;
 }
 
 .topnav .hover:hover {
-  background-color: rgb(71, 135, 232);
+  background-color: #9a9fe6;
   color: black;
 }
 
@@ -134,7 +134,7 @@ i {
 }
 
 .dropdown-content a:hover {
-  background-color: rgb(71, 135, 232);
+  background-color: #9a9fe6;
 }
 
 .dropdown:hover .dropdown-content {

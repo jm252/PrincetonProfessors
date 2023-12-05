@@ -39,8 +39,8 @@ def landing():
 # @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
-    flask.session["username"] = auth.authenticate()
-    # flask.session["username"] = "eb1889"
+    # flask.session["username"] = auth.authenticate()
+    flask.session["username"] = "eb1889"
 
     professors = db.get_all_professors()
     is_admin = flask.session.get("username") in ADMIN_USERS
@@ -77,8 +77,8 @@ def review_form():
 
     username = flask.session.get("username")
     if username is None:
-        flask.session["username"] = auth.authenticate()
-        # flask.session["username"] = "eb1889"
+        # flask.session["username"] = auth.authenticate()
+        flask.session["username"] = "eb1889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
     is_banned = db.is_banned(username)
@@ -120,7 +120,9 @@ def review():
         courses,
     )
     is_admin = flask.session.get("username") in ADMIN_USERS
-    html_code = flask.render_template("thanks.html", is_admin=is_admin, username=username)
+    html_code = flask.render_template(
+        "thanks.html", is_admin=is_admin, username=username
+    )
     response = flask.make_response(html_code)
     return response
 
@@ -142,8 +144,8 @@ def prof_details():
 def admin_page():
     username = flask.session.get("username")
     if username is None:
-        flask.session["username"] = auth.authenticate()
-        # flask.session["username"] = "eb1889"
+        # flask.session["username"] = auth.authenticate()
+        flask.session["username"] = "eb1889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
 
@@ -179,16 +181,21 @@ def admin_user_track_page():
 
 @app.route("/adminusertable", methods=["GET"])
 def admin_user_table():
-    username = flask.request.args.get("username")
-    reviews = db.get_user_reviews(username)
-    prof = db.get_prof_from_review
+    # hi idk if this works but I added a try and except
+    try:
+        username = flask.request.args.get("username")
+        reviews = db.get_user_reviews(username)
+        prof = db.get_prof_from_review
 
-    # if success is False:
+    except Exception as ex:
+        html_code = flask.render_template("error_admin.html")  # if success is False:
+        response = flask.make_response(html_code)
+
     #     message = table.get('error_msg')
     #     error_type = table.get('error_type')
     #     html_code = flask.render_template('error.html', message=message,
     #                                     error_type=error_type)
-    # else:
+
     html_code = flask.render_template(
         "adminusertable.html",
         reviews=reviews,
@@ -201,22 +208,22 @@ def admin_user_table():
 
 
 @app.route("/adminproftable", methods=["GET"])
-def reg():
+def admin_prof_table():
     profname = flask.request.args.get("profname")
     profdept = flask.request.args.get("profdept")
-    reviews = db.get_reviews(profname, profdept)
 
-    # if success is False:
-    #     message = table.get('error_msg')
-    #     error_type = table.get('error_type')
-    #     html_code = flask.render_template('error.html', message=message,
-    #                                     error_type=error_type)
-    # else:
+       
+    try:
+        reviews = db.get_reviews(profname, profdept)
+    except Exception as ex:
+        html_code = flask.render_template("error_admin.html", error_msg="Invalid Input")
+        response = flask.make_response(html_code)
+        return response
+
     html_code = flask.render_template(
         "adminproftable.html", reviews=reviews, profname=profname, profdept=profdept
     )
     response = flask.make_response(html_code)
-
     return response
 
 
@@ -240,7 +247,6 @@ def delete_review():
 @app.route("/delete_all_reviews", methods=["DELETE"])
 def delete_all_reviews():
     username = flask.request.args.get("username")
-
 
     db.delete_all_reviews(username)
     db.ban_user(username)
@@ -273,6 +279,7 @@ def adminUserResults():
     response = flask.make_response(html_code)
     return response
 
+
 @app.route("/bannedusers", methods=["GET"])
 def banned_users():
     usernames = db.get_all_banned_users()
@@ -280,6 +287,7 @@ def banned_users():
     html_code = flask.render_template("bannedusers.html", usernames=usernames)
     response = flask.make_response(html_code)
     return response
+
 
 @app.route("/unban", methods=["GET"])
 def unban():
@@ -290,6 +298,7 @@ def unban():
     html_code = flask.render_template("bannedusers.html", usernames=usernames)
     response = flask.make_response(html_code)
     return response
+
 
 # @app.route("/adminsearch_results", methods=["GET"])
 # def search_results():
