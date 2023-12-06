@@ -70,18 +70,25 @@
       
       <div class="adminbody"></div>
       <div class="container">
-        {% for username in usernames %}
-        <br>
-        <div class="card" id="adminusertable">
-            <tr>
-                <td>
-                    <h5 style="color: black;">{{username}}</h5>
-                    <a href="/unban?username={{username}}">Unban</a>
-                </td>
-            </tr>
-        </div>
-        </a>
-        {% endfor %}
+        {% if not usernames %}
+        <center>
+          <br>
+          <h2>No banned users!</h2>
+        </center>
+        {% else %}
+          {% for username in usernames %}
+          <br>
+          <div class="card" id="adminusertable">
+              <tr>
+                  <td>
+                      <h5 style="color: black;">{{username}}</h5>
+                      <a href="/unban?username={{username}}">Unban</a>
+                  </td>
+              </tr>
+          </div>
+          </a>
+          {% endfor %}
+        {% endif %}
         </div>
   </body>
   </html>
