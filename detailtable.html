@@ -101,7 +101,7 @@
     <div class="header">
       <!-- <i class="fa fa-user" style="font-size: 36px;"></i> -->
       <h2> {{prof.name.title()}} • {{prof.department}}</h2> 
-      <center><h4>{{prof.numratings}} Reviews <b>|</b> {{ '%.2f'|format(prof.rating) }}{% set wholeStars = prof.rating | int %}
+      <center><h4>{{prof.numratings}} Review(s) <b>|</b> {{ '%.2f'|format(prof.rating) }}{% set wholeStars = prof.rating | int %}
         {% for _ in range(wholeStars) %}<i class="fa fa-star"></i>{% endfor %}
         {% set fractionalPart = prof.rating - wholeStars %}
         {% if fractionalPart > 0 %}
