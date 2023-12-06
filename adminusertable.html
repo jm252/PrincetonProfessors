@@ -4,6 +4,7 @@
   }
 
   .card {
+      color: black;
       flex: 1 1 calc(33.33% - 20px); /* Adjust the width of each card as needed */
       margin: 10px; /* Adjust the margin to add space between cards */
       padding: 20px;
@@ -16,6 +17,7 @@
 
 
 <!DOCTYPE html>
+<link rel="stylesheet" href="/static/style.css">
 <html>
     <head>
         <title>Admin Controls</title>
@@ -32,7 +34,6 @@
 
     </head>
 
-    <body>
         <div class="container-fluid header">
             <center>
                 <h1>Admin Control Panel</h1>
@@ -41,11 +42,10 @@
 <!-- <script src="path/to/jquery.min.js"></script> Include jQuery if not already included -->
 <!-- <script src="path/to/db_utils.js"></script>
 <script src="path/to/main.js"></script> -->
-<div class="container-fluid">
+
 <center>
     <h3>Displaying all reviews for {{username}}:</h3>
 </center>
-
 <div class="adminbody">
 
 <table class="table table-striped">
@@ -66,6 +66,7 @@
 
     {% else %}
     <center>
+    <br>
     <a href="/adminuserpage"><button>Go back to all users</button></a>
     <button onclick="blockUserAndDeleteAllUserReviews('{{ username }}')">Delete All Reviews and Ban this user</button>
     </center>
@@ -86,9 +87,10 @@
     {% endfor %}
   </div>
     {% endif %}
+  </div>
+
+</div>
 </table>
-</div>
-</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"> </script>
 <script>

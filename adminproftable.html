@@ -4,6 +4,7 @@
   }
 
   .card {
+    color: black;
     flex: 1 1 calc(33.33% - 20px); /* Adjust the width of each card as needed */
     margin: 10px; /* Adjust the margin to add space between cards */
     padding: 20px;
@@ -14,10 +15,12 @@
 </style>
 
 <!DOCTYPE html>
+<link rel="stylesheet" href="/static/style.css">
 <html>
   <head>
     <title>Admin Controls</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
 
     <link
       rel="stylesheet"
@@ -33,7 +36,7 @@
     </style>
   </head>
 
-  <body>
+  
     <div class="container-fluid header">
       <center>
         <h1>Admin Control Panel</h1>
@@ -42,9 +45,11 @@
     <!-- <script src="path/to/jquery.min.js"></script> Include jQuery if not already included -->
     <!-- <script src="path/to/db_utils.js"></script>
 <script src="path/to/main.js"></script> -->
+<div class="adminbody">
     <div class="container-fluid">
       <center>
         <h3>Displaying all reviews for {{profname.title()}}:</h3>
+        <a href="/adminprofpage"><button>Go Back</button></a>
       </center>
 
       <table class="table table-striped">
@@ -119,5 +124,5 @@
         }
       }
     </script>
-  </body>
+  </div>
 </html>
