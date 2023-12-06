@@ -94,18 +94,18 @@ def review_form():
     return response
 
 
-@app.route("/review", methods=["GET"])
+@app.route("/review", methods=["POST"])
 def review():
-    professor = flask.request.args.get("professor")
+    professor = flask.request.form.get("professor")
     parse = professor.split(", ")
     name, department = parse[0], parse[1]
 
-    content = float(flask.request.args.get("content"))
-    delivery = float(flask.request.args.get("delivery"))
-    availability = float(flask.request.args.get("availability"))
-    organization = float(flask.request.args.get("organization"))
-    comment = flask.request.args.get("comment")
-    courses = flask.request.args.get("courses")
+    content = float(flask.request.form.get("content"))
+    delivery = float(flask.request.form.get("delivery"))
+    availability = float(flask.request.form.get("availability"))
+    organization = float(flask.request.form.get("organization"))
+    comment = flask.request.form.get("comment")
+    courses = flask.request.form.get("courses")
     username = flask.session.get("username")
 
     db.add_review(
