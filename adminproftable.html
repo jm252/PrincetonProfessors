@@ -51,11 +51,11 @@
         {% if not reviews %} {{profname.title()}} does not have any reviews!
         <hr />
 
-        {% else %}
         <center>
           <a href="/adminprofpage"><button>Go back to all professors</button></a>
         </center>
 
+        {% else %}
         <div class="card-wrapper"></div>
 
         {% for review in reviews %}
