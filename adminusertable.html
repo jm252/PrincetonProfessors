@@ -46,18 +46,28 @@
     <h3>Displaying all reviews for {{username}}:</h3>
 </center>
 
+<div class="adminbody">
+
 <table class="table table-striped">
 
-    {% if not reviews %}
+    {% if is_banned %}
+    <center>
+      <br>
+    <a href="/bannedusers"><button>Go to all banned users</button></a>
+    <br>
+    <br>
+    <h2>{{username}} has been banned.</h2>
+  
+    </center>
+
+    {% elif not reviews %}
     {{username}} has not left any reviews!
     <hr>
 
     {% else %}
     <center>
-    <button onclick="blockUserAndDeleteAllUserReviews('{{ username }}')">Delete All Reviews and Block this user</button>
-    <br>
-    <br>
-    <a href="/adminuserpage">Go back to all users</a>
+    <a href="/adminuserpage"><button>Go back to all users</button></a>
+    <button onclick="blockUserAndDeleteAllUserReviews('{{ username }}')">Delete All Reviews and Ban this user</button>
     </center>
     <div class="card-wrapper"></div>
 
@@ -77,6 +87,7 @@
   </div>
     {% endif %}
 </table>
+</div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"> </script>

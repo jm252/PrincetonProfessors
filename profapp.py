@@ -185,6 +185,7 @@ def admin_user_table():
     try:
         username = flask.request.args.get("username")
         reviews = db.get_user_reviews(username)
+        is_banned = db.is_banned(username)
         prof = db.get_prof_from_review
 
     except Exception as ex:
@@ -198,6 +199,7 @@ def admin_user_table():
 
     html_code = flask.render_template(
         "adminusertable.html",
+        is_banned=is_banned,
         reviews=reviews,
         username=username,
         get_professor=db.get_prof_from_review,

@@ -25,7 +25,12 @@
         color: white;
     }
     </style>
+{% if not usernames %}
+<center>
+<h2> No users have left any reviews.</h2>
+</center>
 <div class="container">
+{% else %}
 {% for username in usernames %}
 <br>
 <a class= "card-link" target="childWindow" href="/adminusertable?username={{username}}">
@@ -39,3 +44,4 @@
 </a>
 {% endfor %}
 </div>
+{% endif %}
