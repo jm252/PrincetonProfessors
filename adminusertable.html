@@ -66,11 +66,11 @@
     <div class="card">
       <!-- make for loop for all reviews  -->
       {% set professor = get_professor(review) %}
-      <h2>{{professor.name}}</h2>
+      <h2>{{professor.name.title()}}</h2>
       <p>Overall Rating: {{review.rating}} </p> <!-- gonna have to add this  -->
       <p>Content: {{review.content}} / 5.0 | Delivery {{review.delivery}} / 5.0 | Availability {{review.availability}} / 5.0 | Organization {{review.organization}} / 5.0</p>
       <p>Comments: {{review.comment}}</p>
-      <p>Courses taken with {{professor.name}}: {{review.courses}}</p>
+      <p>Courses taken with {{professor.name.title()}}: {{review.courses}}</p>
       <!-- *** WE NEED TO ADD A FUNCTION IN UTILS TO BE ABLE TO DELETE AN INDIVIDUAL REVIEW! -->
       <button onclick="deleteReview('{{review.reviewId}}', '{{professor.name}}', '{{professor.department}}')">Delete</button>
     </div>
