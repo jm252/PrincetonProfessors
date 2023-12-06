@@ -53,7 +53,7 @@
 
         {% else %}
         <center>
-          <a href="/adminlandingpage">Go back to all professors</a>
+          <a href="/adminprofpage">Go back to all professors</a>
         </center>
 
         <div class="card-wrapper"></div>
@@ -70,6 +70,7 @@
           </p>
           <p>Comments: {{review.comment}}</p>
           <p>Courses taken with {{profname.title()}}: {{review.courses}}</p>
+          <p>User: {{review.username}}</p>
           <!-- *** WE NEED TO ADD A FUNCTION IN UTILS TO BE ABLE TO DELETE AN INDIVIDUAL REVIEW! -->
           <button
             onclick="deleteReview('{{review.reviewId}}', '{{profname}}', '{{profdept}}')"
