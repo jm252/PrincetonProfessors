@@ -48,7 +48,7 @@
       </center>
 
       <table class="table table-striped">
-        {% if not reviews %} {{profname}} does not have any reviews!
+        {% if not reviews %} {{profname.title()}} does not have any reviews!
         <hr />
 
         {% else %}
