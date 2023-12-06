@@ -300,6 +300,12 @@ def unban():
     response = flask.make_response(html_code)
     return response
 
+@app.route("/help", methods=["GET"])
+def help_page():
+    html_code = flask.render_template("help.html")
+    response = flask.make_response(html_code)
+    return response
+
 
 # @app.route("/adminsearch_results", methods=["GET"])
 # def search_results():
