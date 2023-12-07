@@ -370,6 +370,21 @@ def delete_review(review_id):
         session.commit()
         session.flush()
 
+def delete_prof(name, dept):
+    with sqlalchemy.orm.Session(engine) as session:
+            if not prof_exists(name, dept):
+                raise Exception("no professor found with given name")
+            # faster in this case not to use _get_profId in order to only query once
+            query = session.query(Professor).filter(
+                Professor.name == name.lower(), Professor.department == dept.upper()
+            )
+            professor = query.first()
+            reviews = get_reviews(name, dept)
+            for review in reviews:
+                reviewId = review.reviewId
+                delete_review(reviewId)
+            session.delete(professor)
+            session.commit()
 
 # Add this function to your db_utils.py file
 def delete_all_reviews(username):
@@ -484,8 +499,13 @@ def main():
     # add_review("YonI mIN", 'LAs', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
+<<<<<<< HEAD
     # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
-    add_review("YonI mIN", "COS", "kw2689", 5, 5, 3, 1, "", "heshitllo")
+#     add_review("YonI mIN", "COS", "kw2689", 5, 5, 3, 1, "", "heshitllo")
+# =======
+#     add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
+#     delete_prof("YonI mIN", 'COS')
+>>>>>>> 268a4b090fb305270979d5dff30ef9104300a574
     # users = get_all_users()
     # print(users)
     # print(query_username_keyword('f'))
