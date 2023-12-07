@@ -28,7 +28,7 @@ class InappropriateTextError(Exception):
 def get_all_professors():
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            query = session.query(Professor).order_by(Professor.rating.desc())
+            query = session.query(Professor).order_by(Professor.rating.desc(), Professor.numratings.desc())
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
@@ -90,7 +90,7 @@ def query_professor_keyword(name="", dept=""):
                     Professor.name.contains(name.lower())
                     & Professor.department.contains(dept.upper())
                 )
-                .order_by(Professor.rating.desc())
+                .order_by(Professor.rating.desc(), Professor.numratings.desc())
             )
             professors = query.all()
             return professors
@@ -238,7 +238,7 @@ def add_user(username):
 
 
 def _contains_profanity(text):
-    disallowed_words = ["horseshoe"]
+    disallowed_words = ["horseshoe", "fuck"]
     lowercase_text = text.lower()
 
     for disallowed_word in disallowed_words:
@@ -264,11 +264,11 @@ def add_review(
     with sqlalchemy.orm.Session(engine) as session:
         if _contains_profanity(comment):
             raise InappropriateTextError(
-                "The review text contains profanity and your review therefore cannot be submitted. "
+                "Profanity has been detected in your review. Your review has not been submitted. "
             )
         if _contains_profanity(courses):
             raise InappropriateTextError(
-                "The course you listed contains profanity and your review therefore cannot be submitted. "
+                "Profanity has been detected in your review. Your review has not been submitted. "
             )
 
         if not prof_exists(name, dept):

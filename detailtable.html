@@ -132,8 +132,8 @@
             <strong>Organization:</strong> {{ review.organization }} 
           </p>
           <p><strong>Comments:</strong> {{ review.comment }}</p>
-          <p><strong>Courses taken with {{ prof.name.title() }}:</strong> {{ review.courses }}</p>
-          <p><strong>Year:</strong> {{ review.datetime.strftime('%Y') }}</p>
+          <p><strong>Course(s) taken with {{ prof.name.title() }}:</strong> {{ review.courses }}</p>
+          <p style="font-size: 8pt;">Review submitted on {{ review.datetime.strftime('%m/%d/%Y') }}</p>
         </div>
         {% endfor %}
       </div>
