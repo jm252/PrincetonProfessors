@@ -24,6 +24,7 @@ except Exception as ex:
 class InappropriateTextError(Exception):
     pass
 
+
 def get_all_professors():
     try:
         with sqlalchemy.orm.Session(engine) as session:
@@ -127,7 +128,7 @@ def _get_profId(name, dept):
 
 
 def get_reviews(name, dept):
-    try:            
+    try:
         with sqlalchemy.orm.Session(engine) as session:
             query = (
                 session.query(Review)
@@ -246,6 +247,7 @@ def _contains_profanity(text):
 
     return False
 
+
 # right now we require reviews to include dept and rating; this needs
 # to change going forward!!
 def add_review(
@@ -261,16 +263,18 @@ def add_review(
 ):
     with sqlalchemy.orm.Session(engine) as session:
         if _contains_profanity(comment):
-            raise InappropriateTextError("The review text contains profanity and your review therefore cannot be submitted. ")
+            raise InappropriateTextError(
+                "The review text contains profanity and your review therefore cannot be submitted. "
+            )
         if _contains_profanity(courses):
-            raise InappropriateTextError("The course you listed contains profanity and your review therefore cannot be submitted. ")
+            raise InappropriateTextError(
+                "The course you listed contains profanity and your review therefore cannot be submitted. "
+            )
 
         if not prof_exists(name, dept):
             add_professor(name, dept)
 
         profId = _get_profId(name, dept)
-
-        
 
         review = Review(
             profId=profId,
@@ -317,6 +321,7 @@ def add_review(
         # user table checks / inserts
         if not user_exists(username):
             add_user(username)
+
 
 def delete_review(review_id):
     with sqlalchemy.orm.Session(engine) as session:
@@ -408,6 +413,8 @@ def is_banned(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
             user = session.query(User).filter(User.username == username).first()
+            if user is None:
+                return False
             return user.isBanned
 
     except sqlalchemy.exc.SQLAlchemyError as ex:
@@ -478,7 +485,7 @@ def main():
     # add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
-    add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "" , "heshitllo")
+    add_review("YonI mIN", "COS", "kw2689", 5, 5, 3, 1, "", "heshitllo")
     # users = get_all_users()
     # print(users)
     # print(query_username_keyword('f'))
@@ -505,7 +512,7 @@ def main():
     # reviews = get_reviews("jacob colch", "gss")
     # for review in reviews:
     # print(review.reviewId)
-    #print("hi")
+    # print("hi")
 
 
 if __name__ == "__main__":
