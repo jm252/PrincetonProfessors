@@ -15,8 +15,8 @@ app.secret_key = os.environ["SECRET_KEY"]
 
 dotenv.load_dotenv()
 ADMIN_USERS = os.environ["ADMIN_USERS"]
-# -----------------------------------------------------------------------
 
+# -----------------------------------------------------------------------
 
 # Routes for authentication.
 @app.route("/logoutapp", methods=["GET"])
@@ -168,6 +168,11 @@ def admin_page():
 
 @app.route("/adminprofpage", methods=["GET"])
 def admin_landing_page():
+    username = flask.session.get("username")
+    if username is None:
+        flask.session["username"] = auth.authenticate()
+        # flask.session["username"] = "eb1889"
+
     is_admin = flask.session.get("username") in ADMIN_USERS
     profs = db.get_all_professors()
     html_code = flask.render_template(
@@ -179,6 +184,11 @@ def admin_landing_page():
 
 @app.route("/adminuserpage", methods=["GET"])
 def admin_user_track_page():
+    username = flask.session.get("username")
+    if username is None:
+        flask.session["username"] = auth.authenticate()
+        # flask.session["username"] = "eb1889"
+
     is_admin = flask.session.get("username") in ADMIN_USERS
 
     usernames = db.get_all_users()
@@ -309,7 +319,12 @@ def unban():
 
 @app.route("/help", methods=["GET"])
 def help_page():
-    html_code = flask.render_template("help.html")
+    username = flask.session.get("username")
+    if username is None:
+        flask.session["username"] = auth.authenticate()
+        # flask.session["username"] = "eb1889"
+
+    html_code = flask.render_template("help.html", username=username)
     response = flask.make_response(html_code)
     return response
 
