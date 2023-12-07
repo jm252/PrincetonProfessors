@@ -188,7 +188,7 @@ def admin_user_table():
         is_banned = db.is_banned(username)
         prof = db.get_prof_from_review
     except Exception as ex:
-        html_code = flask.render_template("error_admin.html")  # if success is False:
+        html_code = flask.render_template("error_admin.html", error_msg="Invalid Input")  # if success is False:
         response = flask.make_response(html_code)
         return response
 
@@ -197,7 +197,7 @@ def admin_user_table():
         is_banned=is_banned,
         reviews=reviews,
         username=username,
-        get_professor=prof,
+        get_professor=prof
     )
     response = flask.make_response(html_code)
     return response

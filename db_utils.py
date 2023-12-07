@@ -394,7 +394,7 @@ def is_banned(username):
             user = session.query(User).filter(User.username == username).first()
             return user.isBanned
 
-    except Exception as ex:
+    except sqlalchemy.exc.SQLAlchemyError as ex:
         err = f"Error checking banned user username %s: %s" % (username, ex)
         print(err, file=sys.stderr)
         return err
