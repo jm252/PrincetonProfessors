@@ -149,9 +149,9 @@ def get_user_reviews(username):
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(
-            f"Error retrieving reviews for username {username}: {ex}", file=sys.stderr
-        )
+        err = f"Error retrieving reviews for username %s: %s" % (username, ex)
+        print(err, file=sys.stderr)
+        return err
 
 
 def get_prof_from_review(review):
@@ -395,7 +395,9 @@ def is_banned(username):
             return user.isBanned
 
     except Exception as ex:
-        print(f"Error blocking user {username}: {ex}", file=sys.stderr)
+        err = f"Error checking banned user username %s: %s" % (username, ex)
+        print(err, file=sys.stderr)
+        return err
 
 
 def print_object_contents(obj):
