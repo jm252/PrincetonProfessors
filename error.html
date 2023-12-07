@@ -1,7 +1,15 @@
 <!DOCTYPE html>
+{% set username = username %}
+{% include 'header.html' %}
+
 <html>
-  <head> </head>
+  <head>
+  </head>
   <body>
-    Could not connect to Princeton Professors. Please Try Again.
+    <br>
+      {{error_msg}}
+    <br>
   </body>
 </html>
+
+{% include 'footer.html' %}

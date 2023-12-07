@@ -7,6 +7,7 @@ import sqlalchemy.orm
 import sqlalchemy.exc
 import dotenv
 from database import Professor, Review, User
+import re
 
 # -----------------------------------------------------------------------
 
@@ -19,6 +20,9 @@ except Exception as ex:
     print(ex, file=sys.stderr)
     sys.exit(1)
 
+
+class InappropriateTextError(Exception):
+    pass
 
 def get_all_professors():
     try:
@@ -232,6 +236,16 @@ def add_user(username):
         print(f"Error adding user {username}: {ex}", file=sys.stderr)
 
 
+def _contains_profanity(text):
+    disallowed_words = ["horseshoe"]
+    lowercase_text = text.lower()
+
+    for disallowed_word in disallowed_words:
+        if re.search(re.escape(disallowed_word.lower()), lowercase_text):
+            return True
+
+    return False
+
 # right now we require reviews to include dept and rating; this needs
 # to change going forward!!
 def add_review(
@@ -246,10 +260,17 @@ def add_review(
     courses,
 ):
     with sqlalchemy.orm.Session(engine) as session:
+        if _contains_profanity(comment):
+            raise InappropriateTextError("The review text contains profanity and your review therefore cannot be submitted. ")
+        if _contains_profanity(courses):
+            raise InappropriateTextError("The course you listed contains profanity and your review therefore cannot be submitted. ")
+
         if not prof_exists(name, dept):
             add_professor(name, dept)
 
         profId = _get_profId(name, dept)
+
+        
 
         review = Review(
             profId=profId,
@@ -297,57 +318,52 @@ def add_review(
         if not user_exists(username):
             add_user(username)
 
-
 def delete_review(review_id):
-    try:
-        with sqlalchemy.orm.Session(engine) as session:
-            # need to check if review exists first
-            review = session.query(Review).filter(Review.reviewId == review_id).first()
-            profId = review.profId
-            rating = review.rating
-            content = review.content
-            delivery = review.delivery
-            availability = review.availability
-            organization = review.organization
-            session.delete(review)
-            session.commit()
+    with sqlalchemy.orm.Session(engine) as session:
+        # need to check if review exists first
+        review = session.query(Review).filter(Review.reviewId == review_id).first()
+        profId = review.profId
+        rating = review.rating
+        content = review.content
+        delivery = review.delivery
+        availability = review.availability
+        organization = review.organization
+        session.delete(review)
+        session.commit()
 
-            prof = session.query(Professor).filter(Professor.profId == profId).first()
-            prof.numratings -= 1
-            if prof.numratings != 0:
-                prof.rating = (
-                    prof.rating * (prof.numratings + 1)
-                    - (content + delivery + availability + organization) / 4
-                ) / prof.numratings
+        prof = session.query(Professor).filter(Professor.profId == profId).first()
+        prof.numratings -= 1
+        if prof.numratings != 0:
+            prof.rating = (
+                prof.rating * (prof.numratings + 1)
+                - (content + delivery + availability + organization) / 4
+            ) / prof.numratings
 
-                prof.content = (
-                    (prof.content * (prof.numratings + 1)) - content
-                ) / prof.numratings
+            prof.content = (
+                (prof.content * (prof.numratings + 1)) - content
+            ) / prof.numratings
 
-                prof.delivery = (
-                    (prof.delivery * (prof.numratings + 1)) - delivery
-                ) / prof.numratings
+            prof.delivery = (
+                (prof.delivery * (prof.numratings + 1)) - delivery
+            ) / prof.numratings
 
-                prof.availability = (
-                    (prof.availability * (prof.numratings + 1)) - availability
-                ) / prof.numratings
+            prof.availability = (
+                (prof.availability * (prof.numratings + 1)) - availability
+            ) / prof.numratings
 
-                prof.organization = (
-                    (prof.organization * (prof.numratings + 1)) - organization
-                ) / prof.numratings
+            prof.organization = (
+                (prof.organization * (prof.numratings + 1)) - organization
+            ) / prof.numratings
 
-            else:
-                prof.rating = 0
-                prof.content = 0
-                prof.delivery = 0
-                prof.availability = 0
-                prof.organization = 0
+        else:
+            prof.rating = 0
+            prof.content = 0
+            prof.delivery = 0
+            prof.availability = 0
+            prof.organization = 0
 
-            session.commit()
-            session.flush()
-
-    except Exception as ex:
-        print(f"Error deleting review {review_id}: {ex}", file=sys.stderr)
+        session.commit()
+        session.flush()
 
 
 # Add this function to your db_utils.py file
@@ -462,7 +478,7 @@ def main():
     # add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
-    # add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "Hello" , "hello")
+    add_review("YonI mIN", 'COS', "kw2689", 5, 5, 3, 1, "" , "heshitllo")
     # users = get_all_users()
     # print(users)
     # print(query_username_keyword('f'))
@@ -489,7 +505,7 @@ def main():
     # reviews = get_reviews("jacob colch", "gss")
     # for review in reviews:
     # print(review.reviewId)
-    print("hi")
+    #print("hi")
 
 
 if __name__ == "__main__":

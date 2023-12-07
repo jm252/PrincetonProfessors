@@ -1,6 +1,7 @@
 # import html # html_code.escape() is used to thwart XSS attacks
 import flask
 import auth
+from db_utils import InappropriateTextError
 import db_utils as db
 import os
 import dotenv
@@ -108,17 +109,26 @@ def review():
     courses = flask.request.form.get("courses")
     username = flask.session.get("username")
 
-    db.add_review(
-        name,
-        department,
-        username,
-        content,
-        delivery,
-        availability,
-        organization,
-        comment,
-        courses,
-    )
+    try:
+        db.add_review(
+            name,
+            department,
+            username,
+            content,
+            delivery,
+            availability,
+            organization,
+            comment,
+            courses,
+        )
+    except InappropriateTextError as ex:
+        is_admin = flask.session.get("username") in ADMIN_USERS
+        html_code = flask.render_template(
+        "error.html", is_admin=is_admin, username=username, error_msg=ex
+        )
+        response = flask.make_response(html_code)
+        return response
+
     is_admin = flask.session.get("username") in ADMIN_USERS
     html_code = flask.render_template(
         "thanks.html", is_admin=is_admin, username=username
