@@ -27,7 +27,7 @@
 </style>
 
 {% for prof in professors: %}
-<div class="profName w3-container" prof-name="{{prof.name}}" prof-dept={{prof.department}} onclick="getResults('{{prof.name}}', '{{prof.department}}')">
+<div class="profName w3-container" prof-name="{{prof.name}}" prof-dept={{prof.department}} onclick="getResults('{{prof.name | urlencode}}', '{{prof.department | urlencode}}')">
   <h4 class="w3-opacity"><b><div class="profname"> {{prof.name.title()}}</div></b>
     <div class="deptB"> {{ prof.department.upper() }}</div> 
     <div class="ratingB" style="background-color: {% if prof.rating >= 4.0 %} #4CAF50 {% elif prof.rating >= 3.0 %} #FFC107 {% else %} #E53935 {% endif %}; color: black;">{% if prof.numratings == 0 %} N/A 
@@ -56,9 +56,9 @@
 
   let request = null
 
-  function getResults(name, dept, rating) {
-    let encodedProfName = encodeURIComponent(name);
-    let encodedProfDept = encodeURIComponent(dept);
+  function getResults(name, dept) {
+    let encodedProfName = name;
+    let encodedProfDept = dept;
 
     let url = '/prof_details?name=' + encodedProfName + "&dept=" + encodedProfDept;
 
