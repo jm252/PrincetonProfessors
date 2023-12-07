@@ -499,13 +499,11 @@ def main():
     # add_review("YonI mIN", 'LAs', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
-<<<<<<< HEAD
     # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
 #     add_review("YonI mIN", "COS", "kw2689", 5, 5, 3, 1, "", "heshitllo")
 # =======
 #     add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
 #     delete_prof("YonI mIN", 'COS')
->>>>>>> 268a4b090fb305270979d5dff30ef9104300a574
     # users = get_all_users()
     # print(users)
     # print(query_username_keyword('f'))
@@ -532,7 +530,7 @@ def main():
     # reviews = get_reviews("jacob colch", "gss")
     # for review in reviews:
     # print(review.reviewId)
-    # print("hi")
+    print("hi")
 
 
 if __name__ == "__main__":
