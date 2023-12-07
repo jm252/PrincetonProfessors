@@ -32,6 +32,7 @@
 <div class="container">
 {% else %}
 {% for username in usernames %}
+<div class="container">
 <br>
 <a class= "card-link" target="childWindow" href="/adminusertable?username={{username}}">
 <div class="card" id="adminusertable">
@@ -42,6 +43,7 @@
     </tr>
 </div>
 </a>
+</div>
 {% endfor %}
 </div>
 {% endif %}
