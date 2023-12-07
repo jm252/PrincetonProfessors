@@ -57,10 +57,12 @@ def get_professors(number):
 
 if __name__ == "__main__":
     # number = 25500 #cs
-    # number = 25500 #cs
-    # 22300
+    # number = 22300 #history
+    number = 22200 #eco
+
+
     professors = get_professors(number)
-    for prof in cs_professors:
-        print(prof)
-        # add_professor(prof['full_name'], 'COS')
+    for prof in professors:
+        # print(prof)
+        add_professor(prof['full_name'], 'ECO')
 
