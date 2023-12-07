@@ -30,7 +30,9 @@
 <div class="profName w3-container" prof-name="{{prof.name}}" prof-dept={{prof.department}} onclick="getResults('{{prof.name}}', '{{prof.department}}')">
   <h4 class="w3-opacity"><b><div class="profname"> {{prof.name.title()}}</div></b>
     <div class="deptB"> {{ prof.department.upper() }}</div> 
-    <div class="ratingB" style="background-color: {% if prof.rating >= 4.0 %} #4CAF50 {% elif prof.rating >= 3.0 %} #FFC107 {% else %} #E53935 {% endif %}; color: black;">{{ '%.2f'|format(prof.rating) }} </div>
+    <div class="ratingB" style="background-color: {% if prof.rating >= 4.0 %} #4CAF50 {% elif prof.rating >= 3.0 %} #FFC107 {% else %} #E53935 {% endif %}; color: black;">{% if prof.numratings == 0 %} N/A 
+      {% else %} {{ '%.2f'|format(prof.rating) }} 
+      {% endif %}</div>
   </h4>
 </div>
 <hr style="margin: 0;">

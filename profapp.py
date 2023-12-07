@@ -40,8 +40,8 @@ def landing():
 # @app.route("/", methods=["GET"])
 @app.route("/index", methods=["GET"])
 def index():
-    # flask.session["username"] = auth.authenticate()
-    flask.session["username"] = "eb1889"
+    flask.session["username"] = auth.authenticate()
+    # flask.session["username"] = "eb1889"
 
     professors = db.get_all_professors()
     is_admin = flask.session.get("username") in ADMIN_USERS
@@ -78,8 +78,8 @@ def review_form():
 
     username = flask.session.get("username")
     if username is None:
-        # flask.session["username"] = auth.authenticate()
-        flask.session["username"] = "eb1889"
+        flask.session["username"] = auth.authenticate()
+        # flask.session["username"] = "eb1889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
     is_banned = db.is_banned(username)
@@ -124,7 +124,7 @@ def review():
     except InappropriateTextError as ex:
         is_admin = flask.session.get("username") in ADMIN_USERS
         html_code = flask.render_template(
-        "error.html", is_admin=is_admin, username=username, error_msg=ex
+            "error.html", is_admin=is_admin, username=username, error_msg=ex
         )
         response = flask.make_response(html_code)
         return response
@@ -154,8 +154,8 @@ def prof_details():
 def admin_page():
     username = flask.session.get("username")
     if username is None:
-        # flask.session["username"] = auth.authenticate()
-        flask.session["username"] = "eb1889"
+        flask.session["username"] = auth.authenticate()
+        # flask.session["username"] = "eb1889"
 
     is_admin = flask.session.get("username") in ADMIN_USERS
 
@@ -198,7 +198,9 @@ def admin_user_table():
         is_banned = db.is_banned(username)
         prof = db.get_prof_from_review
     except Exception as ex:
-        html_code = flask.render_template("error_admin.html", error_msg="Invalid Input")  # if success is False:
+        html_code = flask.render_template(
+            "error_admin.html", error_msg="Invalid Input"
+        )  # if success is False:
         response = flask.make_response(html_code)
         return response
 
@@ -207,7 +209,7 @@ def admin_user_table():
         is_banned=is_banned,
         reviews=reviews,
         username=username,
-        get_professor=prof
+        get_professor=prof,
     )
     response = flask.make_response(html_code)
     return response
@@ -303,6 +305,7 @@ def unban():
     html_code = flask.render_template("bannedusers.html", usernames=usernames)
     response = flask.make_response(html_code)
     return response
+
 
 @app.route("/help", methods=["GET"])
 def help_page():
