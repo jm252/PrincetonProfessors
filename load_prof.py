@@ -55,14 +55,21 @@ def get_professors(number):
     return response_json_doc
 
 
+def print_professors(professors):
+    for prof in professors:
+        print(prof)
+
+
+def add_professors(professors, dept):
+    for prof in professors:
+        add_professor(prof["full_name"], dept)
+
+
 if __name__ == "__main__":
     # number = 25500 #cs
     # number = 22300 #history
-    number = 22200 #eco
-
+    number = 22200  # eco
 
     professors = get_professors(number)
-    for prof in professors:
-        # print(prof)
-        add_professor(prof['full_name'], 'ECO')
-
+    print_professors(professors)
+    # add_professors(professors, array[1])
