@@ -20,6 +20,53 @@ ENDPOINT = "/members/full"
 CONSUMER_KEY = "KPYMe2FTDdpk9Lo3Q0FLWPWCjwsa"
 CONSUMER_SECRET = "ONBGvpgskS6EKutumvlTf_kh56Ua"
 
+DEPT_LIST = [
+    (22100, "AAS"),
+    (28000, "AMS"),
+    (22000, "ANT"),
+    (20000, "ARC"),
+    (20100, "ART"),
+    (28100, "UCH"),
+    (29200, "SML"),
+    (26300, "CSR"),
+    (21000, "HUM"),
+    (20504, "LCA"),
+    (23500, "CHM"),
+    (25200, "CEE"),
+    (20200, "CLA"),
+    (20300, "COM"),
+    (25500, "COS"),
+    (20503, "LCA"),
+    (20400, "EAS"),
+    (22200, "ECO"),
+    (25400, "ECE"),
+    (20600, "ENG"),
+    (20700, "FIT"),
+    (22700, "GSS"),
+    (20800, "GER"),
+    (26400, "HLS"),
+    (22300, "HIS"),
+    (20500, "LCA"),
+    (24200, "LSI"),
+    (21009, "HUM"),
+    (23700, "MAT"),
+    (21100, "MUS"),
+    (21200, "NES"),
+    (22500, "POL"),
+    (27800, "PII"),
+    (25800, "PSM"),
+    (24400, "PNI"),
+    (26000, "SPI"),
+    (41400, "UAM"),
+    (23900, "PSY"),
+    (21400, "REL"),
+    (21500, "SLA"),
+    (22600, "SOC"),
+    (21600, "SPO"),
+    (20507, "LCA"),
+    (20505, "LCA"),
+]
+
 
 def get_professors(number):
     if len(sys.argv) != 1:
@@ -44,7 +91,7 @@ def get_professors(number):
     # Use the access token to get the data.
 
     auth_header = "Bearer " + access_token
-    print("Access token:", access_token)
+    # print("Access token:", access_token)
     data_url = BASE_URL + ENDPOINT + "?group=Department " + str(number) + " Faculty"
 
     response = requests.get(data_url, headers={"Authorization": auth_header})
@@ -66,10 +113,8 @@ def add_professors(professors, dept):
 
 
 if __name__ == "__main__":
-    # number = 25500 #cs
-    # number = 22300 #history
-    number = 22200  # eco
-
-    professors = get_professors(number)
-    print_professors(professors)
-    # add_professors(professors, array[1])
+    for dept in DEPT_LIST:
+        professors = get_professors(dept[0])
+        # print(dept[1] + ": \n")
+        # print_professors(professors)
+        add_professors(professors, dept[1])
