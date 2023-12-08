@@ -1,0 +1,44 @@
+African American Studies - 22100 - AAS
+American Studies - 28000 - AMS
+Anthropology - 22000 - ANT
+Architecture - 20000 - ARC
+Art and Archaeology - 20100 - ART
+Center for Human Values - 28100 - UCH
+Center for Statistics and Machine Learning - 29200 - SML
+Center for the Study of Religion - 26300 - CSR
+Council of the Humanities - 21000 - HUM
+Creative Writing - 20504 - LCA
+Chemistry - 23500 - CHM
+Civil and Environmental Engineering - 25200 - CEE
+Classics - 20200 - CLA
+Comparative Literature - 20300 - COM
+Computer Science - 25500 - COS
+Dance - 20503 - LCA
+East Asian Studies - 20400 - EAS 
+Economics - 22200 - ECO
+Electrical and Computer Engineering - 25400 - ECE
+English - 20600 - ENG
+French and Italian - 20700 - FIT
+Gender and Sexuality Studies - 22700 - GSS
+German - 20800 - GER
+Hellenic Studies - 26400 - HLS
+History - 22300 - HIS
+Lewis Center for the Arts - 20500 - LCA
+Lewis-Sigler Institute of Genomics - 24200 - LSI
+Linguistics - 21009 - HUM
+Mathematics - 23700 - MAT
+Music - 21100 - MUS
+Near Eastern Studies - 21200 - NES 
+Politics - 22500 - POL
+Princeton Institute for International and Regional Studie (PIIRS) - 27800 - PII
+Princeton Institute for the Science and Technology of Materials (PRISM) - 25800 - PSM
+Princeton Neuroscience Institute - 24400 - PNI
+Princeton School of Public and International Affairs - 26000 - SPI
+Princeton University Art Museum - 41400 - UAM
+Psychology - 23900 - PSY
+Religion - 21400 - REL
+Slavic Languages and Literature - 21500 - SLA
+Sociology - 22600 - SOC
+Spanish and Portuguese Languages and Culture - 21600 - SPO
+Theater - 20507 - LCA
+Visual Arts - 20505 - LCA
