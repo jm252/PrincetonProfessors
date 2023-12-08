@@ -1,3 +1,16 @@
+<!-- Source for the following block: https://www.w3schools.com/cssref/tryit.php?filename=trycss3_placeholder -->
+<style>
+  ::-ms-input-placeholder { /* Edge 12-18 */
+  font-style: italic;
+  color: rgba(150, 149, 149, 0.628)
+}
+
+::placeholder {
+  font-style: italic;
+}
+</style>
+<!-- end block -->
+
 <!DOCTYPE html>
 <html>
 {% set username = username %}
@@ -12,11 +25,13 @@
     
       <div class="w3-white w3-text-grey w3-card-4">
         <div class="w3-container">
-          <br>
+          <h4><b>Find reviews about your professors</b></h4>
           <div id = "searchDiv" class="search col-sm-3">
             <div class="name col-sm-3">
-              <input type="text" id="nameInput" placeholder="Search by Name" style="max-width: 100%;">
-              <input type="text" id="deptInput" placeholder="Search by Department" style="max-width: 100%;">
+              Search by Professor Name
+              <input type="text" id="nameInput" placeholder="Ex. Kevin Wayne" style="max-width: 100%;">
+              Search by Department Code
+              <input type="text" id="deptInput" placeholder="Ex. COS" style="max-width: 100%;">
               <!-- <button type="button" onclick="showFilters()" id="filters">
                 Filters
               </button> -->
