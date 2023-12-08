@@ -20,12 +20,13 @@
           </div>
         </div>
         <div id="review-form" class="w3-container">
-          <h2>Submit a Review</h2>
+          <h2>Review a Professor</h2>
                           <!-- Input boxes for searching -->
                 <form action="/review" method="post">
 
-                    <b>Professor:</b>
+                    <b>Professor:<span style="color: red;">*</span></b>
                     <select id="professor-select" name="professor" style="width: 100%;" required>
+                      <option vale=""disabled selected>Select a Professor...</option>
                       {% for prof in profs: %}
                         <option value="{{prof.name}}, {{prof.department}}">{{prof.name.title()}} ({{prof.department}})</option>
                         {% endfor %}
@@ -35,7 +36,7 @@
                     <div style="background-color: #f2f2f2; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
                       <p style="font-size: 16px; color: #333;">
                         Please rate each category on a scale from 0 to 5, with 5 being the best.
-                        You can list ratings up to one decimal place (e.g., 4.5) to indicate greater precision.
+                        You may use up to one decimal place.
                       </p>
                     </div>
                     <br>
