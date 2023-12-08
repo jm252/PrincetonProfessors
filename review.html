@@ -26,7 +26,7 @@
 
                     <b>Professor:<span style="color: red;">*</span></b>
                     <select id="professor-select" name="professor" style="width: 100%;" required>
-                      <option vale=""disabled selected>Select a Professor...</option>
+                      <option></option>
                       {% for prof in profs: %}
                         <option value="{{prof.name}}, {{prof.department}}">{{prof.name.title()}} ({{prof.department}})</option>
                         {% endfor %}
@@ -107,7 +107,7 @@
 <script>
   // Activate Select2 on the professor's name select element
   $(document).ready(function() {
-      $('#professor-select').select2();
+      $('#professor-select').select2({ placeholder: '-- Select a Professor --' });
   });
 </script>
 
