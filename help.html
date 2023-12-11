@@ -3,7 +3,20 @@
     font-size: 54pt;
     font-weight: 400;
   }
+
+  .faq-section {
+    margin-top: 20px;
+  }
+
+  .faq-question {
+    font-weight: bold;
+  }
+
+  .faq-answer {
+    margin-bottom: 10px;
+  }
 </style>
+
 {% set username = username %} {% include 'header.html' %}
 
 <center>
@@ -15,7 +28,28 @@
   <a href="mailto:kw2689@princeton.edu">Kayla Waitman</a>,
   <a href="mailto:eb1889@princeton.edu">Eden Bendory</a>,
   <a href="mailto:jm2889@princeton.edu">Jonathan Mindel</a>
-  <br />
+
+  <!-- FAQs Section -->
+  <div class="faq-section">
+    <h2>Frequently Asked Questions:</h2>
+
+    <div class="faq-question">Q: Where can I submit a new review?</div>
+    <div class="faq-answer">A: To submit a new review, click on the Review a Professor button on the top of this screen. Alternatively, click <a href="/review_form"> here</a>.</div>
+
+    <div class="faq-question">Q: I'm lost. How can I get back to the home page? </div>
+    <div class="faq-answer">A: You can always click on the words 'Princeton Professors' in the top left corner of the screen to navigate back to the home page. </div>
+
+    <div class="faq-question">Q: I regret submitting a review and want to take it down. How can I do this? </div>
+    <div class="faq-answer">A: Email any of the admins listed on this page for assistance with removing a review. </div>
+
+    <div class="faq-question">Q: How do you assess professors? </div>
+    <div class="faq-answer">A: Professors are scored on quality of content, delivery, availability, and organization. Content refers to choices that a professor makes regarding what material to include in the curriculum for a course. Delivery refers to the professor's ability to clearly explain concepts to students. Availability refers to a professor's willingness to help students with material outside of lecture, and organization refers to the overall clarity in a professor's teaching materials and the planning which went into producing them. </div>
+
+   
+
+  </div>
+
+
   <h2>Department Key:</h2>
   African American Studies - AAS <br />
   American Studies - AMS <br />
@@ -62,6 +96,7 @@
   Spanish and Portuguese Languages and Culture - SPO <br />
   Theater - LCA <br />
   Visual Arts - LCA <br />
+
   <br />
   <a href="/index"
     ><button style="background-color: orange">
