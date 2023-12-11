@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Float, Integer, DateTime, Boolean
 
-Base = declarative_base()    
+Base = declarative_base()
 
 class Professor (Base):
     __tablename__ = 'professors'
@@ -43,5 +43,3 @@ class User (Base):
     isBanned = Column(Boolean, default=False)
     isAdmin = Column(Boolean, default=False)
     # add review ids later?
-
-    

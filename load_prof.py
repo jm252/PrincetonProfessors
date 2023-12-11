@@ -92,9 +92,11 @@ def get_professors(number):
 
     auth_header = "Bearer " + access_token
     # print("Access token:", access_token)
-    data_url = BASE_URL + ENDPOINT + "?group=Department " + str(number) + " Faculty"
+    data_url = BASE_URL + ENDPOINT + "?group=Department " + str(
+        number) + " Faculty"
 
-    response = requests.get(data_url, headers={"Authorization": auth_header})
+    response = requests.get(
+        data_url, headers={"Authorization": auth_header})
     response_json_doc = json.loads(response.text)
 
     # Pretty-print the data.

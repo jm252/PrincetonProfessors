@@ -9,7 +9,7 @@ import dotenv
 from database import Professor, Review, User
 import re
 
-# -----------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 dotenv.load_dotenv()
 DATABASE_URL = os.environ["DATABASE_URL"]
@@ -28,7 +28,9 @@ class InappropriateTextError(Exception):
 def get_all_professors():
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            query = session.query(Professor).order_by(Professor.rating.desc(), Professor.numratings.desc())
+            query = session.query(Professor).order_by(
+                Professor.rating.desc(), Professor.numratings.desc()
+            )
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
@@ -65,20 +67,20 @@ def get_all_reviews():
         print(f"Error retrieving all professors: {ex}", file=sys.stderr)
 
 
-# need to make error handling more robust, right now doesn't reach except clause if there's no professor
 def get_professor(name, dept):
     try:
         with sqlalchemy.orm.Session(engine) as session:
             if not prof_exists(name, dept):
                 raise Exception("no professor found with given name")
-            # faster in this case not to use _get_profId in order to only query once
             query = session.query(Professor).filter(
-                Professor.name == name.lower(), Professor.department == dept.upper()
+                Professor.name == name.lower(),
+                Professor.department == dept.upper()
             )
             professor = query.first()
             return professor
     except Exception as ex:
-        print(f"Error retrieving professor {name}: {ex}", file=sys.stderr)
+        print(f"Error retrieving professor {name}: {ex}",
+              file=sys.stderr)
 
 
 def query_professor_keyword(name="", dept=""):
@@ -90,12 +92,14 @@ def query_professor_keyword(name="", dept=""):
                     Professor.name.contains(name.lower())
                     & Professor.department.contains(dept.upper())
                 )
-                .order_by(Professor.rating.desc(), Professor.numratings.desc())
+                .order_by(Professor.rating.desc(),
+                          Professor.numratings.desc())
             )
             professors = query.all()
             return professors
     except Exception as ex:
-        print(f"Error retrieving query {name}, {dept}: {ex}", file=sys.stderr)
+        print(f"Error retrieving query {name}, {dept}: {ex}",
+              file=sys.stderr)
 
 
 def query_username_keyword(username=""):
@@ -117,14 +121,16 @@ def _get_profId(name, dept):
             prof = (
                 session.query(Professor)
                 .filter(
-                    Professor.name == name.lower(), Professor.department == dept.upper()
+                    Professor.name == name.lower(),
+                    Professor.department == dept.upper()
                 )
                 .first()
             )
 
             return prof.profId
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(f"Error retrieving reviews for professor {name}: {ex}", file=sys.stderr)
+        print(f"Error retrieving reviews for professor {name}: {ex}",
+              file=sys.stderr)
 
 
 def get_reviews(name, dept):
@@ -138,7 +144,8 @@ def get_reviews(name, dept):
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        err = "Error retrieving reviews for professor %s: %s" % (name, ex)
+        err = "Error retrieving reviews for professor %s: %s" % (name,
+                                                                 ex)
         print(err, file=sys.stderr)
         return err
 
@@ -154,7 +161,8 @@ def get_user_reviews(username):
             table = query.all()
             return table
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        err = f"Error retrieving reviews for username %s: %s" % (username, ex)
+        err = f"Error retrieving reviews for username %s: %s" % (
+            username, ex)
         print(err, file=sys.stderr)
         return err
 
@@ -163,7 +171,8 @@ def get_prof_from_review(review):
     try:
         with sqlalchemy.orm.Session(engine) as session:
             profId = review.profId
-            prof = session.query(Professor).filter(Professor.profId == profId).first()
+            prof = session.query(Professor).filter(
+                Professor.profId == profId).first()
             return prof
     except sqlalchemy.exc.SQLAlchemyError as ex:
         print(f"Error identifying professor for review")
@@ -201,24 +210,24 @@ def prof_exists(name, dept):
             return bool(
                 session.query(Professor)
                 .filter(
-                    Professor.name == name.lower(), Professor.department == dept.upper()
+                    Professor.name == name.lower(),
+                    Professor.department == dept.upper()
                 )
                 .first()
             )
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(f"Error checking if professor {name} exists: {ex}", file=sys.stderr)
-    # if len(session.query(Professor).filter_by(name == name).all()) != 0:
-    #     return True
-    # else:
-    #     return False
+        print(f"Error checking if professor {name} exists: {ex}",
+              file=sys.stderr)
 
 
 def user_exists(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            return bool(session.query(User).filter(User.username == username).first())
+            return bool(session.query(User).filter(
+                User.username == username).first())
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        print(f"Error checking if professor {username} exists: {ex}", file=sys.stderr)
+        print(f"Error checking if professor {username} exists: {ex}",
+              file=sys.stderr)
 
 
 def add_user(username):
@@ -242,14 +251,13 @@ def _contains_profanity(text):
     lowercase_text = text.lower()
 
     for disallowed_word in disallowed_words:
-        if re.search(re.escape(disallowed_word.lower()), lowercase_text):
+        if re.search(re.escape(disallowed_word.lower()),
+                     lowercase_text):
             return True
 
     return False
 
 
-# right now we require reviews to include dept and rating; this needs
-# to change going forward!!
 def add_review(
     name,
     dept,
@@ -264,11 +272,13 @@ def add_review(
     with sqlalchemy.orm.Session(engine) as session:
         if _contains_profanity(comment):
             raise InappropriateTextError(
-                "Profanity has been detected in your review. Your review has not been submitted. "
+                "Profanity has been detected in your review. " + 
+                "Your review has not been submitted. "
             )
         if _contains_profanity(courses):
             raise InappropriateTextError(
-                "Profanity has been detected in your review. Your review has not been submitted. "
+                "Profanity has been detected in your review. " + 
+                "Your review has not been submitted. "
             )
 
         if not prof_exists(name, dept):
@@ -279,7 +289,8 @@ def add_review(
         review = Review(
             profId=profId,
             username=username,
-            rating=(content + delivery + availability + organization) / 4,
+            rating=(
+                content + delivery + availability + organization) / 4,
             content=content,
             delivery=delivery,
             availability=availability,
@@ -291,11 +302,13 @@ def add_review(
         session.add(review)
         session.commit()
 
-        prof = session.query(Professor).filter(Professor.profId == profId).first()
+        prof = session.query(Professor).filter(
+            Professor.profId == profId).first()
         if prof:
             # increse number of ratings by 1
             prof.numratings += 1
-            # update rating, this user's contribution is average of their subscores
+            # update rating, this user's contribution is average of
+            # their subscores
             prof.content = prof.content
             prof.rating = (
                 prof.rating * (prof.numratings - 1)
@@ -326,7 +339,8 @@ def add_review(
 def delete_review(review_id):
     with sqlalchemy.orm.Session(engine) as session:
         # need to check if review exists first
-        review = session.query(Review).filter(Review.reviewId == review_id).first()
+        review = session.query(Review).filter(
+            Review.reviewId == review_id).first()
         profId = review.profId
         rating = review.rating
         content = review.content
@@ -336,7 +350,8 @@ def delete_review(review_id):
         session.delete(review)
         session.commit()
 
-        prof = session.query(Professor).filter(Professor.profId == profId).first()
+        prof = session.query(Professor).filter(
+            Professor.profId == profId).first()
         prof.numratings -= 1
         if prof.numratings != 0:
             prof.rating = (
@@ -370,40 +385,47 @@ def delete_review(review_id):
         session.commit()
         session.flush()
 
+
 def delete_prof(name, dept):
     with sqlalchemy.orm.Session(engine) as session:
-            if not prof_exists(name, dept):
-                raise Exception("no professor found with given name")
-            # faster in this case not to use _get_profId in order to only query once
-            query = session.query(Professor).filter(
-                Professor.name == name.lower(), Professor.department == dept.upper()
-            )
-            professor = query.first()
-            reviews = get_reviews(name, dept)
-            for review in reviews:
-                reviewId = review.reviewId
-                delete_review(reviewId)
-            session.delete(professor)
-            session.commit()
+        if not prof_exists(name, dept):
+            raise Exception("no professor found with given name")
+        # faster in this case not to use _get_profId in order to only
+        # query once
+        query = session.query(Professor).filter(
+            Professor.name == name.lower(),
+            Professor.department == dept.upper()
+        )
+        professor = query.first()
+        reviews = get_reviews(name, dept)
+        for review in reviews:
+            reviewId = review.reviewId
+            delete_review(reviewId)
+        session.delete(professor)
+        session.commit()
+
 
 # Add this function to your db_utils.py file
 def delete_all_reviews(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            reviews = session.query(Review).filter(Review.username == username).all()
+            reviews = session.query(Review).filter(
+                Review.username == username).all()
 
             for review in reviews:
                 reviewId = review.reviewId
                 delete_review(reviewId)
 
     except Exception as ex:
-        print(f"Error deleting all reviews for {username}: {ex}", file=sys.stderr)
+        print(f"Error deleting all reviews for {username}: {ex}",
+              file=sys.stderr)
 
 
 def ban_user(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            user = session.query(User).filter(User.username == username).first()
+            user = session.query(User).filter(
+                User.username == username).first()
             user.isBanned = True
             session.commit()
             session.flush()
@@ -415,7 +437,8 @@ def ban_user(username):
 def unban_user(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            user = session.query(User).filter(User.username == username).first()
+            user = session.query(User).filter(
+                User.username == username).first()
             user.isBanned = False
             session.commit()
             session.flush()
@@ -427,13 +450,15 @@ def unban_user(username):
 def is_banned(username):
     try:
         with sqlalchemy.orm.Session(engine) as session:
-            user = session.query(User).filter(User.username == username).first()
+            user = session.query(User).filter(
+                User.username == username).first()
             if user is None:
                 return False
             return user.isBanned
 
     except sqlalchemy.exc.SQLAlchemyError as ex:
-        err = f"Error checking banned user username %s: %s" % (username, ex)
+        err = f"Error checking banned user username %s: %s" % (username,
+                                                                ex)
         print(err, file=sys.stderr)
         return err
 
@@ -500,10 +525,10 @@ def main():
     # add_review("Kayla WaY", 'aAS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("KAYla WAY", 'aaS', "jm2889", 5, 5, 5, 5, "Hello", "hello")
     # add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
-#     add_review("YonI mIN", "COS", "kw2689", 5, 5, 3, 1, "", "heshitllo")
-# =======
-#     add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
-#     delete_prof("YonI mIN", 'COS')
+    #     add_review("YonI mIN", "COS", "kw2689", 5, 5, 3, 1, "", "heshitllo")
+    # =======
+    #     add_review("YonI mIN", 'COS', "jm2889", 5, 5, 3, 1, "Hello" , "hello")
+    #     delete_prof("YonI mIN", 'COS')
     # users = get_all_users()
     # print(users)
     # print(query_username_keyword('f'))
