@@ -108,7 +108,7 @@
           <i class="fa fa-star-half"></i>
         {% endif %}
       </h4></center>
-      <h5>Content: {{prof.content}} | Delivery: {{prof.delivery}} | Availability: {{prof.availability}} | Organization: {{prof.organization}}</h5>
+      <h5>Content: {{'%.2f'|format(prof.content)}} | Delivery: {{'%.2f'|format(prof.delivery)}} | Availability: {{'%.2f'|format(prof.availability)}} | Organization: {{'%.2f'|format(prof.organization)}}</h5>
     </div>
 
     <div class="content-container">
