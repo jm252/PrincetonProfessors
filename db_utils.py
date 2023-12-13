@@ -247,7 +247,7 @@ def add_user(username):
 
 
 def _contains_profanity(text):
-    disallowed_words = ["horseshoe", "fuck"]
+    disallowed_words = ["horseshoe", "leapfrog"]
     lowercase_text = text.lower()
 
     for disallowed_word in disallowed_words:
