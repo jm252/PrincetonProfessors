@@ -60,10 +60,10 @@
                     </div>
                     <br>
                     <b>Any Comments?</b>
-                    <textarea name="comment"> </textarea>
+                    <textarea name="comment" maxlength="2000"> </textarea>
                     <br>
                     <label>If this review applies to a specific course(s), please list them below:</label>
-                    <input type="text" name="courses"/>
+                    <input type="text" name="courses" maxlength="10"/>
                     <br>
                     <br>
                     <span style="color: red;">*</span> = required
@@ -114,7 +114,7 @@
     var inputElements = document.getElementsByClassName('inputValue');
     for (var i = 0; i < inputElements.length; i++) {
       var inputValue = inputElements[i].value;
-      if (inputValue < 0.0 || inputValue > 5.0) {
+      if (inputValue < 0.0 || inputValue > 5.0 ) {
         alert('Please enter a valid value between 0.0 and 5.0');
         // Clear the input field value
         inputElements[i].value = '';
