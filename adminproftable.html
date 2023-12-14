@@ -40,19 +40,21 @@
     <div class="container-fluid header">
       <center>
         <a style="text-decoration: none;"href="adminlandingpage"><h1>Admin Control Panel</h1></a>
+        <h3 style="color: black;">Displaying all reviews for {{profname.title()}}:</h3>
       </center>
     </div>
     <!-- <script src="path/to/jquery.min.js"></script> Include jQuery if not already included -->
     <!-- <script src="path/to/db_utils.js"></script>
 <script src="path/to/main.js"></script> -->
-<body style="background-color:rgb(71, 135, 232); color: white;">
+
     <div class="container-fluid">
       <center>
-        <h3>Displaying all reviews for {{profname.title()}}:</h3>
+        <br>
         <a href="/adminprofpage"><button>Go Back</button></a>
       </center>
     </div>
 
+    <body style="background-color:rgb(71, 135, 232); color: white;">
   
         {% if not reviews %} 
         <div class="card"> 
