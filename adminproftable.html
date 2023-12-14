@@ -45,22 +45,22 @@
     <!-- <script src="path/to/jquery.min.js"></script> Include jQuery if not already included -->
     <!-- <script src="path/to/db_utils.js"></script>
 <script src="path/to/main.js"></script> -->
-<div class="adminbody">
+<body style="background-color:rgb(71, 135, 232); color: white;">
     <div class="container-fluid">
       <center>
         <h3>Displaying all reviews for {{profname.title()}}:</h3>
         <a href="/adminprofpage"><button>Go Back</button></a>
       </center>
+    </div>
 
-      <table class="table table-striped">
-        {% if not reviews %} {{profname.title()}} does not have any reviews!
-        <hr />
-
-        <center>
-          <a href="/adminprofpage"><button>Go back to all professors</button></a>
-        </center>
+  
+        {% if not reviews %} 
+        <div class="card"> 
+          {{profname.title()}} does not have any reviews!
+        </div>
 
         {% else %}
+        <table class="table table-striped">
         <div class="card-wrapper"></div>
 
         {% for review in reviews %}
@@ -85,9 +85,10 @@
 
           <hr />
         </div>
-        {% endfor %} {% endif %}
-      </table>
-    </div>
+        {% endfor %} 
+        </table>
+        {% endif %}
+</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
@@ -124,5 +125,5 @@
         }
       }
     </script>
-  </div>
+  </body>
 </html>
