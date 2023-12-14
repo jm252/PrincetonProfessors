@@ -18,6 +18,7 @@ ADMIN_USERS = os.environ["ADMIN_USERS"]
 
 # ----------------------------------------------------------------------
 
+
 # Routes for authentication.
 @app.route("/logoutapp", methods=["GET"])
 def logoutapp():
@@ -67,8 +68,7 @@ def search_results():
 
     professors = db.query_professor_keyword(name, dept)
 
-    html_code = flask.render_template(
-        "search_results.html", professors=professors)
+    html_code = flask.render_template("search_results.html", professors=professors)
     response = flask.make_response(html_code)
     return response
 
@@ -125,8 +125,7 @@ def review():
     except InappropriateTextError as ex:
         is_admin = flask.session.get("username") in ADMIN_USERS
         html_code = flask.render_template(
-            "error.html", is_admin=is_admin, username=username, 
-            error_msg=ex
+            "error.html", is_admin=is_admin, username=username, error_msg=ex
         )
         response = flask.make_response(html_code)
         return response
@@ -147,8 +146,7 @@ def prof_details():
     reviews = db.get_reviews(name, dept)
     prof = db.get_professor(name, dept)
 
-    html_code = flask.render_template("detailtable.html",
-                                      reviews=reviews, prof=prof)
+    html_code = flask.render_template("detailtable.html", reviews=reviews, prof=prof)
     response = flask.make_response(html_code)
     return response
 
@@ -236,14 +234,12 @@ def admin_prof_table():
     try:
         reviews = db.get_reviews(profname, profdept)
     except Exception as ex:
-        html_code = flask.render_template("error_admin.html",
-                                          error_msg="Invalid Input")
+        html_code = flask.render_template("error_admin.html", error_msg="Invalid Input")
         response = flask.make_response(html_code)
         return response
 
     html_code = flask.render_template(
-        "adminproftable.html", reviews=reviews, profname=profname, 
-        profdept=profdept
+        "adminproftable.html", reviews=reviews, profname=profname, profdept=profdept
     )
     response = flask.make_response(html_code)
     return response
@@ -284,8 +280,7 @@ def adminProfResults():
 
     professors = db.query_professor_keyword(prof)
 
-    html_code = flask.render_template("adminProfResults.html",
-                                      professors=professors)
+    html_code = flask.render_template("adminProfResults.html", professors=professors)
     response = flask.make_response(html_code)
     return response
 
@@ -298,8 +293,7 @@ def adminUserResults():
 
     usernames = db.query_username_keyword(user)
 
-    html_code = flask.render_template("adminUserResults.html",
-                                      usernames=usernames)
+    html_code = flask.render_template("adminUserResults.html", usernames=usernames)
     response = flask.make_response(html_code)
     return response
 
@@ -308,8 +302,7 @@ def adminUserResults():
 def banned_users():
     usernames = db.get_all_banned_users()
 
-    html_code = flask.render_template("bannedusers.html",
-                                      usernames=usernames)
+    html_code = flask.render_template("bannedusers.html", usernames=usernames)
     response = flask.make_response(html_code)
     return response
 
@@ -320,8 +313,7 @@ def unban():
     db.unban_user(username)
 
     usernames = db.get_all_banned_users()
-    html_code = flask.render_template("bannedusers.html",
-                                      usernames=usernames)
+    html_code = flask.render_template("bannedusers.html", usernames=usernames)
     response = flask.make_response(html_code)
     return response
 
@@ -336,23 +328,3 @@ def help_page():
     html_code = flask.render_template("help.html", username=username)
     response = flask.make_response(html_code)
     return response
-
-
-# @app.route("/adminsearch_results", methods=["GET"])
-# def search_results():
-#     query = flask.request.args.get("search")
-#     if query is None:
-#         query = ""
-#     name = flask.request.args.get("name")
-#     if name is None:
-#         name = ""
-#     dept = flask.request.args.get("dept")
-#     if dept is None:
-#         dept = ""
-
-#     professors = db.query_professor_keyword(name, dept)
-
-#     html_code = flask.render_template("search_results.html",
-# professors=professors)
-#     response = flask.make_response(html_code)
-#     return response
