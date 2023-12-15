@@ -325,6 +325,7 @@ def help_page():
         flask.session["username"] = auth.authenticate()
         # flask.session["username"] = "eb1889"
 
-    html_code = flask.render_template("help.html", username=username)
+    is_admin = flask.session.get("username") in ADMIN_USERS
+    html_code = flask.render_template("help.html", username=username, is_admin=is_admin)
     response = flask.make_response(html_code)
     return response
