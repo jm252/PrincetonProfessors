@@ -1,23 +1,4 @@
-Hello and Welcome 
+Princeton Professors is a web application designed to provide students 
+with an opportunity to view and submit feedback on all university course instructors.  
 
-for virtual env: source ~/.virtualenvs/cos333/bin/activate
-
-for CAS (run as terminal command): /Applications/Python\ 3.10/Install\ Certificates.command
-
-Smalt Blyue - #00468B
-
-index.html:
-- https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_cv&stacked=h
-- https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-star-o
-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_topnav
-- https://www.w3schools.com/howto/howto_css_searchbar.asp
-- https://fontawesome.com/icons/user?s=solid
-
-Dropdown button:
-- https://www.w3schools.com/howto/howto_css_dropdown.asp
-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_buttons_animate3
-
-- https://www.cs.princeton.edu/news/teaching-faculty-key-opening-door
-
-Placeholder style:
-- https://www.w3schools.com/cssref/tryit.php?filename=trycss3_placeholder
+Live Website: https://princetonprofessors.onrender.com
